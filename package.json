@@ -1,0 +1,45 @@
+{
+    "name": "housebox-nextjs-template",
+    "version": "2.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@reduxjs/toolkit": "^2.6.0",
+        "@types/react-slick": "^0.23.13",
+        "aos": "^2.3.4",
+        "bootstrap": "^5.3.3",
+        "chart.js": "^4.4.8",
+        "gsap": "^3.12.7",
+        "lucide-react": "^0.477.0",
+        "next": "^16.0.9",
+        "react": "^19.2.1",
+        "react-dom": "^19.2.1",
+        "react-countup": "^6.5.3",
+        "react-modal-video": "^2.0.2",
+        "react-redux": "^9.2.0",
+        "react-slick": "^0.30.3",
+        "slick-carousel": "^1.8.1",
+        "swiper": "^11.2.4"
+    },
+    "devDependencies": {
+        "@types/aos": "^3.0.7",
+        "@types/bootstrap": "^5.2.10",
+        "@types/node": "^22",
+        "@types/react": "^19",
+        "@types/react-dom": "^19",
+        "eslint": "^9",
+        "eslint-config-next": "^16.0.9",
+        "typescript": "^5"
+    },
+    "overrides": {
+        "react-modal-video": {
+            "react": "^19.2.1",
+            "react-dom": "^19.2.1"
+        }
+    }
+}
