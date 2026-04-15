@@ -26,11 +26,12 @@ import Header4 from './header/Header4'
 import Header5 from './header/Header5'
 import MobileMenu from './MobileMenu'
 import Search from './Search'
+import '../../styles/main.css'
 const BootstrapComponents = dynamic(() => import("../elements/BootstrapComponents"), { ssr: false })
 
 interface LayoutProps {
-	headerStyle?: Number
-	footerStyle?: Number
+	headerStyle?: number
+	footerStyle?: number
 	children?: React.ReactNode
 	breadcrumbTitle?: string
 }
@@ -71,12 +72,13 @@ export default function Layout({ headerStyle, footerStyle, breadcrumbTitle, chil
 			<AddClassBody />
 			<AnimatedText />
 			<BootstrapComponents />
-			{!headerStyle && <Header1 />}
-			{headerStyle == 1 ? <Header1 /> : null}
-			{headerStyle == 2 ? <Header2 /> : null}
-			{headerStyle == 3 ? <Header3 /> : null}
-			{headerStyle == 4 ? <Header4 /> : null}
-			{headerStyle == 5 ? <Header5 /> : null}
+		{headerStyle === 1 && <Header1 />}
+		{headerStyle === 2 && <Header2 />}
+		{headerStyle === 3 && <Header3 />}
+		{headerStyle === 4 && <Header4 />}
+		{headerStyle === 5 && <Header5 />}
+
+		{!headerStyle && <Header1 />}
 			<Search />
 			<MobileMenu isMobileMenu={isMobileMenu} handleMobileMenu={handleMobileMenu} />
 			{children}

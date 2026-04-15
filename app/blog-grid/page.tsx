@@ -128,7 +128,7 @@ const BlogPost = ({ image, date, author, title, link }: (typeof blogPosts)[0]) =
 
 export default function BlogGrid() {
     return (
-        <Layout headerStyle={1} footerStyle={1}>
+        <Layout headerStyle={3} footerStyle={3}>
             {/* Hero Section */}
             <div className="hero-inner-section-area-sidebar">
                 <img src="/assets/img/all-images/hero/hero-img1.png" alt="housebox" className="hero-img1" />

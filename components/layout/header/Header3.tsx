@@ -1,9 +1,16 @@
+'use client';
+import { useState } from "react";
 import Link from "next/link";
+import AuthModal from "@/components/elements/authModal";
+import { useUser } from "@/context/UserContext";
 export default function Header3({ scroll, isMobileMenu, handleMobileMenu }: any) {
+    const { user, logout } = useUser();
+    const [mobileOpen, setMobileOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     return (
         <>
             <header>
-                <div className="header-area homepage3 header header-sticky d-none d-lg-block " id="header">
+                <div className="header-area homepage1 header header-sticky d-none d-lg-block " id="header">
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-12">
@@ -16,10 +23,10 @@ export default function Header3({ scroll, isMobileMenu, handleMobileMenu }: any)
                                     <div className="main-menu">
                                         <ul>
                                             <li>
-                                                <Link href="#" className="plus">
-                                                    Home <i className="fa-solid fa-angle-down" />
+                                                <Link href="/" className="plus">
+                                                    Home
                                                 </Link>
-                                                <div className="tp-submenu">
+                                                {/* <div className="tp-submenu">
                                                     <div className="row">
                                                         <div className="col-lg-12">
                                                             <div className="all-images-menu">
@@ -127,7 +134,7 @@ export default function Header3({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> */}
                                             </li>
                                             <li>
                                                 <Link href="#" className="plus">
@@ -158,10 +165,10 @@ export default function Header3({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                 </ul>
                                             </li>
                                             <li>
-                                                <Link href="#" className="plus">
-                                                    Listing <i className="fa-solid fa-angle-down" />
+                                                <Link href="/sidebar-list" className="plus">
+                                                    Listing
                                                 </Link>
-                                                <ul className="dropdown-padding">
+                                                {/* <ul className="dropdown-padding">
                                                     <li>
                                                         <Link href="/property-halfmap-grid">Property Half Grid</Link>
                                                     </li>
@@ -180,13 +187,13 @@ export default function Header3({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                     <li>
                                                         <Link href="/sidebar-list">Find Sidebar List</Link>
                                                     </li>
-                                                </ul>
+                                                </ul> */}
                                             </li>
                                             <li>
-                                                <Link href="/contact" className="plus">
-                                                    Properties <i className="fa-solid fa-angle-down" />
+                                                <Link href="/property-details-v1" className="plus">
+                                                    Properties
                                                 </Link>
-                                                <ul className="dropdown-padding">
+                                                {/* <ul className="dropdown-padding">
                                                     <li>
                                                         <Link href="/property-details-v1">Property Details 01</Link>
                                                     </li>
@@ -199,7 +206,7 @@ export default function Header3({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                     <li>
                                                         <Link href="/property-details-v4">Property Details 04</Link>
                                                     </li>
-                                                </ul>
+                                                </ul> */}
                                             </li>
                                             <li>
                                                 <Link href="#" className="plus">
@@ -230,10 +237,10 @@ export default function Header3({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                 </ul>
                                             </li>
                                             <li>
-                                                <Link href="#" className="plus">
-                                                    Blogs <i className="fa-solid fa-angle-down" />
+                                                <Link href="/blog-grid" className="plus">
+                                                    Blogs
                                                 </Link>
-                                                <ul className="dropdown-padding">
+                                                {/* <ul className="dropdown-padding">
                                                     <li>
                                                         <Link href="/blog">Blog Default</Link>
                                                     </li>
@@ -243,7 +250,7 @@ export default function Header3({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                     <li>
                                                         <Link href="/blog-detail">Blog Post Details</Link>
                                                     </li>
-                                                </ul>
+                                                </ul> */}
                                             </li>
                                         </ul>
                                     </div>
@@ -255,7 +262,7 @@ export default function Header3({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                 </svg>
                                             </Link>
                                         </div>
-                                        <Link href="/sidebar-grid" className="theme-btn4">
+                                        <Link href="/sidebar-list" className="theme-btn4">
                                             View Listing{" "}
                                             <span className="arrow1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24} fill="currentColor">
@@ -268,6 +275,15 @@ export default function Header3({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                 </svg>
                                             </span>
                                         </Link>
+                                        {user ? (
+                                            <button onClick={()=> logout()} style={{color: 'red'}}>
+                                                Logout
+                                            </button>
+                                        ) : (
+                                            <button onClick={()=> setIsOpen(true)}>
+                                                Login
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -275,6 +291,9 @@ export default function Header3({ scroll, isMobileMenu, handleMobileMenu }: any)
                     </div>
                 </div>
             </header>
+            {isOpen && (
+                <AuthModal isOpen={isOpen} setIsOpen={setIsOpen} />
+            )}
         </>
     );
 }

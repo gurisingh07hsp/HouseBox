@@ -26,7 +26,7 @@ const swiperFade = {
 export default function SidebarList() {
     return (
         <>
-            <Layout headerStyle={1} footerStyle={1}>
+            <Layout headerStyle={3} footerStyle={3}>
                 <div>
                     <div className="hero-inner-section-area-sidebar">
                         <img src="/assets/img/all-images/hero/hero-img1.png" alt="housebox" className="hero-img1" />

@@ -617,7 +617,7 @@ Location:
 .heading1 h2 {
     color: var(--ztc-text-text-2);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s44);
+    font-size: var(--ztc-font-size-font-s30);
     font-style: normal;
     font-weight: var(--ztc-weight-semibold);
     line-height: 44px;
@@ -625,7 +625,7 @@ Location:
 
 @media (max-width: 767px) {
     .heading1 h2 {
-        font-size: var(--ztc-font-size-font-s32);
+        font-size: var(--ztc-font-size-font-s30);
         line-height: 40px;
     }
 }
@@ -643,7 +643,7 @@ Location:
     color: var(--ztc-text-text-7);
     text-align: center;
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s18);
+    font-size: var(--ztc-font-size-font-s14);
     font-style: normal;
     font-weight: var(--ztc-weight-medium);
     line-height: 18px;
@@ -657,7 +657,7 @@ Location:
 .heading2 h2 {
     color: var(--ztc-text-text-2);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s44);
+    font-size: var(--ztc-font-size-font-s26);
     font-style: normal;
     font-weight: var(--ztc-weight-semibold);
     line-height: 54px;
@@ -665,7 +665,7 @@ Location:
 
 @media (max-width: 767px) {
     .heading2 h2 {
-        font-size: var(--ztc-font-size-font-s32);
+        font-size: var(--ztc-font-size-font-s30);
         line-height: 40px;
     }
 }
@@ -697,7 +697,7 @@ Location:
 .heading3 h2 {
     color: var(--ztc-text-text-2);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s44);
+    font-size: var(--ztc-font-size-font-s30);
     font-style: normal;
     font-weight: var(--ztc-weight-semibold);
     line-height: 54px;
@@ -705,7 +705,7 @@ Location:
 
 @media (max-width: 767px) {
     .heading3 h2 {
-        font-size: var(--ztc-font-size-font-s32);
+        font-size: var(--ztc-font-size-font-s30);
         line-height: 40px;
     }
 }
@@ -723,7 +723,7 @@ Location:
     display: inline-block;
     padding: 14px 16.57px;
     color: var(--ztc-text-text-2);
-    font-size: var(--ztc-font-size-font-s14);
+    font-size: var(--ztc-font-size-font-s12);
     font-style: normal;
     font-weight: var(--ztc-weight-medium);
     line-height: 14px;
@@ -881,7 +881,7 @@ Location:
     display: inline-block;
     padding: 14px 16.57px;
     color: var(--ztc-text-text-2);
-    font-size: var(--ztc-font-size-font-s14);
+    font-size: var(--ztc-font-size-font-s12);
     font-style: normal;
     font-weight: var(--ztc-weight-medium);
     line-height: 14px;
@@ -960,7 +960,7 @@ Location:
     display: inline-block;
     padding: 14px 16.57px;
     color: var(--ztc-text-text-1);
-    font-size: var(--ztc-font-size-font-s14);
+    font-size: var(--ztc-font-size-font-s12);
     font-style: normal;
     font-weight: var(--ztc-weight-medium);
     line-height: 14px;
@@ -1039,7 +1039,7 @@ Location:
     display: inline-block;
     padding: 14px 16.57px;
     color: var(--ztc-text-text-1);
-    font-size: var(--ztc-font-size-font-s14);
+    font-size: var(--ztc-font-size-font-s12);
     font-style: normal;
     font-weight: var(--ztc-weight-medium);
     line-height: 14px;
@@ -1169,7 +1169,7 @@ Location:
     color: var(--ztc-text-text-2);
     text-align: center;
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s20);
+    font-size: var(--ztc-font-size-font-s15);
     font-style: normal;
     font-weight: var(--ztc-weight-medium);
     line-height: 20px;
@@ -1234,7 +1234,7 @@ Location:
 .link-big {
     color: var(--ztc-text-text-4);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s16);
+    font-size: var(--ztc-font-size-font-s14);
     font-style: normal;
     font-weight: var(--ztc-weight-semibold);
     line-height: 20px;
@@ -1254,7 +1254,7 @@ Location:
 
 .swiper-button-next::after,
 .swiper-button-prev::after {
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .swiper-pagination-bullet.swiper-pagination-bullet-active {
@@ -1625,7 +1625,7 @@ Location:
     color: var(--ztc-text-text-2);
     text-align: center;
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s24);
+    font-size: var(--ztc-font-size-font-s20);
     font-style: normal;
     font-weight: var(--ztc-weight-medium);
     line-height: 24px;
@@ -1668,7 +1668,7 @@ Location:
 .about2-section-area .about-heading .accordion .accordion-item button {
     color: var(--ztc-text-text-2);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s20);
+    font-size: var(--ztc-font-size-font-s15);
     font-style: normal;
     font-weight: var(--ztc-weight-semibold);
     line-height: 28px;
@@ -1715,7 +1715,7 @@ Location:
 .about3-section-area .about-list-box {
     color: var(--ztc-text-text-2);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s20);
+    font-size: var(--ztc-font-size-font-s15);
     font-style: normal;
     font-weight: var(--ztc-weight-medium);
     line-height: 20px;
@@ -1730,14 +1730,14 @@ Location:
 @media (max-width: 767px) {
     .about3-section-area .about-list-box {
         left: 0;
-        font-size: var(--ztc-font-size-font-s16);
+        font-size: var(--ztc-font-size-font-s12);
     }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .about3-section-area .about-list-box {
         left: 0;
-        font-size: var(--ztc-font-size-font-s16);
+        font-size: var(--ztc-font-size-font-s12);
     }
 }
 
@@ -1814,7 +1814,7 @@ Location:
 .about3-section-area .about-list-box2 {
     color: var(--ztc-text-text-2);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s20);
+    font-size: var(--ztc-font-size-font-s15);
     font-style: normal;
     font-weight: var(--ztc-weight-medium);
     line-height: 20px;
@@ -2107,7 +2107,7 @@ Location:
     color: var(--ztc-text-text-1);
     text-align: center;
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s22);
+    font-size: var(--ztc-font-size-font-s20);
     font-style: normal;
     font-weight: var(--ztc-weight-medium);
     line-height: 22px;
@@ -2131,7 +2131,7 @@ Location:
     color: var(--ztc-text-text-1);
     text-align: center;
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s70);
+    font-size: var(--ztc-font-size-font-s50);
     font-style: normal;
     font-weight: var(--ztc-weight-semibold);
     line-height: 70px;
@@ -2214,7 +2214,7 @@ Location:
     color: var(--ztc-text-text-1);
     border: none;
     outline: none;
-    font-size: var(--ztc-font-size-font-s30);
+    font-size: var(--ztc-font-size-font-s20);
     position: absolute;
     z-index: 2;
     top: 50%;
@@ -2474,7 +2474,7 @@ Location:
     color: var(--ztc-text-text-1);
     text-align: center;
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s18);
+    font-size: var(--ztc-font-size-font-s12);
     font-style: normal;
     font-weight: var(--ztc-weight-medium);
     line-height: 18px;
@@ -2490,7 +2490,7 @@ Location:
 
 @media (max-width: 767px) {
     .hero3-section-area .hero3-header h5 {
-        font-size: var(--ztc-font-size-font-s16);
+        font-size: var(--ztc-font-size-font-s14);
         line-height: 16px;
     }
 }
@@ -2498,7 +2498,7 @@ Location:
 .hero3-section-area .hero3-header h1 {
     color: var(--ztc-text-text-1);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s56);
+    font-size: var(--ztc-font-size-font-s46);
     font-style: normal;
     font-weight: var(--ztc-weight-semibold);
     line-height: 64px;
@@ -2657,7 +2657,7 @@ Location:
 .hero3-section-area .villa-listing .villa-images .text a {
     color: var(--ztc-text-text-2);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s16);
+    font-size: var(--ztc-font-size-font-s12);
     font-style: normal;
     font-weight: var(--ztc-weight-medium);
     line-height: 15.441px;
@@ -2764,7 +2764,7 @@ Location:
 .hero3-section-area .villa-listing2 .villa-images .text a {
     color: var(--ztc-text-text-2);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s16);
+    font-size: var(--ztc-font-size-font-s12);
     font-style: normal;
     font-weight: var(--ztc-weight-medium);
     line-height: 15.441px;
@@ -3395,7 +3395,7 @@ Location:
 .hero-inner-section-area .hero-header-area a {
     color: var(--ztc-text-text-1);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s16);
+    font-size: var(--ztc-font-size-font-s14);
     font-style: normal;
     font-weight: var(--ztc-weight-semibold);
     line-height: 16px;
@@ -3413,7 +3413,7 @@ Location:
     color: var(--ztc-text-text-1);
     text-align: center;
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s70);
+    font-size: var(--ztc-font-size-font-s50);
     font-style: normal;
     font-weight: var(--ztc-weight-semibold);
     line-height: 70px;
@@ -3421,7 +3421,7 @@ Location:
 
 @media (max-width: 767px) {
     .hero-inner-section-area .hero-header-area h1 {
-        font-size: var(--ztc-font-size-font-s40);
+        font-size: var(--ztc-font-size-font-s30);
         line-height: 50px;
     }
 }
@@ -3564,7 +3564,7 @@ Location:
     color: var(--ztc-text-text-2);
     text-align: center;
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s16);
+    font-size: var(--ztc-font-size-font-s14);
     font-style: normal;
     font-weight: var(--ztc-weight-medium);
     line-height: 16px;
@@ -3589,7 +3589,7 @@ Location:
 .hero-inner-section-area .map-others-area .map-box-area .property-boxarea .content-area a {
     color: var(--ztc-text-text-2);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s20);
+    font-size: var(--ztc-font-size-font-s14);
     font-style: normal;
     font-weight: var(--ztc-weight-semibold);
     line-height: 20px;
@@ -3605,7 +3605,7 @@ Location:
 .hero-inner-section-area .map-others-area .map-box-area .property-boxarea .content-area p {
     color: var(--ztc-text-text-3);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s16);
+    font-size: var(--ztc-font-size-font-s14);
     font-style: normal;
     font-weight: var(--medium);
     line-height: 16px;
@@ -3869,7 +3869,7 @@ Location:
     color: var(--ztc-text-text-2);
     text-align: center;
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s16);
+    font-size: var(--ztc-font-size-font-s14);
     font-style: normal;
     font-weight: var(--ztc-weight-medium);
     line-height: 16px;
@@ -4174,7 +4174,7 @@ Location:
     color: var(--ztc-text-text-2);
     text-align: center;
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s16);
+    font-size: var(--ztc-font-size-font-s14);
     font-style: normal;
     font-weight: var(--ztc-weight-medium);
     line-height: 16px;
@@ -4199,7 +4199,7 @@ Location:
 .hero-inner-section-area .map-others-area .map-box-area3 .property-boxarea .content-area a {
     color: var(--ztc-text-text-2);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s20);
+    font-size: var(--ztc-font-size-font-s15);
     font-style: normal;
     font-weight: var(--ztc-weight-semibold);
     line-height: 20px;
@@ -4215,7 +4215,7 @@ Location:
 .hero-inner-section-area .map-others-area .map-box-area3 .property-boxarea .content-area p {
     color: var(--ztc-text-text-3);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s16);
+    font-size: var(--ztc-font-size-font-s14);
     font-style: normal;
     font-weight: var(--medium);
     line-height: 16px;
@@ -4256,7 +4256,7 @@ Location:
 .hero-inner-section-area .map-others-area .map-box-area3 .property-boxarea .content-area ul li a {
     color: var(--ztc-text-text-3);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s16);
+    font-size: var(--ztc-font-size-font-s14);
     font-style: normal;
     font-weight: var(--medium);
     line-height: 16px;
@@ -4300,7 +4300,7 @@ Location:
 .hero-inner-section-area .map-others-area .map-box-area3 .property-boxarea .content-area .btn-area .name-area .text a {
     color: var(--ztc-text-text-2);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s16);
+    font-size: var(--ztc-font-size-font-s14);
     font-style: normal;
     font-weight: var(--ztc-weight-regular);
     line-height: 16px;
@@ -8190,6 +8190,11 @@ Location:
 }
 
 .homepage1-body .header-area.homepage1 {
+    /* position: absolute;
+    width: 100%;
+    z-index: 9;
+    transition: all 0.4s;
+    background: var(--ztc-bg-bg-1); */
     position: absolute;
     width: 100%;
     z-index: 9;
@@ -8205,7 +8210,7 @@ Location:
     left: 0;
     top: 0;
     transition: all 0.4s;
-    background: var(--ztc-bg-bg-4);
+    background: var(--ztc-bg-bg-1);
     z-index: -1;
 }
 
@@ -8215,7 +8220,7 @@ Location:
 }
 
 .homepage1-body .header-area.homepage1 nav#navbar-example2 ul li a.nav-link.active {
-    color: var(--ztc-text-text-4);
+    color: var(--ztc-text-text-7);
 }
 
 .homepage1-body .header-area.homepage1 .header-top-area {
@@ -8230,7 +8235,6 @@ Location:
 }
 
 .homepage1-body .header-area.homepage1 .header-top-area .header-content li span {
-    color: #224f4e;
     display: inline-block;
     margin: 0 8px;
 }
@@ -9989,7 +9993,7 @@ Location:
     color: var(--ztc-text-text-5);
     text-align: center;
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s18);
+    font-size: var(--ztc-font-size-font-s14);
     font-style: normal;
     font-weight: var(--ztc-weight-medium);
     line-height: 18px;
@@ -10071,7 +10075,7 @@ Location:
     color: var(--ztc-text-text-2);
     text-align: center;
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s16);
+    font-size: var(--ztc-font-size-font-s14);
     font-style: normal;
     font-weight: var(--ztc-weight-medium);
     line-height: 16px;
@@ -10096,7 +10100,7 @@ Location:
 .properties-section-area .property-feature-slider .property-boxarea .content-area a {
     color: var(--ztc-text-text-2);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s24);
+    font-size: var(--ztc-font-size-font-s20);
     font-style: normal;
     font-weight: var(--ztc-weight-semibold);
     line-height: 24px;
@@ -10112,7 +10116,7 @@ Location:
 .properties-section-area .property-feature-slider .property-boxarea .content-area p {
     color: var(--ztc-text-text-3);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s16);
+    font-size: var(--ztc-font-size-font-s14);
     font-style: normal;
     font-weight: var(--medium);
     line-height: 16px;
@@ -10147,7 +10151,7 @@ Location:
 .properties-section-area .property-feature-slider .property-boxarea .content-area ul li a {
     color: var(--ztc-text-text-3);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s16);
+    font-size: var(--ztc-font-size-font-s14);
     font-style: normal;
     font-weight: var(--medium);
     line-height: 16px;
@@ -10187,7 +10191,7 @@ Location:
     transition: all 0.4s;
     color: var(--ztc-text-text-2);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s16);
+    font-size: var(--ztc-font-size-font-s14);
     font-style: normal;
     font-weight: var(--ztc-weight-medium);
     line-height: 16px;
@@ -10318,7 +10322,7 @@ Location:
     color: var(--ztc-text-text-5);
     text-align: center;
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s18);
+    font-size: var(--ztc-font-size-font-s14);
     font-style: normal;
     font-weight: var(--ztc-weight-medium);
     line-height: 18px;
@@ -10400,7 +10404,7 @@ Location:
     color: var(--ztc-text-text-2);
     text-align: center;
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s16);
+    font-size: var(--ztc-font-size-font-s14);
     font-style: normal;
     font-weight: var(--ztc-weight-medium);
     line-height: 16px;
@@ -11315,7 +11319,7 @@ Location:
 .property-inner-section .heading1 h3 {
     color: var(--ztc-text-text-2);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s32);
+    font-size: var(--ztc-font-size-font-s30);
     font-style: normal;
     font-weight: var(--ztc-weight-semibold);
     line-height: 32px;
@@ -18427,7 +18431,7 @@ Location:
 .others-section-area .property-tab-section label {
     color: var(--ztc-text-text-2);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s16);
+    font-size: var(--ztc-font-size-font-s14);
     font-style: normal;
     font-weight: var(--ztc-weight-medium);
     line-height: 16px;

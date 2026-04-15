@@ -112,7 +112,7 @@ const BlogPost = ({ image, author, date, title, description, link, style }: (typ
 
 export default function Blog() {
     return (
-        <Layout headerStyle={1} footerStyle={1}>
+        <Layout headerStyle={3} footerStyle={3}>
             {/* Hero Section */}
             <div className="hero-inner-section-area-sidebar">
                 <img src="/assets/img/all-images/hero/hero-img1.png" alt="housebox" className="hero-img1" />

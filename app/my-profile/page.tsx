@@ -6,7 +6,7 @@ export default function MyProfile() {
 	return (
 		<>
 
-			<Layout headerStyle={1} footerStyle={1}>
+			<Layout headerStyle={3} footerStyle={3}>
 
 				<div>
 					<div className="hero-inner-section-area-sidebar">
