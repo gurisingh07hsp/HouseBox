@@ -9,6 +9,7 @@ import "@/styles/plugins/sidebar.css"
 import "@/styles/plugins/slick-slider.css"
 import "@/styles/plugins/swiper-slider.css"
 import "@/styles/main.css"
+import './globals.css'
 
 import StoreProvider from '@/features/StoreProvider'
 import type { Metadata } from "next"

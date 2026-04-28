@@ -240,18 +240,15 @@ export default function Header3({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                 <Link href="/blog-grid" className="plus">
                                                     Blogs
                                                 </Link>
-                                                {/* <ul className="dropdown-padding">
-                                                    <li>
-                                                        <Link href="/blog">Blog Default</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/blog-grid">Blog Grid</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/blog-detail">Blog Post Details</Link>
-                                                    </li>
-                                                </ul> */}
+                    
                                             </li>
+                                            {user && user.role === 'admin' && (
+                                            <li>
+                                                <Link href="/admin" className="plus">
+                                                    Admin
+                                                </Link>
+                                            </li>
+                                            )}
                                         </ul>
                                     </div>
                                     <div className="btn-area">
