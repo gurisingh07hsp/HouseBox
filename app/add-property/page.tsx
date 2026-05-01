@@ -1,6 +1,73 @@
+'use client'
 import Layout from "@/components/layout/Layout";
+import axios from "axios";
+// import { addProperty } from "@/features/property/propertySlice";
 import Link from "next/link";
+import { useState } from "react";
 export default function AddProperty() {
+    const [propertyForm, setPropertyForm] = useState({
+        name: '',
+        images: [],
+        video: '',
+        description: '',
+        address: '',
+        zipCode: '',
+        country: '',
+        state: '',
+        sold: false,
+        seller: '',
+        propertyPrices: {
+            propertyPrice: 0,
+            unitPrice: 0,
+            beforePriceLabel: 0,
+            afterPriceLabel: 0,
+        },
+        additionalInformation: {
+            propertySize: '',
+            landArea: '',
+            rooms: 0,
+            bedrooms: 0,
+            bathrooms: 0,
+            garages: 0,
+            garageSize: '',
+            yearBuilt: ''
+        },
+        amenities: {
+            airCondition: false,
+            windowType: false,
+            petFriendly: false,
+            floor: false,
+            furnishing: false,
+            sellingHeight: false,
+            elevator: false,
+            parking: false,
+            renovation: false,
+            garden: false,
+            heating: false,
+            firePlace: false,
+            disabledAccess: false,
+            cableTV: false,
+            wifi: false,
+        },
+        floors: [{
+            floorNumber: 0,
+            floorImage: '',
+            floorPrice: 0,
+            floorSize: 0,
+            bedrooms: 0,
+            bathrooms: 0,
+        }],
+    })
+
+
+    const postData = async()=> {
+        const response = await axios.post('/api/properties', propertyForm, {withCredentials: true});
+        if(response.status == 200){
+            alert('Property Added!')
+            console.log(response.data);
+        }
+    }
+
     return (
         <>
             <Layout headerStyle={3} footerStyle={3}>
@@ -37,7 +104,7 @@ export default function AddProperty() {
                                     </div>
                                 </div>
                                 <div className="col-lg-12">
-                                    <div className="property-main-boxarea">
+                                    {/* <div className="property-main-boxarea">
                                         <h3>Upload Media</h3>
                                         <div className="space38" />
                                         <div className="box-uploadfile text-center">
@@ -90,7 +157,7 @@ export default function AddProperty() {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div className="space60" />
                                     <div className="upload-main-boxarea">
                                         <h3>Property Details</h3>
@@ -98,13 +165,13 @@ export default function AddProperty() {
                                         <div className="input-area">
                                             <h5>Full Name*</h5>
                                             <div className="space16" />
-                                            <input type="text" placeholder="Property Name" />
+                                            <input type="text" value={propertyForm.name} onChange={(e)=> setPropertyForm({...propertyForm, name: e.target.value})} placeholder="Property Name" />
                                         </div>
                                         <div className="space28" />
                                         <div className="input-area">
                                             <h5>Description</h5>
                                             <div className="space16" />
-                                            <textarea placeholder="Property Description" />
+                                            <textarea value={propertyForm.description} onChange={(e)=> setPropertyForm({...propertyForm, description: e.target.value})} placeholder="Property Description" />
                                         </div>
                                         <div className="row">
                                             <div className="col-lg-4 col-md-6">
@@ -112,7 +179,7 @@ export default function AddProperty() {
                                                 <div className="input-area">
                                                     <h5>Full Address*</h5>
                                                     <div className="space16" />
-                                                    <input type="text" placeholder="Property Full Address*" />
+                                                    <input value={propertyForm.address} onChange={(e)=> setPropertyForm({...propertyForm, address: e.target.value})} type="text" placeholder="Property Full Address*" />
                                                 </div>
                                             </div>
                                             <div className="col-lg-4 col-md-6">
@@ -120,7 +187,7 @@ export default function AddProperty() {
                                                 <div className="input-area">
                                                     <h5>Zip Code*</h5>
                                                     <div className="space16" />
-                                                    <input type="text" placeholder="Property Zip Code" />
+                                                    <input value={propertyForm.zipCode} onChange={(e)=> setPropertyForm({...propertyForm, zipCode: e.target.value})} type="text" placeholder="Property Zip Code" />
                                                 </div>
                                             </div>
                                             <div className="col-lg-4 col-md-6">
@@ -128,31 +195,8 @@ export default function AddProperty() {
                                                 <div className="input-area">
                                                     <h5>Country*</h5>
                                                     <div className="space16" />
-                                                    <div className="nice-select" tabIndex={0}>
-                                                        <span className="current">Select</span>
-                                                        <ul className="list">
-                                                            <li data-value={1} className="option">
-                                                                USA
-                                                            </li>
-                                                            <li data-value={2} className="option selected">
-                                                                Australia
-                                                            </li>
-                                                            <li data-value={1} className="option">
-                                                                England
-                                                            </li>
-                                                            <li data-value={1} className="option">
-                                                                Portugal
-                                                            </li>
-                                                            <li data-value={1} className="option">
-                                                                California
-                                                            </li>
-                                                            <li data-value={1} className="option">
-                                                                Inter Milan
-                                                            </li>
-                                                            <li data-value={1} className="option">
-                                                                Liverpool
-                                                            </li>
-                                                        </ul>
+                                                    <div className="input-area" tabIndex={0}>
+                                                        <input value={propertyForm.country} onChange={(e)=> setPropertyForm({...propertyForm, country: e.target.value})} type="text" placeholder="Country" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -161,35 +205,27 @@ export default function AddProperty() {
                                                 <div className="input-area">
                                                     <h5>Province/State*</h5>
                                                     <div className="space16" />
-                                                    <div className="nice-select" tabIndex={0}>
-                                                        <span className="current">None</span>
-                                                        <ul className="list">
-                                                            <li data-value={1} className="option">
-                                                                Texas
-                                                            </li>
-                                                            <li data-value={2} className="option selected">
-                                                                New York
-                                                            </li>
-                                                        </ul>
+                                                    <div className="input-area" tabIndex={0}>
+                                                        <input value={propertyForm.state} onChange={(e)=> setPropertyForm({...propertyForm, state: e.target.value})} type="text" placeholder="State" />
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="col-lg-4 col-md-6">
+                                            {/* <div className="col-lg-4 col-md-6">
                                                 <div className="space28" />
                                                 <div className="input-area">
                                                     <h5>Neighborhood:</h5>
                                                     <div className="space16" />
                                                     <input type="text" placeholder="None" />
                                                 </div>
-                                            </div>
-                                            <div className="col-lg-4 col-md-6">
+                                            </div> */}
+                                            {/* <div className="col-lg-4 col-md-6">
                                                 <div className="space28" />
                                                 <div className="input-area">
                                                     <h5>Location*</h5>
                                                     <div className="space16" />
                                                     <input type="text" placeholder="Property Zip Code" />
                                                 </div>
-                                            </div>
+                                            </div> */}
                                             <div className="col-lg-12">
                                                 <div className="space48" />
                                                 <div className="mapouter">
@@ -210,7 +246,7 @@ export default function AddProperty() {
                                                 <div className="input-area">
                                                     <h5>Property Price*</h5>
                                                     <div className="space16" />
-                                                    <input type="text" placeholder="Price" />
+                                                    <input value={propertyForm.propertyPrices.propertyPrice} onChange={(e)=> setPropertyForm({...propertyForm, propertyPrices: {...propertyForm.propertyPrices, propertyPrice: Number(e.target.value)}})} type="number" placeholder="Price" />
                                                 </div>
                                             </div>
                                             <div className="col-lg-6 col-md-6">
@@ -218,7 +254,7 @@ export default function AddProperty() {
                                                 <div className="input-area">
                                                     <h5>Unit Price*</h5>
                                                     <div className="space16" />
-                                                    <input type="text" placeholder="Price" />
+                                                    <input value={propertyForm.propertyPrices.unitPrice} onChange={(e)=> setPropertyForm({...propertyForm, propertyPrices: {...propertyForm.propertyPrices, unitPrice: Number(e.target.value)}})} type="number" placeholder="Price" />
                                                 </div>
                                             </div>
                                             <div className="col-lg-6 col-md-6">
@@ -226,7 +262,7 @@ export default function AddProperty() {
                                                 <div className="input-area">
                                                     <h5>Before Price Label*</h5>
                                                     <div className="space16" />
-                                                    <input type="text" placeholder="Price" />
+                                                    <input value={propertyForm.propertyPrices.beforePriceLabel} onChange={(e)=> setPropertyForm({...propertyForm, propertyPrices: {...propertyForm.propertyPrices, beforePriceLabel: Number(e.target.value)}})} type="number" placeholder="Price" />
                                                 </div>
                                             </div>
                                             <div className="col-lg-6 col-md-6">
@@ -234,7 +270,7 @@ export default function AddProperty() {
                                                 <div className="input-area">
                                                     <h5>After Price Label*</h5>
                                                     <div className="space16" />
-                                                    <input type="text" placeholder="Price" />
+                                                    <input value={propertyForm.propertyPrices.afterPriceLabel} onChange={(e)=> setPropertyForm({...propertyForm, propertyPrices: {...propertyForm.propertyPrices, afterPriceLabel: Number(e.target.value)}})} type="number" placeholder="Price" />
                                                 </div>
                                             </div>
                                         </div>
@@ -244,7 +280,7 @@ export default function AddProperty() {
                                         <h3>Additional Information</h3>
                                         <div className="space4" />
                                         <div className="row">
-                                            <div className="col-lg-4 col-md-6">
+                                            {/* <div className="col-lg-4 col-md-6">
                                                 <div className="space28" />
                                                 <div className="input-area">
                                                     <h5>Property Type*</h5>
@@ -264,8 +300,8 @@ export default function AddProperty() {
                                                         </ul>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div className="col-lg-4 col-md-6">
+                                            </div> */}
+                                            {/* <div className="col-lg-4 col-md-6">
                                                 <div className="space28" />
                                                 <div className="input-area">
                                                     <h5>Property Status*</h5>
@@ -282,8 +318,8 @@ export default function AddProperty() {
                                                         </ul>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div className="col-lg-4 col-md-6">
+                                            </div> */}
+                                            {/* <div className="col-lg-4 col-md-6">
                                                 <div className="space28" />
                                                 <div className="input-area">
                                                     <h5>Property Label*</h5>
@@ -300,7 +336,7 @@ export default function AddProperty() {
                                                         </ul>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                         </div>
                                         <div className="row">
                                             <div className="col-lg-4 col-md-6">
@@ -308,7 +344,7 @@ export default function AddProperty() {
                                                 <div className="input-area">
                                                     <h5>Size (SQFT)*</h5>
                                                     <div className="space16" />
-                                                    <input type="text" placeholder="Size" />
+                                                    <input value={propertyForm.additionalInformation.propertySize} onChange={(e)=> setPropertyForm({...propertyForm, additionalInformation: {...propertyForm.additionalInformation, propertySize: e.target.value}})} type="text" placeholder="Size" />
                                                 </div>
                                             </div>
                                             <div className="col-lg-4 col-md-6">
@@ -316,23 +352,23 @@ export default function AddProperty() {
                                                 <div className="input-area">
                                                     <h5>Land Area (SQFT)*</h5>
                                                     <div className="space16" />
-                                                    <input type="text" placeholder="Land Area (SQFT)*" />
+                                                    <input value={propertyForm.additionalInformation.landArea} onChange={(e)=> setPropertyForm({...propertyForm, additionalInformation: {...propertyForm.additionalInformation, landArea: e.target.value}})} type="text" placeholder="Land Area (SQFT)*" />
                                                 </div>
                                             </div>
-                                            <div className="col-lg-4 col-md-6">
+                                            {/* <div className="col-lg-4 col-md-6">
                                                 <div className="space28" />
                                                 <div className="input-area">
                                                     <h5>Property ID*</h5>
                                                     <div className="space16" />
                                                     <input type="text" placeholder="Property ID*" />
                                                 </div>
-                                            </div>
+                                            </div> */}
                                             <div className="col-lg-4 col-md-6">
                                                 <div className="space28" />
                                                 <div className="input-area">
                                                     <h5>Rooms*</h5>
                                                     <div className="space16" />
-                                                    <input type="text" placeholder="#" />
+                                                    <input value={propertyForm.additionalInformation.rooms} onChange={(e)=> setPropertyForm({...propertyForm, additionalInformation: {...propertyForm.additionalInformation, rooms: Number(e.target.value)}})} type="number" placeholder="#" />
                                                 </div>
                                             </div>
                                             <div className="col-lg-4 col-md-6">
@@ -340,7 +376,7 @@ export default function AddProperty() {
                                                 <div className="input-area">
                                                     <h5>Bedrooms*</h5>
                                                     <div className="space16" />
-                                                    <input type="text" placeholder="#" />
+                                                    <input value={propertyForm.additionalInformation.bedrooms} onChange={(e)=> setPropertyForm({...propertyForm, additionalInformation: {...propertyForm.additionalInformation, bedrooms: Number(e.target.value)}})} type="number" placeholder="#" />
                                                 </div>
                                             </div>
                                             <div className="col-lg-4 col-md-6">
@@ -348,7 +384,7 @@ export default function AddProperty() {
                                                 <div className="input-area">
                                                     <h5>Bathrooms*</h5>
                                                     <div className="space16" />
-                                                    <input type="text" placeholder="#" />
+                                                    <input value={propertyForm.additionalInformation.bathrooms} onChange={(e)=> setPropertyForm({...propertyForm, additionalInformation: {...propertyForm.additionalInformation, bathrooms: Number(e.target.value)}})} type="number" placeholder="#" />
                                                 </div>
                                             </div>
                                             <div className="col-lg-4 col-md-6">
@@ -356,7 +392,7 @@ export default function AddProperty() {
                                                 <div className="input-area">
                                                     <h5>Garages*</h5>
                                                     <div className="space16" />
-                                                    <input type="text" placeholder="#" />
+                                                    <input value={propertyForm.additionalInformation.garages} onChange={(e)=> setPropertyForm({...propertyForm, additionalInformation: {...propertyForm.additionalInformation, garages: Number(e.target.value)}})} type="number" placeholder="#" />
                                                 </div>
                                             </div>
                                             <div className="col-lg-4 col-md-6">
@@ -364,7 +400,7 @@ export default function AddProperty() {
                                                 <div className="input-area">
                                                     <h5>Garages Size (SQFT)*</h5>
                                                     <div className="space16" />
-                                                    <input type="text" placeholder="#" />
+                                                    <input value={propertyForm.additionalInformation.garageSize} onChange={(e)=> setPropertyForm({...propertyForm, additionalInformation: {...propertyForm.additionalInformation, garageSize: e.target.value}})} type="text" placeholder="#" />
                                                 </div>
                                             </div>
                                             <div className="col-lg-4 col-md-6">
@@ -372,7 +408,7 @@ export default function AddProperty() {
                                                 <div className="input-area">
                                                     <h5>Year Built*</h5>
                                                     <div className="space16" />
-                                                    <input type="text" placeholder="#" />
+                                                    <input value={propertyForm.additionalInformation.yearBuilt} onChange={(e)=> setPropertyForm({...propertyForm, additionalInformation: {...propertyForm.additionalInformation, yearBuilt: e.target.value}})} type="text" placeholder="#" />
                                                 </div>
                                             </div>
                                         </div>
@@ -385,21 +421,21 @@ export default function AddProperty() {
                                             <div className="col-lg-2 col-md-6">
                                                 <fieldset className="checkbox-item style-1">
                                                     <label>
-                                                        <input type="checkbox" />
+                                                        <input checked={propertyForm.amenities.airCondition} onChange={(e)=> setPropertyForm({...propertyForm, amenities: {...propertyForm.amenities, airCondition: e.target.checked}})} type="checkbox" />
                                                         <span className="btn-checkbox" />
-                                                        <span className="text-4">Air Condition </span>
+                                                        <span  className="text-4">Air Condition </span>
                                                     </label>
                                                 </fieldset>
                                                 <fieldset className="checkbox-item style-1">
                                                     <label>
-                                                        <input type="checkbox" />
+                                                        <input checked={propertyForm.amenities.sellingHeight} onChange={(e)=> setPropertyForm({...propertyForm, amenities: {...propertyForm.amenities, sellingHeight: e.target.checked}})} type="checkbox" />
                                                         <span className="btn-checkbox" />
                                                         <span className="text-4">Selling Height </span>
                                                     </label>
                                                 </fieldset>
                                                 <fieldset className="checkbox-item style-1">
                                                     <label>
-                                                        <input type="checkbox" />
+                                                        <input checked={propertyForm.amenities.heating} onChange={(e)=> setPropertyForm({...propertyForm, amenities: {...propertyForm.amenities, heating: e.target.checked}})} type="checkbox" />
                                                         <span className="btn-checkbox" />
                                                         <span className="text-4">Heating</span>
                                                     </label>
@@ -408,21 +444,21 @@ export default function AddProperty() {
                                             <div className="col-lg-2 col-md-6">
                                                 <fieldset className="checkbox-item style-1">
                                                     <label>
-                                                        <input type="checkbox" />
+                                                        <input checked={propertyForm.amenities.windowType} onChange={(e)=> setPropertyForm({...propertyForm, amenities: {...propertyForm.amenities, windowType: e.target.checked}})} type="checkbox" />
                                                         <span className="btn-checkbox" />
                                                         <span className="text-4">Window Type</span>
                                                     </label>
                                                 </fieldset>
                                                 <fieldset className="checkbox-item style-1">
                                                     <label>
-                                                        <input type="checkbox" />
+                                                        <input checked={propertyForm.amenities.elevator} onChange={(e)=> setPropertyForm({...propertyForm, amenities: {...propertyForm.amenities, elevator: e.target.checked}})} type="checkbox" />
                                                         <span className="btn-checkbox" />
                                                         <span className="text-4">Elevator</span>
                                                     </label>
                                                 </fieldset>
                                                 <fieldset className="checkbox-item style-1">
                                                     <label>
-                                                        <input type="checkbox" />
+                                                        <input checked={propertyForm.amenities.firePlace} onChange={(e)=> setPropertyForm({...propertyForm, amenities: {...propertyForm.amenities, firePlace: e.target.checked}})} type="checkbox" />
                                                         <span className="btn-checkbox" />
                                                         <span className="text-4">Fire Place</span>
                                                     </label>
@@ -431,21 +467,21 @@ export default function AddProperty() {
                                             <div className="col-lg-2 col-md-6">
                                                 <fieldset className="checkbox-item style-1">
                                                     <label>
-                                                        <input type="checkbox" />
+                                                        <input checked={propertyForm.amenities.petFriendly} onChange={(e)=> setPropertyForm({...propertyForm, amenities: {...propertyForm.amenities, petFriendly: e.target.checked}})} type="checkbox" />
                                                         <span className="btn-checkbox" />
                                                         <span className="text-4">Pet Friendly</span>
                                                     </label>
                                                 </fieldset>
                                                 <fieldset className="checkbox-item style-1">
                                                     <label>
-                                                        <input type="checkbox" />
+                                                        <input checked={propertyForm.amenities.parking} onChange={(e)=> setPropertyForm({...propertyForm, amenities: {...propertyForm.amenities, parking: e.target.checked}})} type="checkbox" />
                                                         <span className="btn-checkbox" />
                                                         <span className="text-4">Parking</span>
                                                     </label>
                                                 </fieldset>
                                                 <fieldset className="checkbox-item style-1">
                                                     <label>
-                                                        <input type="checkbox" />
+                                                        <input checked={propertyForm.amenities.disabledAccess} onChange={(e)=> setPropertyForm({...propertyForm, amenities: {...propertyForm.amenities, disabledAccess: e.target.checked}})} type="checkbox" />
                                                         <span className="btn-checkbox" />
                                                         <span className="text-4">Disabled Access</span>
                                                     </label>
@@ -454,21 +490,21 @@ export default function AddProperty() {
                                             <div className="col-lg-2 col-md-6">
                                                 <fieldset className="checkbox-item style-1">
                                                     <label>
-                                                        <input type="checkbox" />
+                                                        <input checked={propertyForm.amenities.floor} onChange={(e)=> setPropertyForm({...propertyForm, amenities: {...propertyForm.amenities, floor: e.target.checked}})} type="checkbox" />
                                                         <span className="btn-checkbox" />
                                                         <span className="text-4">Floor</span>
                                                     </label>
                                                 </fieldset>
                                                 <fieldset className="checkbox-item style-1">
                                                     <label>
-                                                        <input type="checkbox" />
+                                                        <input checked={propertyForm.amenities.renovation} onChange={(e)=> setPropertyForm({...propertyForm, amenities: {...propertyForm.amenities, renovation: e.target.checked}})} type="checkbox" />
                                                         <span className="btn-checkbox" />
                                                         <span className="text-4">Renovation</span>
                                                     </label>
                                                 </fieldset>
                                                 <fieldset className="checkbox-item style-1">
                                                     <label>
-                                                        <input type="checkbox" />
+                                                        <input checked={propertyForm.amenities.cableTV} onChange={(e)=> setPropertyForm({...propertyForm, amenities: {...propertyForm.amenities, cableTV: e.target.checked}})} type="checkbox" />
                                                         <span className="btn-checkbox" />
                                                         <span className="text-4">Cable TV</span>
                                                     </label>
@@ -477,21 +513,21 @@ export default function AddProperty() {
                                             <div className="col-lg-2 col-md-6">
                                                 <fieldset className="checkbox-item style-1">
                                                     <label>
-                                                        <input type="checkbox" />
+                                                        <input checked={propertyForm.amenities.furnishing} onChange={(e)=> setPropertyForm({...propertyForm, amenities: {...propertyForm.amenities, furnishing: e.target.checked}})}type="checkbox" />
                                                         <span className="btn-checkbox" />
                                                         <span className="text-4">Furnishing</span>
                                                     </label>
                                                 </fieldset>
                                                 <fieldset className="checkbox-item style-1">
                                                     <label>
-                                                        <input type="checkbox" />
+                                                        <input checked={propertyForm.amenities.garden} onChange={(e)=> setPropertyForm({...propertyForm, amenities: {...propertyForm.amenities, garden: e.target.checked}})} type="checkbox" />
                                                         <span className="btn-checkbox" />
                                                         <span className="text-4">Garden</span>
                                                     </label>
                                                 </fieldset>
                                                 <fieldset className="checkbox-item style-1">
                                                     <label>
-                                                        <input type="checkbox" />
+                                                        <input checked={propertyForm.amenities.wifi} onChange={(e)=> setPropertyForm({...propertyForm, amenities: {...propertyForm.amenities, wifi: e.target.checked}})} type="checkbox" />
                                                         <span className="btn-checkbox" />
                                                         <span className="text-4">Wifi</span>
                                                     </label>
@@ -499,8 +535,8 @@ export default function AddProperty() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="space60" />
-                                    <div className="upload-main-boxarea">
+                                    {/* <div className="space60" /> */}
+                                    {/* <div className="upload-main-boxarea">
                                         <h3>Virtual Your 360°</h3>
                                         <div className="space16" />
                                         <div className="radio-area">
@@ -525,7 +561,7 @@ export default function AddProperty() {
                                             <div className="space16" />
                                             <textarea placeholder="####" />
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div className="space60" />
                                     <div className="upload-main-boxarea">
                                         <h3>Videos</h3>
@@ -534,7 +570,7 @@ export default function AddProperty() {
                                             <div className="space28" />
                                             <h5>Video URL:</h5>
                                             <div className="space16" />
-                                            <input type="text" placeholder="yourtube.com" />
+                                            <input value={propertyForm.video} onChange={(e)=> setPropertyForm({...propertyForm, video: e.target.value})} type="text" placeholder="yourtube.com" />
                                         </div>
                                     </div>
                                     <div className="space60" />
@@ -563,7 +599,10 @@ export default function AddProperty() {
                                                 <div className="input-area">
                                                     <h5>Floor Name**</h5>
                                                     <div className="space16" />
-                                                    <input type="text" placeholder="Floor Name*" />
+                                                    <input value={propertyForm.floors[0].floorNumber} onChange={(e)=> setPropertyForm({...propertyForm,
+                                                        floors: propertyForm.floors.map((floor, index) =>index === 0
+                                                        ? {...floor,floorNumber: Number(e.target.value),}: floor),
+                                                    })} type="number" placeholder="Floor Name*" />
                                                 </div>
                                             </div>
                                             <div className="col-lg-6 col-md-6">
@@ -571,39 +610,48 @@ export default function AddProperty() {
                                                 <div className="input-area">
                                                     <h5>Floor Price (Only Digits):</h5>
                                                     <div className="space16" />
-                                                    <input type="text" placeholder="#" />
+                                                    <input value={propertyForm.floors[0].floorPrice} onChange={(e)=> setPropertyForm({...propertyForm,
+                                                        floors: propertyForm.floors.map((floor, index) =>index === 0
+                                                        ? {...floor,floorPrice: Number(e.target.value),}: floor),
+                                                    })} type="number" placeholder="#" />
                                                 </div>
                                             </div>
-                                            <div className="col-lg-6 col-md-6">
+                                            {/* <div className="col-lg-6 col-md-6">
                                                 <div className="space28" />
                                                 <div className="input-area">
                                                     <h5>Price Postfix:</h5>
                                                     <div className="space16" />
                                                     <input type="text" placeholder="#" />
                                                 </div>
-                                            </div>
+                                            </div> */}
                                             <div className="col-lg-6 col-md-6">
                                                 <div className="space28" />
                                                 <div className="input-area">
                                                     <h5>Floor Size (Only Digits):</h5>
                                                     <div className="space16" />
-                                                    <input type="text" placeholder="#" />
+                                                    <input value={propertyForm.floors[0].floorSize} onChange={(e)=>  setPropertyForm({...propertyForm,
+                                                        floors: propertyForm.floors.map((floor, index) =>index === 0
+                                                        ? {...floor,floorSize: Number(e.target.value),}: floor),
+                                                    })} type="number" placeholder="#" />
                                                 </div>
                                             </div>
-                                            <div className="col-lg-6 col-md-6">
+                                            {/* <div className="col-lg-6 col-md-6">
                                                 <div className="space28" />
                                                 <div className="input-area">
                                                     <h5>Size Postfix:</h5>
                                                     <div className="space16" />
                                                     <input type="text" placeholder="#" />
                                                 </div>
-                                            </div>
+                                            </div> */}
                                             <div className="col-lg-6 col-md-6">
                                                 <div className="space28" />
                                                 <div className="input-area">
                                                     <h5>Bedrooms:</h5>
                                                     <div className="space16" />
-                                                    <input type="text" placeholder="#" />
+                                                    <input value={propertyForm.floors[0].bedrooms} onChange={(e)=> setPropertyForm({...propertyForm,
+                                                        floors: propertyForm.floors.map((floor, index) =>index === 0
+                                                        ? {...floor,bedrooms: Number(e.target.value),}: floor),
+                                                    })} type="number" placeholder="#" />
                                                 </div>
                                             </div>
                                             <div className="col-lg-6 col-md-6">
@@ -611,7 +659,10 @@ export default function AddProperty() {
                                                 <div className="input-area">
                                                     <h5>Bathrooms:</h5>
                                                     <div className="space16" />
-                                                    <input type="text" placeholder="#" />
+                                                    <input value={propertyForm.floors[0].bathrooms} onChange={(e)=> setPropertyForm({...propertyForm,
+                                                        floors: propertyForm.floors.map((floor, index) =>index === 0
+                                                        ? {...floor,bathrooms: Number(e.target.value),}: floor),
+                                                    })} type="number" placeholder="" />
                                                 </div>
                                             </div>
                                             <div className="col-lg-6 col-md-6">
@@ -631,18 +682,18 @@ export default function AddProperty() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="col-lg-6 col-md-6">
+                                            {/* <div className="col-lg-6 col-md-6">
                                                 <div className="space28" />
                                                 <div className="input-area textarea">
                                                     <h5>Description: </h5>
                                                     <div className="space16" />
                                                     <textarea />
                                                 </div>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
-                                    <div className="space60" />
-                                    <div className="upload-main-boxarea">
+                                    {/* <div className="space60" /> */}
+                                    {/* <div className="upload-main-boxarea">
                                         <h3>Agent Information</h3>
                                         <div className="space28" />
                                         <div className="input-area">
@@ -664,10 +715,10 @@ export default function AddProperty() {
                                                 </label>
                                             </fieldset>
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div className="space48" />
                                     <div className="btn-area1 text-center">
-                                        <Link href="#" className="theme-btn1">
+                                        <button onClick={postData} className="theme-btn1">
                                             Add Property{" "}
                                             <span className="arrow1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24} fill="currentColor">
@@ -679,8 +730,8 @@ export default function AddProperty() {
                                                     <path d="M12 13H4V11H12V4L20 12L12 20V13Z" />
                                                 </svg>
                                             </span>
-                                        </Link>
-                                        <Link href="#" className="theme-btn1 btn2">
+                                        </button>
+                                        {/* <Link href="#" className="theme-btn1 btn2">
                                             Save And Preview{" "}
                                             <span className="arrow1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24} fill="currentColor">
@@ -692,7 +743,7 @@ export default function AddProperty() {
                                                     <path d="M12 13H4V11H12V4L20 12L12 20V13Z" />
                                                 </svg>
                                             </span>
-                                        </Link>
+                                        </Link> */}
                                     </div>
                                 </div>
                             </div>
