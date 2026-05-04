@@ -4,9 +4,11 @@ import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 
 type User = {
-  _Id?: string;
+  _id?: string;
   name: string;
   email: string;
+  phone: string;
+  description: string;
   role?: string;
   bookings?: string[];
 };

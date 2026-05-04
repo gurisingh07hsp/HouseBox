@@ -1,8 +1,8 @@
 "use client";
-
 import { addPerPage, addSort } from "@/features/filter/filterSlice";
 import { toggleFavoriteProperty } from "@/features/property/propertySlice";
 import type { RootState } from "@/features/store";
+import axios from "axios";
 import Link from "next/link";
 import type React from "react";
 import { useCallback, useEffect, useState } from "react";
@@ -11,32 +11,86 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Updated interface to match the JSON structure
+// interface PropertyListItem {
+//     id: number;
+//     keyword: string;
+//     images?: {
+//         [key: string]: string;
+//     };
+//     address: string;
+//     city: string;
+//     state: string;
+//     status: string;
+//     label: string;
+//     type: string;
+//     bedrooms: number;
+//     linkProperty: number;
+//     bathrooms: number;
+//     garages: number;
+//     rooms: number;
+//     minPrice: number;
+//     maxPrice: number;
+//     minSize: number;
+//     maxSize: number;
+//     amenities: string[];
+//     agent?: {
+//         name: string;
+//         image: string;
+//     };
+// }
 interface PropertyListItem {
-    id: number;
-    keyword: string;
-    images?: {
-        [key: string]: string;
-    };
-    address: string;
-    city: string;
-    state: string;
-    status: string;
-    label: string;
-    type: string;
-    bedrooms: number;
-    linkProperty: number;
-    bathrooms: number;
-    garages: number;
-    rooms: number;
-    minPrice: number;
-    maxPrice: number;
-    minSize: number;
-    maxSize: number;
-    amenities: string[];
-    agent?: {
-        name: string;
-        image: string;
-    };
+    _id: '',
+    name: '',
+    images: [],
+    video: '',
+    description: '',
+    address: '',
+    zipCode: '',
+    country: '',
+    state: '',
+    sold: false,
+    seller: '',
+    propertyPrices: {
+        propertyPrice: 0,
+        unitPrice: 0,
+        beforePriceLabel: 0,
+        afterPriceLabel: 0,
+    },
+    additionalInformation: {
+        propertySize: '',
+        landArea: '',
+        rooms: 0,
+        bedrooms: 0,
+        bathrooms: 0,
+        garages: 0,
+        garageSize: '',
+        yearBuilt: ''
+    },
+    amenities: {
+        airCondition: false,
+        windowType: false,
+        petFriendly: false,
+        floor: false,
+        furnishing: false,
+        sellingHeight: false,
+        elevator: false,
+        parking: false,
+        renovation: false,
+        garden: false,
+        heating: false,
+        firePlace: false,
+        disabledAccess: false,
+        cableTV: false,
+        wifi: false,
+    },
+    floors: [{
+        floorNumber: 0,
+        floorImage: '',
+        floorPrice: 0,
+        floorSize: 0,
+        bedrooms: 0,
+        bathrooms: 0,
+    }],
 }
 
 export default function PropertyList({ view }: any) {
@@ -44,54 +98,74 @@ export default function PropertyList({ view }: any) {
     const { properties, favoriteProperties } = useSelector((state: RootState) => state.property);
     const { propertyFilter } = useSelector((state: RootState) => state.filter);
 
+    const [pro, setPro] = useState([]);
+
     const [filteredProperties, setFilteredProperties] = useState<PropertyListItem[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(12);
     const [sortOrder, setSortOrder] = useState("default");
     const [viewMode, setViewMode] = useState(view); // "grid" or "list"
 
+    const fetchProperties = async() => {
+        try{
+            const response = await axios.get('/api/properties');
+            setPro(response.data);
+            console.log(response.data);
+        }catch(error){
+            console.log(error);
+        }
+    }
+
+    useEffect(()=> {
+        fetchProperties();
+    },[]);
+    console.log("pro : ", pro);
+
     useEffect(() => {
-        let result = [...properties] as PropertyListItem[];
+        // let result = [...properties] as PropertyListItem[];
+        let result = [...pro] as any[];
+
+        console.log("result : ", result);
 
         if (propertyFilter.keyword) {
             const keyword = propertyFilter.keyword.toLowerCase();
             result = result.filter((property) => property.keyword.toLowerCase().includes(keyword) || property.address.toLowerCase().includes(keyword));
         }
 
-        if (propertyFilter.city) {
-            result = result.filter((property) => property.city.toLowerCase() === propertyFilter.city.replace(/-/g, " ").toLowerCase());
-        }
+        // if (propertyFilter.city) {
+        //     result = result.filter((property) => property.city.toLowerCase() === propertyFilter.city.replace(/-/g, " ").toLowerCase());
+        // }
 
         if (propertyFilter.state) {
             result = result.filter((property) => property.state.toLowerCase() === propertyFilter.state.replace(/-/g, " ").toLowerCase());
         }
 
-        if (propertyFilter.status) {
-            result = result.filter((property) => property.status.toLowerCase() === propertyFilter.status.replace(/-/g, " ").toLowerCase());
-        }
+        // if (propertyFilter.status) {
+        //     result = result.filter((property) => property.status.toLowerCase() === propertyFilter.status.replace(/-/g, " ").toLowerCase());
+        // }
 
         if (propertyFilter.bedrooms.min > 0) {
             result = result.filter((property) => property.bedrooms >= propertyFilter.bedrooms.min);
         }
 
         if (propertyFilter.bathrooms.min > 0) {
-            result = result.filter((property) => property.bathrooms >= propertyFilter.bathrooms.min);
+            result = result.filter((property) => property.additionalInformation.bathrooms >= propertyFilter.bathrooms.min);
         }
 
         if (propertyFilter.garages.min > 0) {
-            result = result.filter((property) => property.garages >= propertyFilter.garages.min);
+            result = result.filter((property) => property.additionalInformation.garages >= propertyFilter.garages.min);
         }
 
         if (propertyFilter.rooms.min > 0) {
-            result = result.filter((property) => property.rooms >= propertyFilter.rooms.min);
+            result = result.filter((property) => property.additionalInformation.rooms >= propertyFilter.rooms.min);
         }
 
-        result = result.filter((property) => property.minPrice >= propertyFilter.price.min && property.maxPrice <= propertyFilter.price.max);
+        result = result.filter((property) => property.propertyPrices.propertyPrice >= propertyFilter.price.min && property.propertyPrices.afterPriceLabel <= propertyFilter.price.max);
 
-        result = result.filter((property) => property.minSize >= propertyFilter.size.min && property.maxSize <= propertyFilter.size.max);
+        result = result.filter((property) => property.additionalInformation.propertySize >= propertyFilter.size.min && property.additionalInformation.propertySize <= propertyFilter.size.max);
 
         if (propertyFilter.amenities.length > 0) {
-            result = result.filter((property) => propertyFilter.amenities.every((amenity) => property.amenities.some((a) => a.toLowerCase() === amenity.replace(/-/g, " ").toLowerCase())));
+            result = result.filter((property) => propertyFilter.amenities.every((amenity) => property.amenities.some((a: any) => a.toLowerCase() === amenity.replace(/-/g, " ").toLowerCase())));
         }
 
         if (sortOrder === "oldest") {
@@ -110,7 +184,7 @@ export default function PropertyList({ view }: any) {
         const startIndex = 0;
         const endIndex = Math.min(itemsPerPage, result.length);
         dispatch(addPerPage({ start: startIndex, end: endIndex }));
-    }, [properties, propertyFilter, sortOrder, itemsPerPage, dispatch]);
+    }, [properties, pro, propertyFilter, sortOrder, itemsPerPage, dispatch]);
 
     const indexOfLastProperty = currentPage * itemsPerPage;
     const indexOfFirstProperty = indexOfLastProperty - itemsPerPage;
@@ -124,9 +198,9 @@ export default function PropertyList({ view }: any) {
         dispatch(addPerPage({ start: startIndex, end: endIndex }));
     };
 
-    const handleFavoriteToggle = (e: React.MouseEvent, propertyId: number) => {
+    const handleFavoriteToggle = (e: React.MouseEvent, propertyId: string) => {
         e.preventDefault();
-        dispatch(toggleFavoriteProperty(propertyId));
+        dispatch(toggleFavoriteProperty(Number(propertyId)));
     };
 
     const handleItemsPerPageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -190,7 +264,7 @@ export default function PropertyList({ view }: any) {
                     <div className="swiper-wrapper">
                         {Object.values(property.images).map((image, index) => (
                             <SwiperSlide key={index}>
-                                <img src={image || "/assets/img/all-images/properties/property-img1.png"} alt={property.keyword} />
+                                <img src={image || "/assets/img/all-images/properties/property-img1.png"} alt={property.name} />
                             </SwiperSlide>
                         ))}
                     </div>
@@ -198,7 +272,7 @@ export default function PropertyList({ view }: any) {
                 </Swiper>
             );
         } else {
-            return <img src="/assets/img/all-images/properties/property-img1.png" alt={property.keyword} />;
+            return <img src="/assets/img/all-images/properties/property-img1.png" alt={property.name} />;
         }
     };
 
@@ -295,54 +369,51 @@ export default function PropertyList({ view }: any) {
 
     // Function to render a grid item
     const renderGridItem = (property: PropertyListItem) => (
-        <div className="col-md-6" key={property.id}>
+        <div className="col-md-6" key={property._id}>
             <div className="property-boxarea">
                 <div className="img1 image-anime">{renderPropertyImages(property)}</div>
                 <div className="category-list">
                     <ul>
-                        {property.label && (
+                        {property.sold && (
                             <li>
-                                <Link href="#">{property.label}</Link>
+                                <Link href="#">Sold</Link>
                             </li>
                         )}
-                        <li>
-                            <Link href="#">{property.status}</Link>
-                        </li>
                     </ul>
                 </div>
                 <div className="content-area">
-                    <Link href={`/property-details-v${property.linkProperty}`}>{property.keyword}</Link>
+                    <Link href={`/property-details-v-${property.name}`}>{property.name}</Link>
                     <div className="space18" />
                     <p>
-                        {property.address}, {property.city}, {property.state}
+                        {property.address} {property.state}
                     </p>
                     <div className="space24" />
                     <ul>
                         <li>
                             <Link href="#">
-                                <img src="/assets/img/icons/bed1.svg" alt="bed" />x{property.bedrooms}
+                                <img src="/assets/img/icons/bed1.svg" alt="bed" />x{property.additionalInformation.bedrooms}
                             </Link>
                         </li>
                         <li>
                             <Link href="#">
-                                <img src="/assets/img/icons/bath1.svg" alt="bath" />x{property.bathrooms}
+                                <img src="/assets/img/icons/bath1.svg" alt="bath" />x{property.additionalInformation.bathrooms}
                             </Link>
                         </li>
                         <li>
                             <Link href="#">
                                 <img src="/assets/img/icons/sqare1.svg" alt="size" />
-                                {property.minSize} sq
+                                {property.additionalInformation.propertySize} sq
                             </Link>
                         </li>
                     </ul>
                     <div className="btn-area">
                         <Link href="#" className="nm-btn">
-                            ${property.minPrice.toLocaleString()}
+                            ${property.propertyPrices.propertyPrice.toLocaleString()}
                         </Link>
-                        <Link href="#" className="heart" onClick={(e) => handleFavoriteToggle(e, property.id)}>
-                            <img src="/assets/img/icons/heart1.svg" alt="favorite" className={`heart1 ${favoriteProperties.includes(property.id) ? "d-none" : ""}`} />
-                            <img src="/assets/img/icons/heart2.svg" alt="favorite" className={`heart2 ${favoriteProperties.includes(property.id) ? "" : ""}`} />
-                        </Link>
+                        {/* <Link href="#" className="heart" onClick={(e) => handleFavoriteToggle(e, property._id)}>
+                            <img src="/assets/img/icons/heart1.svg" alt="favorite" className={`heart1 ${favoriteProperties.includes(property._id) ? "d-none" : ""}`} />
+                            <img src="/assets/img/icons/heart2.svg" alt="favorite" className={`heart2 ${favoriteProperties.includes(property._id) ? "" : ""}`} />
+                        </Link> */}
                     </div>
                 </div>
             </div>
@@ -351,63 +422,60 @@ export default function PropertyList({ view }: any) {
 
     // Function to render a list item
     const renderListItem = (property: PropertyListItem) => (
-        <div className="col-lg-12" key={property.id}>
+        <div className="col-lg-12" key={property._id}>
             <div className="property-boxarea2">
                 <div className="row align-items-center">
                     <div className="col-lg-6 col-md-6">
                         <div className="img1 image-anime">
                             {renderPropertyImages(property)}
-                            <button className={`favorite-btn ${favoriteProperties.includes(property.id) ? "active" : ""}`} onClick={(e) => handleFavoriteToggle(e, property.id)}>
+                            {/* <button className={`favorite-btn ${favoriteProperties.includes(property.id) ? "active" : ""}`} onClick={(e) => handleFavoriteToggle(e, property.id)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
                                     <path d="M12.001 4.52853C14.35 2.42 17.98 2.49 20.2426 4.75736C22.5053 7.02472 22.583 10.637 20.4786 12.993L11.9999 21.485L3.52138 12.993C1.41705 10.637 1.49571 7.01901 3.75736 4.75736C6.02157 2.49315 9.64519 2.41687 12.001 4.52853Z" />
                                 </svg>
-                            </button>
+                            </button> */}
                         </div>
                     </div>
                     <div className="col-lg-6 col-md-6">
                         <div className="category-list">
                             <ul>
-                                {property.label && (
+                                {property.sold && (
                                     <li>
-                                        <Link href="#">{property.label}</Link>
+                                       <Link href="#">Sold</Link>
                                     </li>
                                 )}
-                                <li>
-                                    <Link href="#">{property.status}</Link>
-                                </li>
                             </ul>
                         </div>
                         <div className="content-area">
-                            <Link href={`/property-details-v${property.linkProperty}`}>{property.keyword}</Link>
+                            <Link href={`/property-details-v-${property.name}`}>{property.name}</Link>
                             <div className="space18" />
                             <p>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M18.364 17.364L12 23.7279L5.63604 17.364C2.12132 13.8492 2.12132 8.15076 5.63604 4.63604C9.15076 1.12132 14.8492 1.12132 18.364 4.63604C21.8787 8.15076 21.8787 13.8492 18.364 17.364ZM12 15C14.2091 15 16 13.2091 16 11C16 8.79086 14.2091 7 12 7C9.79086 7 8 8.79086 8 11C8 13.2091 9.79086 15 12 15ZM12 13C10.8954 13 10 12.1046 10 11C10 9.89543 10.8954 9 12 9C13.1046 9 14 9.89543 14 11C14 12.1046 13.1046 13 12 13Z" />
                                 </svg>{" "}
-                                {property.address}, {property.city}, {property.state}
+                                {property.address}, {property.state}
                             </p>
                             <div className="space24" />
                             <ul>
                                 <li>
                                     <Link href="#">
-                                        <img src="/assets/img/icons/bed1.svg" alt="bed" />x{property.bedrooms}
+                                        <img src="/assets/img/icons/bed1.svg" alt="bed" />x{property.additionalInformation.bedrooms}
                                     </Link>
                                 </li>
                                 <li>
                                     <Link href="#">
-                                        <img src="/assets/img/icons/bath1.svg" alt="bath" />x{property.bathrooms}
+                                        <img src="/assets/img/icons/bath1.svg" alt="bath" />x{property.additionalInformation.bathrooms}
                                     </Link>
                                 </li>
                                 <li>
                                     <Link href="#">
                                         <img src="/assets/img/icons/sqare1.svg" alt="size" />
-                                        {property.minSize} sq
+                                        {property.additionalInformation.propertySize} sq
                                     </Link>
                                 </li>
                             </ul>
                             <div className="btn-area">
                                 <div className="name-area">
-                                    {property.agent && (
+                                    {/* {property.agent && (
                                         <>
                                             <div className="img">
                                                 <img src={property.agent.image || "/assets/img/all-images/properties/property-img7.png"} alt="agent" />
@@ -416,10 +484,10 @@ export default function PropertyList({ view }: any) {
                                                 <Link href="#">{property.agent.name}</Link>
                                             </div>
                                         </>
-                                    )}
+                                    )} */}
                                 </div>
                                 <Link href="#" className="nm-btn">
-                                    ${property.minPrice.toLocaleString()}
+                                    ${property.propertyPrices.propertyPrice.toLocaleString()}
                                 </Link>
                             </div>
                         </div>

@@ -168,74 +168,42 @@ export default function Header3({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                 <Link href="/sidebar-list" className="plus">
                                                     Listing
                                                 </Link>
-                                                {/* <ul className="dropdown-padding">
-                                                    <li>
-                                                        <Link href="/property-halfmap-grid">Property Half Grid</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/property-halfmap-list">Property Half Map List</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/topmap-grid">Property Top Map Grid</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/topmap-list">Property Top Map List</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/sidebar-grid">Find Sidebar Grid</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/sidebar-list">Find Sidebar List</Link>
-                                                    </li>
-                                                </ul> */}
                                             </li>
-                                            <li>
+                                            {/* <li>
                                                 <Link href="/property-details-v1" className="plus">
                                                     Properties
                                                 </Link>
-                                                {/* <ul className="dropdown-padding">
-                                                    <li>
-                                                        <Link href="/property-details-v1">Property Details 01</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/property-details-v2">Property Details 02</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/property-details-v3">Property Details 03</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/property-details-v4">Property Details 04</Link>
-                                                    </li>
-                                                </ul> */}
-                                            </li>
-                                            <li>
-                                                <Link href="#" className="plus">
-                                                    Dashboard <i className="fa-solid fa-angle-down" />
-                                                </Link>
-                                                <ul className="dropdown-padding">
-                                                    <li>
-                                                        <Link href="/dashboard">Dashboard</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/my-property">My Properties</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/message">Message</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/my-favorites">My Favourites</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/reviews">Reviews</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/my-profile">My Propfile</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/add-property">Add Property</Link>
-                                                    </li>
-                                                </ul>
-                                            </li>
+                                            </li> */}
+                                            {user && user.email && (
+                                                <li>
+                                                    <Link href="dashboard" className="plus">
+                                                        Dashboard <i className="fa-solid fa-angle-down" />
+                                                    </Link>
+                                                    <ul className="dropdown-padding">
+                                                        <li>
+                                                            <Link href="/dashboard">Dashboard</Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link href="/my-property">My Properties</Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link href="/message">Message</Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link href="/my-favorites">My Favourites</Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link href="/reviews">Reviews</Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link href="/my-profile">My Propfile</Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link href="/add-property">Add Property</Link>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            )}
                                             <li>
                                                 <Link href="/blog-grid" className="plus">
                                                     Blogs

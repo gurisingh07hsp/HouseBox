@@ -1,11 +1,30 @@
-
+'use client';
 import Layout from "@/components/layout/Layout"
 import Link from "next/link"
+import { useEffect, useState } from "react";
+import { useUser } from "@/context/UserContext";
+import axios from "axios";
 export default function MyProfile() {
+	const {user} = useUser();
+	const [form, setForm] = useState(user);
+
+	const updateProfile = async() => {
+		try{
+			const response = await axios.put(`/api/auth/profile/${user?._id}`, form);
+			if(response.status === 200){
+				alert('Profile Updated!');
+			}
+		}catch(error){
+			console.log(error);
+		}
+	}
+
+	useEffect(()=> {
+		setForm(user);
+	},[user]);
 
 	return (
 		<>
-
 			<Layout headerStyle={3} footerStyle={3}>
 
 				<div>
@@ -37,24 +56,10 @@ export default function MyProfile() {
 									</div>
 								</div>
 								<div className="col-lg-12">
-									<div className="account-details-boxarea">
+									{/* <div className="account-details-boxarea">
 										<h2>Account Setting</h2>
 										<div className="space32" />
-										<h4>Settings</h4>
-										<div className="space32" />
-										<div className="accout-box">
-											<h3>Agent Account</h3>
-											<div className="space20" />
-											<p className="pera">Your current account type is set to agent, if you want to remove your agent account, and return to normal account! Click Button</p>
-											<div className="space20" />
-											<div className="btn-area1">
-												<Link href="/" className="theme-btn1">Remove Agent Account <span className="arrow1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24} fill="currentColor">
-													<path d="M12 13H4V11H12V4L20 12L12 20V13Z" />
-												</svg></span><span className="arrow2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24} fill="currentColor">
-													<path d="M12 13H4V11H12V4L20 12L12 20V13Z" />
-												</svg></span></Link>
-											</div>
-										</div>
+									
 										<div className="space32" />
 										<h4>User Avatar</h4>
 										<div className="space24" />
@@ -72,40 +77,30 @@ export default function MyProfile() {
 												<p>JPEG 100x100</p>
 											</div>
 										</div>
-										<div className="space40" />
-										<h4>Agent Poster</h4>
-										<div className="space24" />
-										<div className="box-agent-avt">
-											<div className="img-poster">
-												<img src="/assets/img/all-images/others/profile2.png" alt="avatar" loading="lazy" />
-											</div>
-											<div className="content uploadfile">
-												<p>Upload a new poster</p>
-												<div className="space16" />
-												<div className="box-ip">
-													<input type="file" className="ip-file" />
-												</div>
-												<div className="space16" />
-												<span>JPEG 100x100</span>
-											</div>
-										</div>
-									</div>
-									<div className="space48" />
+	
+									</div> */}
+									{/* <div className="space48" /> */}
 									<div className="personal-info-area">
 										<h2>Personal Information</h2>
 										<div className="space28" />
 										<div className="input-area">
 											<h5>Full Name*</h5>
 											<div className="space16" />
-											<input type="text" placeholder="Full Name" />
+											<input value={form?.name || ""} onChange={(e)=> form !== null && setForm({...form, name: e.target.value})} type="text" placeholder="Full Name" />
+										</div>
+										<div className="space28" />
+										<div className="input-area">
+											<h5>Phone*</h5>
+											<div className="space16" />
+											<input value={form?.phone || ""} onChange={(e)=> form !== null && setForm({...form, phone: e.target.value})}  type="text" placeholder="Phone" />
 										</div>
 										<div className="space28" />
 										<div className="input-area">
 											<h5>Description</h5>
 											<div className="space16" />
-											<textarea defaultValue={"Choosing the right neighborhood is a crucial step in finding the perfect home for your family. It’s not just about the house itself but the environment that surrounds it. A great neighborhood offers safety, convenience, and access to essential amenities like schools, parks, and healthcare. It should reflect your family’s lifestyle, providing opportunities for growth, connection, and comfort. "} />
+											<textarea value={form?.description || ""} onChange={(e)=> form !== null && setForm({...form, description: e.target.value})}/>
 										</div>
-										<div className="row">
+										{/* <div className="row">
 											<div className="col-lg-3 col-md-6">
 												<div className="space28" />
 												<div className="input-area">
@@ -202,17 +197,18 @@ export default function MyProfile() {
 													<input type="text" placeholder="##" />
 												</div>
 											</div>
-											<div className="col-lg-12">
+									
+										</div> */}
+												<div className="col-lg-12">
 												<div className="space32" />
 												<div className="btn-area1">
-													<Link href="/" className="theme-btn1">Save And Update <span className="arrow1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24} fill="currentColor">
+													<button onClick={updateProfile} className="theme-btn1">Save And Update <span className="arrow1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24} fill="currentColor">
 														<path d="M12 13H4V11H12V4L20 12L12 20V13Z" />
 													</svg></span><span className="arrow2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24} fill="currentColor">
 														<path d="M12 13H4V11H12V4L20 12L12 20V13Z" />
-													</svg></span></Link>
+													</svg></span></button>
 												</div>
 											</div>
-										</div>
 									</div>
 									<div className="space48" />
 									<div className="password-info-area">
