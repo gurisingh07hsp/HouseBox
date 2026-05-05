@@ -25,13 +25,20 @@ const PropertySchema = new mongoose.Schema(
     state: {
         type: String
     },
+    city: {
+        type: String
+    },
     sold: {
         type: Boolean
     },
-    // seller: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'User'
-    // },
+    status: {
+        type: String,
+
+    },
+    agent: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     propertyPrices: {
         propertyPrice: {type: Number, requried: true},
         unitPrice: {type: Number},
@@ -70,21 +77,8 @@ const PropertySchema = new mongoose.Schema(
         }
     },
     amenities: {
-        airCondition: {type: Boolean},
-        windowType: {type: Boolean},
-        petFriendly: {type: Boolean},
-        floor: {type: Boolean},
-        furnishing: {type: Boolean},
-        sellingHeight: {type: Boolean},
-        elevator: {type: Boolean},
-        parking: {type: Boolean},
-        renovation: {type: Boolean},
-        garden: {type: Boolean},
-        heating: {type: Boolean},
-        firePlace: {type: Boolean},
-        disabledAccess: {type: Boolean},
-        cableTV: {type: Boolean},
-        wifi: {type: Boolean},
+        type: [String],
+        default: [],
     },
     floors: [{
         floorNumber: {type: Number},

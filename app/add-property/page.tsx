@@ -1,11 +1,53 @@
 'use client'
 import Layout from "@/components/layout/Layout";
 import axios from "axios";
-// import { addProperty } from "@/features/property/propertySlice";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useUser } from "@/context/UserContext";
+
+interface PropertyForm {
+    name: string;
+    images: any[];
+    video: string;
+    description: string;
+    address: string;
+    zipCode: string;
+    country: string;
+    state: string;
+    city: string;
+    sold: boolean;
+    status: string;
+    agent: string;
+    propertyPrices: {
+        propertyPrice: number;
+        unitPrice: number;
+        beforePriceLabel: number;
+        afterPriceLabel: number;
+    };
+    additionalInformation: {
+        propertySize: string;
+        landArea: string;
+        rooms: number;
+        bedrooms: number;
+        bathrooms: number;
+        garages: number;
+        garageSize: string;
+        yearBuilt: string;
+    };
+    amenities: string[];
+    floors: {
+        floorNumber: number;
+        floorImage: string;
+        floorPrice: number;
+        floorSize: number;
+        bedrooms: number;
+        bathrooms: number;
+    }[];
+}
+
 export default function AddProperty() {
-    const [propertyForm, setPropertyForm] = useState({
+    const {user} = useUser();
+    const [propertyForm, setPropertyForm] = useState<PropertyForm>({
         name: '',
         images: [],
         video: '',
@@ -14,8 +56,10 @@ export default function AddProperty() {
         zipCode: '',
         country: '',
         state: '',
+        city: '',
         sold: false,
-        seller: '',
+        status: '',
+        agent: user?._id || '',
         propertyPrices: {
             propertyPrice: 0,
             unitPrice: 0,
@@ -32,23 +76,7 @@ export default function AddProperty() {
             garageSize: '',
             yearBuilt: ''
         },
-        amenities: {
-            airCondition: false,
-            windowType: false,
-            petFriendly: false,
-            floor: false,
-            furnishing: false,
-            sellingHeight: false,
-            elevator: false,
-            parking: false,
-            renovation: false,
-            garden: false,
-            heating: false,
-            firePlace: false,
-            disabledAccess: false,
-            cableTV: false,
-            wifi: false,
-        },
+        amenities: [],
         floors: [{
             floorNumber: 0,
             floorImage: '',
@@ -59,6 +87,12 @@ export default function AddProperty() {
         }],
     })
 
+    useEffect(()=> {
+        if(user){
+            setPropertyForm({...propertyForm, agent: user._id || ""})
+        }
+    },[user]);
+
 
     const postData = async()=> {
         const response = await axios.post('/api/properties', propertyForm, {withCredentials: true});
@@ -67,6 +101,24 @@ export default function AddProperty() {
             console.log(response.data);
         }
     }
+
+    const amenitiesList = [
+  "airCondition",
+  "windowType",
+  "petFriendly",
+  "floor",
+  "furnishing",
+  "sellingHeight",
+  "elevator",
+  "parking",
+  "renovation",
+  "garden",
+  "heating",
+  "firePlace",
+  "disabledAccess",
+  "cableTV",
+  "wifi",
+];
 
     return (
         <>
@@ -197,6 +249,16 @@ export default function AddProperty() {
                                                     <div className="space16" />
                                                     <div className="input-area" tabIndex={0}>
                                                         <input value={propertyForm.country} onChange={(e)=> setPropertyForm({...propertyForm, country: e.target.value})} type="text" placeholder="Country" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-4 col-md-6">
+                                                <div className="space28" />
+                                                <div className="input-area">
+                                                    <h5>City</h5>
+                                                    <div className="space16" />
+                                                    <div className="input-area" tabIndex={0}>
+                                                        <input value={propertyForm.city} onChange={(e)=> setPropertyForm({...propertyForm, city: e.target.value})} type="text" placeholder="City" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -417,7 +479,7 @@ export default function AddProperty() {
                                     <div className="upload-main-boxarea">
                                         <h3>Amenities*</h3>
                                         <div className="space16" />
-                                        <div className="row">
+                                        {/* <div className="row">
                                             <div className="col-lg-2 col-md-6">
                                                 <fieldset className="checkbox-item style-1">
                                                     <label>
@@ -533,7 +595,44 @@ export default function AddProperty() {
                                                     </label>
                                                 </fieldset>
                                             </div>
-                                        </div>
+                                        </div> */}
+                                        <div className="row">
+  {amenitiesList.map((item) => (
+    <div className="col-lg-2 col-md-6" key={item}>
+      <fieldset className="checkbox-item style-1">
+        <label>
+          <input
+            type="checkbox"
+            checked={propertyForm.amenities.includes(item)}
+            onChange={(e) => {
+              if (e.target.checked) {
+                // Add amenity
+                setPropertyForm({
+                  ...propertyForm,
+                  amenities: [...propertyForm.amenities, item],
+                });
+              } else {
+                // Remove amenity
+                setPropertyForm({
+                  ...propertyForm,
+                  amenities: propertyForm.amenities.filter(
+                    (amenity) => amenity !== item
+                  ),
+                });
+              }
+            }}
+          />
+
+          <span className="btn-checkbox" />
+
+          <span className="text-4">
+            {item.replace(/([A-Z])/g, " $1")}
+          </span>
+        </label>
+      </fieldset>
+    </div>
+  ))}
+</div>
                                     </div>
                                     {/* <div className="space60" /> */}
                                     {/* <div className="upload-main-boxarea">
@@ -577,27 +676,12 @@ export default function AddProperty() {
                                     <div className="upload-main-boxarea">
                                         <h3>Enable Floor Plan</h3>
                                         <div className="space16" />
-                                        <div className="radio-area">
-                                            <fieldset className="checkbox-item style-1">
-                                                <label>
-                                                    <input type="checkbox" />
-                                                    <span className="btn-checkbox" />
-                                                    <span className="text-4">Embedded Code</span>
-                                                </label>
-                                            </fieldset>
-                                            <fieldset className="checkbox-item style-1">
-                                                <label>
-                                                    <input type="checkbox" />
-                                                    <span className="btn-checkbox" />
-                                                    <span className="text-4">Upload Image</span>
-                                                </label>
-                                            </fieldset>
-                                        </div>
-                                        <div className="row">
+                                    
+                                        {/* <div className="row">
                                             <div className="col-lg-12 col-md-12">
                                                 <div className="space28" />
                                                 <div className="input-area">
-                                                    <h5>Floor Name**</h5>
+                                                    <h5>Floor Name*</h5>
                                                     <div className="space16" />
                                                     <input value={propertyForm.floors[0].floorNumber} onChange={(e)=> setPropertyForm({...propertyForm,
                                                         floors: propertyForm.floors.map((floor, index) =>index === 0
@@ -616,14 +700,7 @@ export default function AddProperty() {
                                                     })} type="number" placeholder="#" />
                                                 </div>
                                             </div>
-                                            {/* <div className="col-lg-6 col-md-6">
-                                                <div className="space28" />
-                                                <div className="input-area">
-                                                    <h5>Price Postfix:</h5>
-                                                    <div className="space16" />
-                                                    <input type="text" placeholder="#" />
-                                                </div>
-                                            </div> */}
+                                
                                             <div className="col-lg-6 col-md-6">
                                                 <div className="space28" />
                                                 <div className="input-area">
@@ -635,14 +712,7 @@ export default function AddProperty() {
                                                     })} type="number" placeholder="#" />
                                                 </div>
                                             </div>
-                                            {/* <div className="col-lg-6 col-md-6">
-                                                <div className="space28" />
-                                                <div className="input-area">
-                                                    <h5>Size Postfix:</h5>
-                                                    <div className="space16" />
-                                                    <input type="text" placeholder="#" />
-                                                </div>
-                                            </div> */}
+                                
                                             <div className="col-lg-6 col-md-6">
                                                 <div className="space28" />
                                                 <div className="input-area">
@@ -682,15 +752,219 @@ export default function AddProperty() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            {/* <div className="col-lg-6 col-md-6">
-                                                <div className="space28" />
-                                                <div className="input-area textarea">
-                                                    <h5>Description: </h5>
-                                                    <div className="space16" />
-                                                    <textarea />
-                                                </div>
-                                            </div> */}
-                                        </div>
+                                        </div> */}
+
+
+
+
+                                        <div className="row">
+  {propertyForm.floors.map((floor, index) => (
+    <div key={index} className="border rounded p-3 mb-4">
+
+      <h4 className="mb-3">Floor {index + 1}</h4>
+
+      <div className="row">
+
+        {/* Floor Number */}
+        <div className="col-lg-12 col-md-12">
+          <div className="space28" />
+          <div className="input-area">
+            <h5>Floor Number*</h5>
+            <div className="space16" />
+
+            <input
+              value={floor.floorNumber}
+              onChange={(e) => {
+                const updatedFloors = [...propertyForm.floors];
+
+                updatedFloors[index].floorNumber = Number(e.target.value);
+
+                setPropertyForm({
+                  ...propertyForm,
+                  floors: updatedFloors,
+                });
+              }}
+              type="number"
+              placeholder="Floor Name*"
+            />
+          </div>
+        </div>
+
+        {/* Floor Price */}
+        <div className="col-lg-6 col-md-6">
+          <div className="space28" />
+          <div className="input-area">
+            <h5>Floor Price</h5>
+            <div className="space16" />
+
+            <input
+              value={floor.floorPrice}
+              onChange={(e) => {
+                const updatedFloors = [...propertyForm.floors];
+
+                updatedFloors[index].floorPrice = Number(e.target.value);
+
+                setPropertyForm({
+                  ...propertyForm,
+                  floors: updatedFloors,
+                });
+              }}
+              type="number"
+              placeholder="#"
+            />
+          </div>
+        </div>
+
+        {/* Floor Size */}
+        <div className="col-lg-6 col-md-6">
+          <div className="space28" />
+          <div className="input-area">
+            <h5>Floor Size</h5>
+            <div className="space16" />
+
+            <input
+              value={floor.floorSize}
+              onChange={(e) => {
+                const updatedFloors = [...propertyForm.floors];
+
+                updatedFloors[index].floorSize = Number(e.target.value);
+
+                setPropertyForm({
+                  ...propertyForm,
+                  floors: updatedFloors,
+                });
+              }}
+              type="number"
+              placeholder="#"
+            />
+          </div>
+        </div>
+
+        {/* Bedrooms */}
+        <div className="col-lg-6 col-md-6">
+          <div className="space28" />
+          <div className="input-area">
+            <h5>Bedrooms</h5>
+            <div className="space16" />
+
+            <input
+              value={floor.bedrooms}
+              onChange={(e) => {
+                const updatedFloors = [...propertyForm.floors];
+
+                updatedFloors[index].bedrooms = Number(e.target.value);
+
+                setPropertyForm({
+                  ...propertyForm,
+                  floors: updatedFloors,
+                });
+              }}
+              type="number"
+              placeholder="#"
+            />
+          </div>
+        </div>
+
+        {/* Bathrooms */}
+        <div className="col-lg-6 col-md-6">
+          <div className="space28" />
+          <div className="input-area">
+            <h5>Bathrooms</h5>
+            <div className="space16" />
+
+            <input
+              value={floor.bathrooms}
+              onChange={(e) => {
+                const updatedFloors = [...propertyForm.floors];
+
+                updatedFloors[index].bathrooms = Number(e.target.value);
+
+                setPropertyForm({
+                  ...propertyForm,
+                  floors: updatedFloors,
+                });
+              }}
+              type="number"
+              placeholder="#"
+            />
+          </div>
+        </div>
+
+                <div className="col-lg-6 col-md-6">
+                <div className="space28" />
+                <div className="input-area">
+                    <h5>Floor Image</h5>
+                    <div className="space16" />
+                    <div className="box-floor-img uploadfile">
+                        <div className="btn-upload theme-btn1">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M6.9998 6V3C6.9998 2.44772 7.44752 2 7.9998 2H19.9998C20.5521 2 20.9998 2.44772 20.9998 3V17C20.9998 17.5523 20.5521 18 19.9998 18H16.9998V20.9991C16.9998 21.5519 16.5499 22 15.993 22H4.00666C3.45059 22 3 21.5554 3 20.9991L3.0026 7.00087C3.0027 6.44811 3.45264 6 4.00942 6H6.9998ZM5.00242 8L5.00019 20H14.9998V8H5.00242ZM8.9998 6H16.9998V16H18.9998V4H8.9998V6Z"></path>
+                            </svg>
+                            Choose File
+                            <input type="file" className="ip-file" />
+                        </div>
+                        <p className="file-name">Or drop file here to upload</p>
+                    </div>
+                </div>
+            </div>
+
+      </div>
+
+      {/* Remove Floor Button */}
+      {propertyForm.floors.length > 1 && (
+        <button
+          type="button"
+          onClick={() => {
+            const updatedFloors = propertyForm.floors.filter(
+              (_, i) => i !== index
+            );
+
+            setPropertyForm({
+              ...propertyForm,
+              floors: updatedFloors,
+            });
+          }}
+          className="btn btn-danger mt-3"
+        >
+          Remove Floor
+        </button>
+      )}
+    </div>
+  ))}
+</div>
+
+{/* Add Floor Button */}
+<button
+  type="button"
+  onClick={() => {
+    setPropertyForm({
+      ...propertyForm,
+      floors: [
+        ...propertyForm.floors,
+        {
+          floorNumber: 0,
+          floorImage: "",
+          floorPrice: 0,
+          floorSize: 0,
+          bedrooms: 0,
+          bathrooms: 0,
+        },
+      ],
+    });
+  }}
+  className="btn btn-primary mt-4"
+>
+  + Add Floor
+</button>
+
+
+
+
+
+
+
+
+
                                     </div>
                                     {/* <div className="space60" /> */}
                                     {/* <div className="upload-main-boxarea">

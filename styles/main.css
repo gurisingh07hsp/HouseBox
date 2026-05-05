@@ -10818,7 +10818,9 @@ Location:
     width: 36px;
     text-align: center;
     line-height: 32px;
-    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     transition: all 0.5s;
     border-radius: 50%;
     background: var(--ztc-bg-bg-2);

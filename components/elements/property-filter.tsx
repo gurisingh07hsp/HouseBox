@@ -27,6 +27,8 @@ export default function PropertyFilter() {
 	const { propertyTypes = [], amenitiesList = [], cities = [] } = useSelector((state: RootState) => state.property)
 	const { propertyFilter } = useSelector((state: RootState) => state.filter)
 
+	console.log("propertyFilter : ", propertyFilter);
+
 	const states = useSelector((state: RootState) => state.property.states) || []
 	const statuses = useSelector((state: RootState) => state.property.statuses) || []
 

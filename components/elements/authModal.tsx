@@ -240,7 +240,7 @@ export default function AuthModal({ isOpen, setIsOpen }: { isOpen: boolean; setI
       <button
         onClick={handleSubmit}
         disabled={loading}
-        className="submit-btn"
+        className="submit-btn text-white"
       >
         {loading ? "Loading..." : isLogin ? "Login" : "Create account"}
       </button>

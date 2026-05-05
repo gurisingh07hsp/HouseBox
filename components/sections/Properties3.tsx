@@ -152,28 +152,34 @@ export default function Properties3() {
                                                             <div className="space24" />
                                                             <ul>
                                                                 <li>
-                                                                    <Link href="#">
-                                                                        <span className="icon">
-                                                                            <img src="/assets/img/icons/bed1.svg" alt="housebox" />
-                                                                        </span>{" "}
+                                                                    <div>
+                                                                        <Link href="#">
+                                                                            <span className="icon">
+                                                                                <img src="/assets/img/icons/bed1.svg" alt="housebox" />
+                                                                            </span>
+                                                                        </Link>
                                                                         12 <span className="line"> |</span>
-                                                                    </Link>
+                                                                    </div>
                                                                 </li>
                                                                 <li>
+                                                                    <div className="ms-1">
                                                                     <Link href="#">
                                                                         <span className="icon">
                                                                             <img src="/assets/img/icons/bath1.svg" alt="housebox" />
                                                                         </span>{" "}
-                                                                        08 <span className="line"> |</span>
                                                                     </Link>
+                                                                        08 <span className="line"> |</span>
+                                                                    </div>
                                                                 </li>
                                                                 <li>
+                                                                    <div className="ms-1">
                                                                     <Link href="#">
                                                                         <span className="icon">
                                                                             <img src="/assets/img/icons/sqare1.svg" alt="housebox" />
                                                                         </span>{" "}
-                                                                        1200 SQ
                                                                     </Link>
+                                                                        1200 SQ
+                                                                    </div>
                                                                 </li>
                                                             </ul>
                                                             <div className="space24" />
@@ -215,30 +221,36 @@ export default function Properties3() {
                                                             <div className="space16" />
                                                             <p>Los Angeles City, CA, USA</p>
                                                             <div className="space24" />
-                                                            <ul>
+                                                               <ul>
                                                                 <li>
-                                                                    <Link href="#">
-                                                                        <span className="icon">
-                                                                            <img src="/assets/img/icons/bed1.svg" alt="housebox" />
-                                                                        </span>{" "}
+                                                                    <div>
+                                                                        <Link href="#">
+                                                                            <span className="icon">
+                                                                                <img src="/assets/img/icons/bed1.svg" alt="housebox" />
+                                                                            </span>
+                                                                        </Link>
                                                                         12 <span className="line"> |</span>
-                                                                    </Link>
+                                                                    </div>
                                                                 </li>
                                                                 <li>
+                                                                    <div className="ms-1">
                                                                     <Link href="#">
                                                                         <span className="icon">
                                                                             <img src="/assets/img/icons/bath1.svg" alt="housebox" />
                                                                         </span>{" "}
-                                                                        08 <span className="line"> |</span>
                                                                     </Link>
+                                                                        08 <span className="line"> |</span>
+                                                                    </div>
                                                                 </li>
                                                                 <li>
+                                                                    <div className="ms-1">
                                                                     <Link href="#">
                                                                         <span className="icon">
                                                                             <img src="/assets/img/icons/sqare1.svg" alt="housebox" />
                                                                         </span>{" "}
-                                                                        1200 SQ
                                                                     </Link>
+                                                                        1200 SQ
+                                                                    </div>
                                                                 </li>
                                                             </ul>
                                                             <div className="space24" />
@@ -293,30 +305,36 @@ export default function Properties3() {
                                                             <div className="space16" />
                                                             <p>Los Angeles City, CA, USA</p>
                                                             <div className="space24" />
-                                                            <ul>
+                                                                <ul>
                                                                 <li>
-                                                                    <Link href="#">
-                                                                        <span className="icon">
-                                                                            <img src="/assets/img/icons/bed1.svg" alt="housebox" />
-                                                                        </span>{" "}
+                                                                    <div>
+                                                                        <Link href="#">
+                                                                            <span className="icon">
+                                                                                <img src="/assets/img/icons/bed1.svg" alt="housebox" />
+                                                                            </span>
+                                                                        </Link>
                                                                         12 <span className="line"> |</span>
-                                                                    </Link>
+                                                                    </div>
                                                                 </li>
                                                                 <li>
+                                                                    <div className="ms-1">
                                                                     <Link href="#">
                                                                         <span className="icon">
                                                                             <img src="/assets/img/icons/bath1.svg" alt="housebox" />
                                                                         </span>{" "}
-                                                                        08 <span className="line"> |</span>
                                                                     </Link>
+                                                                        08 <span className="line"> |</span>
+                                                                    </div>
                                                                 </li>
                                                                 <li>
+                                                                    <div className="ms-1">
                                                                     <Link href="#">
                                                                         <span className="icon">
                                                                             <img src="/assets/img/icons/sqare1.svg" alt="housebox" />
                                                                         </span>{" "}
-                                                                        1200 SQ
                                                                     </Link>
+                                                                        1200 SQ
+                                                                    </div>
                                                                 </li>
                                                             </ul>
                                                             <div className="space24" />
@@ -358,30 +376,36 @@ export default function Properties3() {
                                                             <div className="space16" />
                                                             <p>Los Angeles City, CA, USA</p>
                                                             <div className="space24" />
-                                                            <ul>
+                                                                <ul>
                                                                 <li>
-                                                                    <Link href="#">
-                                                                        <span className="icon">
-                                                                            <img src="/assets/img/icons/bed1.svg" alt="housebox" />
-                                                                        </span>{" "}
+                                                                    <div>
+                                                                        <Link href="#">
+                                                                            <span className="icon">
+                                                                                <img src="/assets/img/icons/bed1.svg" alt="housebox" />
+                                                                            </span>
+                                                                        </Link>
                                                                         12 <span className="line"> |</span>
-                                                                    </Link>
+                                                                    </div>
                                                                 </li>
                                                                 <li>
+                                                                    <div className="ms-1">
                                                                     <Link href="#">
                                                                         <span className="icon">
                                                                             <img src="/assets/img/icons/bath1.svg" alt="housebox" />
                                                                         </span>{" "}
-                                                                        08 <span className="line"> |</span>
                                                                     </Link>
+                                                                        08 <span className="line"> |</span>
+                                                                    </div>
                                                                 </li>
                                                                 <li>
+                                                                    <div className="ms-1">
                                                                     <Link href="#">
                                                                         <span className="icon">
                                                                             <img src="/assets/img/icons/sqare1.svg" alt="housebox" />
                                                                         </span>{" "}
-                                                                        1200 SQ
                                                                     </Link>
+                                                                        1200 SQ
+                                                                    </div>
                                                                 </li>
                                                             </ul>
                                                             <div className="space24" />
@@ -436,30 +460,36 @@ export default function Properties3() {
                                                             <div className="space16" />
                                                             <p>Los Angeles City, CA, USA</p>
                                                             <div className="space24" />
-                                                            <ul>
+                                                               <ul>
                                                                 <li>
-                                                                    <Link href="#">
-                                                                        <span className="icon">
-                                                                            <img src="/assets/img/icons/bed1.svg" alt="housebox" />
-                                                                        </span>{" "}
+                                                                    <div>
+                                                                        <Link href="#">
+                                                                            <span className="icon">
+                                                                                <img src="/assets/img/icons/bed1.svg" alt="housebox" />
+                                                                            </span>
+                                                                        </Link>
                                                                         12 <span className="line"> |</span>
-                                                                    </Link>
+                                                                    </div>
                                                                 </li>
                                                                 <li>
+                                                                    <div className="ms-1">
                                                                     <Link href="#">
                                                                         <span className="icon">
                                                                             <img src="/assets/img/icons/bath1.svg" alt="housebox" />
                                                                         </span>{" "}
-                                                                        08 <span className="line"> |</span>
                                                                     </Link>
+                                                                        08 <span className="line"> |</span>
+                                                                    </div>
                                                                 </li>
                                                                 <li>
+                                                                    <div className="ms-1">
                                                                     <Link href="#">
                                                                         <span className="icon">
                                                                             <img src="/assets/img/icons/sqare1.svg" alt="housebox" />
                                                                         </span>{" "}
-                                                                        1200 SQ
                                                                     </Link>
+                                                                        1200 SQ
+                                                                    </div>
                                                                 </li>
                                                             </ul>
                                                             <div className="space24" />
@@ -501,30 +531,36 @@ export default function Properties3() {
                                                             <div className="space16" />
                                                             <p>Los Angeles City, CA, USA</p>
                                                             <div className="space24" />
-                                                            <ul>
+                                                               <ul>
                                                                 <li>
-                                                                    <Link href="#">
-                                                                        <span className="icon">
-                                                                            <img src="/assets/img/icons/bed1.svg" alt="housebox" />
-                                                                        </span>{" "}
+                                                                    <div>
+                                                                        <Link href="#">
+                                                                            <span className="icon">
+                                                                                <img src="/assets/img/icons/bed1.svg" alt="housebox" />
+                                                                            </span>
+                                                                        </Link>
                                                                         12 <span className="line"> |</span>
-                                                                    </Link>
+                                                                    </div>
                                                                 </li>
                                                                 <li>
+                                                                    <div className="ms-1">
                                                                     <Link href="#">
                                                                         <span className="icon">
                                                                             <img src="/assets/img/icons/bath1.svg" alt="housebox" />
                                                                         </span>{" "}
-                                                                        08 <span className="line"> |</span>
                                                                     </Link>
+                                                                        08 <span className="line"> |</span>
+                                                                    </div>
                                                                 </li>
                                                                 <li>
+                                                                    <div className="ms-1">
                                                                     <Link href="#">
                                                                         <span className="icon">
                                                                             <img src="/assets/img/icons/sqare1.svg" alt="housebox" />
                                                                         </span>{" "}
-                                                                        1200 SQ
                                                                     </Link>
+                                                                        1200 SQ
+                                                                    </div>
                                                                 </li>
                                                             </ul>
                                                             <div className="space24" />
@@ -570,30 +606,36 @@ export default function Properties3() {
                                                             <div className="space16" />
                                                             <p>Los Angeles City, CA, USA</p>
                                                             <div className="space24" />
-                                                            <ul>
+                                                               <ul>
                                                                 <li>
-                                                                    <Link href="#">
-                                                                        <span className="icon">
-                                                                            <img src="/assets/img/icons/bed1.svg" alt="housebox" />
-                                                                        </span>{" "}
+                                                                    <div>
+                                                                        <Link href="#">
+                                                                            <span className="icon">
+                                                                                <img src="/assets/img/icons/bed1.svg" alt="housebox" />
+                                                                            </span>
+                                                                        </Link>
                                                                         12 <span className="line"> |</span>
-                                                                    </Link>
+                                                                    </div>
                                                                 </li>
                                                                 <li>
+                                                                    <div className="ms-1">
                                                                     <Link href="#">
                                                                         <span className="icon">
                                                                             <img src="/assets/img/icons/bath1.svg" alt="housebox" />
                                                                         </span>{" "}
-                                                                        08 <span className="line"> |</span>
                                                                     </Link>
+                                                                        08 <span className="line"> |</span>
+                                                                    </div>
                                                                 </li>
                                                                 <li>
+                                                                    <div className="ms-1">
                                                                     <Link href="#">
                                                                         <span className="icon">
                                                                             <img src="/assets/img/icons/sqare1.svg" alt="housebox" />
                                                                         </span>{" "}
-                                                                        1200 SQ
                                                                     </Link>
+                                                                        1200 SQ
+                                                                    </div>
                                                                 </li>
                                                             </ul>
                                                             <div className="space24" />
@@ -635,30 +677,36 @@ export default function Properties3() {
                                                             <div className="space16" />
                                                             <p>Los Angeles City, CA, USA</p>
                                                             <div className="space24" />
-                                                            <ul>
+                                                                <ul>
                                                                 <li>
-                                                                    <Link href="#">
-                                                                        <span className="icon">
-                                                                            <img src="/assets/img/icons/bed1.svg" alt="housebox" />
-                                                                        </span>{" "}
+                                                                    <div>
+                                                                        <Link href="#">
+                                                                            <span className="icon">
+                                                                                <img src="/assets/img/icons/bed1.svg" alt="housebox" />
+                                                                            </span>
+                                                                        </Link>
                                                                         12 <span className="line"> |</span>
-                                                                    </Link>
+                                                                    </div>
                                                                 </li>
                                                                 <li>
+                                                                    <div className="ms-1">
                                                                     <Link href="#">
                                                                         <span className="icon">
                                                                             <img src="/assets/img/icons/bath1.svg" alt="housebox" />
                                                                         </span>{" "}
-                                                                        08 <span className="line"> |</span>
                                                                     </Link>
+                                                                        08 <span className="line"> |</span>
+                                                                    </div>
                                                                 </li>
                                                                 <li>
+                                                                    <div className="ms-1">
                                                                     <Link href="#">
                                                                         <span className="icon">
                                                                             <img src="/assets/img/icons/sqare1.svg" alt="housebox" />
                                                                         </span>{" "}
-                                                                        1200 SQ
                                                                     </Link>
+                                                                        1200 SQ
+                                                                    </div>
                                                                 </li>
                                                             </ul>
                                                             <div className="space24" />

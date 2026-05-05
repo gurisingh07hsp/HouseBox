@@ -136,9 +136,9 @@ export default function BlogGrid() {
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="hero-header-area text-center">
-                                <Link href="/">
+                                {/* <Link href="/">
                                     Home <BreadcrumbArrow /> Our Blog
-                                </Link>
+                                </Link> */}
                                 <div className="space24" />
                                 <h1>Our Blog</h1>
                             </div>

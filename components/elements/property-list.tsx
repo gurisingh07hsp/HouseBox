@@ -3,12 +3,14 @@ import { addPerPage, addSort } from "@/features/filter/filterSlice";
 import { toggleFavoriteProperty } from "@/features/property/propertySlice";
 import type { RootState } from "@/features/store";
 import axios from "axios";
+import { set } from "mongoose";
 import Link from "next/link";
 import type React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+
 
 // Updated interface to match the JSON structure
 // interface PropertyListItem {
@@ -39,66 +41,49 @@ import { Swiper, SwiperSlide } from "swiper/react";
 //     };
 // }
 interface PropertyListItem {
-    _id: '',
-    name: '',
-    images: [],
-    video: '',
-    description: '',
-    address: '',
-    zipCode: '',
-    country: '',
-    state: '',
-    sold: false,
-    seller: '',
+    _id: string;
+    name: string;
+    images: string[];
+    video: string;
+    description: string;
+    address: string;
+    zipCode: string;
+    country: string;
+    state: string;
+    sold: boolean;
+    seller: string;
     propertyPrices: {
-        propertyPrice: 0,
-        unitPrice: 0,
-        beforePriceLabel: 0,
-        afterPriceLabel: 0,
+        propertyPrice: number;
+        unitPrice: number;
+        beforePriceLabel: number;
+        afterPriceLabel: number;
     },
     additionalInformation: {
-        propertySize: '',
-        landArea: '',
-        rooms: 0,
-        bedrooms: 0,
-        bathrooms: 0,
-        garages: 0,
-        garageSize: '',
-        yearBuilt: ''
+        propertySize: string;
+        landArea: string;
+        rooms: number;
+        bedrooms: number;
+        bathrooms: number;
+        garages: number;
+        garageSize: string;
+        yearBuilt: string;
     },
-    amenities: {
-        airCondition: false,
-        windowType: false,
-        petFriendly: false,
-        floor: false,
-        furnishing: false,
-        sellingHeight: false,
-        elevator: false,
-        parking: false,
-        renovation: false,
-        garden: false,
-        heating: false,
-        firePlace: false,
-        disabledAccess: false,
-        cableTV: false,
-        wifi: false,
-    },
+    amenities: string[],
     floors: [{
-        floorNumber: 0,
-        floorImage: '',
-        floorPrice: 0,
-        floorSize: 0,
-        bedrooms: 0,
-        bathrooms: 0,
+        floorNumber: number;
+        floorImage: string;
+        floorPrice: number;
+        floorSize: number;
+        bedrooms: number;
+        bathrooms: number;
     }],
 }
 
 export default function PropertyList({ view }: any) {
     const dispatch = useDispatch();
-    const { properties, favoriteProperties } = useSelector((state: RootState) => state.property);
-    const { propertyFilter } = useSelector((state: RootState) => state.filter);
-
-    const [pro, setPro] = useState([]);
+    // const { properties, favoriteProperties } = useSelector((state: RootState) => state.property);
+    const [properties, setProperties] = useState<PropertyListItem[]>([]);
+    const { propertyFilter, propertySort } = useSelector((state: RootState) => state.filter);
 
     const [filteredProperties, setFilteredProperties] = useState<PropertyListItem[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -108,75 +93,40 @@ export default function PropertyList({ view }: any) {
 
     const fetchProperties = async() => {
         try{
-            const response = await axios.get('/api/properties');
-            setPro(response.data);
-            console.log(response.data);
+            // const response = await axios.get('/api/properties');
+            const response = await axios.get("/api/properties", {
+            params: {
+                filter: JSON.stringify(propertyFilter),
+                pagination: JSON.stringify(propertySort),
+                agentId: "",
+            },
+            });
+            setProperties(response.data.properties);
         }catch(error){
             console.log(error);
         }
     }
 
     useEffect(()=> {
-        fetchProperties();
-    },[]);
-    console.log("pro : ", pro);
+        setFilteredProperties(properties);
+    },[properties]);
+
 
     useEffect(() => {
-        // let result = [...properties] as PropertyListItem[];
-        let result = [...pro] as any[];
 
-        console.log("result : ", result);
+        fetchProperties();
 
-        if (propertyFilter.keyword) {
-            const keyword = propertyFilter.keyword.toLowerCase();
-            result = result.filter((property) => property.keyword.toLowerCase().includes(keyword) || property.address.toLowerCase().includes(keyword));
-        }
+        let result = [...properties] as PropertyListItem[];
 
-        // if (propertyFilter.city) {
-        //     result = result.filter((property) => property.city.toLowerCase() === propertyFilter.city.replace(/-/g, " ").toLowerCase());
+        // if (sortOrder === "oldest") {
+        //     result.sort((a, b) => a.id - b.id);
+        // } else if (sortOrder === "newest") {
+        //     result.sort((a, b) => b.id - a.id);
+        // } else if (sortOrder === "price-low") {
+        //     result.sort((a, b) => a.minPrice - b.minPrice);
+        // } else if (sortOrder === "price-high") {
+        //     result.sort((a, b) => b.minPrice - a.minPrice);
         // }
-
-        if (propertyFilter.state) {
-            result = result.filter((property) => property.state.toLowerCase() === propertyFilter.state.replace(/-/g, " ").toLowerCase());
-        }
-
-        // if (propertyFilter.status) {
-        //     result = result.filter((property) => property.status.toLowerCase() === propertyFilter.status.replace(/-/g, " ").toLowerCase());
-        // }
-
-        if (propertyFilter.bedrooms.min > 0) {
-            result = result.filter((property) => property.bedrooms >= propertyFilter.bedrooms.min);
-        }
-
-        if (propertyFilter.bathrooms.min > 0) {
-            result = result.filter((property) => property.additionalInformation.bathrooms >= propertyFilter.bathrooms.min);
-        }
-
-        if (propertyFilter.garages.min > 0) {
-            result = result.filter((property) => property.additionalInformation.garages >= propertyFilter.garages.min);
-        }
-
-        if (propertyFilter.rooms.min > 0) {
-            result = result.filter((property) => property.additionalInformation.rooms >= propertyFilter.rooms.min);
-        }
-
-        result = result.filter((property) => property.propertyPrices.propertyPrice >= propertyFilter.price.min && property.propertyPrices.afterPriceLabel <= propertyFilter.price.max);
-
-        result = result.filter((property) => property.additionalInformation.propertySize >= propertyFilter.size.min && property.additionalInformation.propertySize <= propertyFilter.size.max);
-
-        if (propertyFilter.amenities.length > 0) {
-            result = result.filter((property) => propertyFilter.amenities.every((amenity) => property.amenities.some((a: any) => a.toLowerCase() === amenity.replace(/-/g, " ").toLowerCase())));
-        }
-
-        if (sortOrder === "oldest") {
-            result.sort((a, b) => a.id - b.id);
-        } else if (sortOrder === "newest") {
-            result.sort((a, b) => b.id - a.id);
-        } else if (sortOrder === "price-low") {
-            result.sort((a, b) => a.minPrice - b.minPrice);
-        } else if (sortOrder === "price-high") {
-            result.sort((a, b) => b.minPrice - a.minPrice);
-        }
 
         setFilteredProperties(result);
         setCurrentPage(1);
@@ -184,7 +134,7 @@ export default function PropertyList({ view }: any) {
         const startIndex = 0;
         const endIndex = Math.min(itemsPerPage, result.length);
         dispatch(addPerPage({ start: startIndex, end: endIndex }));
-    }, [properties, pro, propertyFilter, sortOrder, itemsPerPage, dispatch]);
+    }, [propertyFilter, sortOrder, itemsPerPage, dispatch]);
 
     const indexOfLastProperty = currentPage * itemsPerPage;
     const indexOfFirstProperty = indexOfLastProperty - itemsPerPage;
@@ -448,7 +398,7 @@ export default function PropertyList({ view }: any) {
                         <div className="content-area">
                             <Link href={`/property-details-v-${property.name}`}>{property.name}</Link>
                             <div className="space18" />
-                            <p>
+                            <p className="flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M18.364 17.364L12 23.7279L5.63604 17.364C2.12132 13.8492 2.12132 8.15076 5.63604 4.63604C9.15076 1.12132 14.8492 1.12132 18.364 4.63604C21.8787 8.15076 21.8787 13.8492 18.364 17.364ZM12 15C14.2091 15 16 13.2091 16 11C16 8.79086 14.2091 7 12 7C9.79086 7 8 8.79086 8 11C8 13.2091 9.79086 15 12 15ZM12 13C10.8954 13 10 12.1046 10 11C10 9.89543 10.8954 9 12 9C13.1046 9 14 9.89543 14 11C14 12.1046 13.1046 13 12 13Z" />
                                 </svg>{" "}
@@ -519,14 +469,6 @@ export default function PropertyList({ view }: any) {
                         </li>
                     </ul>
                     <div className="d-flex">
-                        <div className="filter-group me-3">
-                            <select onChange={handleItemsPerPageChange} value={itemsPerPage}>
-                                <option value="6">Show:(6)</option>
-                                <option value="12">Show:(12)</option>
-                                <option value="24">Show:(24)</option>
-                                <option value="48">Show:(48)</option>
-                            </select>
-                        </div>
                         <div className="filter-group">
                             <select onChange={handleSortOrderChange} value={sortOrder}>
                                 <option value="default">Sort by (Default)</option>
