@@ -3,7 +3,6 @@ import { addPerPage, addSort } from "@/features/filter/filterSlice";
 import { toggleFavoriteProperty } from "@/features/property/propertySlice";
 import type { RootState } from "@/features/store";
 import axios from "axios";
-import { set } from "mongoose";
 import Link from "next/link";
 import type React from "react";
 import { useCallback, useEffect, useState } from "react";
@@ -90,8 +89,10 @@ export default function PropertyList({ view }: any) {
     const [itemsPerPage, setItemsPerPage] = useState(12);
     const [sortOrder, setSortOrder] = useState("default");
     const [viewMode, setViewMode] = useState(view); // "grid" or "list"
+    const [loading, setLoading] = useState(true);
 
     const fetchProperties = async() => {
+        setLoading(true);
         try{
             // const response = await axios.get('/api/properties');
             const response = await axios.get("/api/properties", {
@@ -104,6 +105,8 @@ export default function PropertyList({ view }: any) {
             setProperties(response.data.properties);
         }catch(error){
             console.log(error);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -483,6 +486,9 @@ export default function PropertyList({ view }: any) {
             </div>
             <div className="tab-content" id="pills-tabContent">
                 <div className={`tab-pane fade ${viewMode === "grid" ? "show active" : ""}`} id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabIndex={0}>
+                    {loading ? (
+                        <div className="flex justify-center items-center h-32">Loading...</div>
+                    ) : (
                     <div className="row">
                         {currentProperties.length > 0 ? (
                             <>
@@ -496,21 +502,26 @@ export default function PropertyList({ view }: any) {
                             </div>
                         )}
                     </div>
+                    )}
                 </div>
                 <div className={`tab-pane fade ${viewMode === "list" ? "show active" : ""}`} id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabIndex={0}>
-                    <div className="row">
-                        {currentProperties.length > 0 ? (
-                            <>
-                                {currentProperties.map((property) => renderListItem(property))}
-                                <div className="col-lg-12">{renderPagination()}</div>
-                            </>
-                        ) : (
-                            <div className="col-12 text-center py-5">
-                                <h4>No properties found matching your criteria</h4>
-                                <p>Try adjusting your filters to see more results</p>
-                            </div>
-                        )}
-                    </div>
+                    {loading ? (
+                        <div className="flex justify-center items-center h-32">Loading...</div>
+                    ): (
+                        <div className="row">
+                            {currentProperties.length > 0 ? (
+                                <>
+                                    {currentProperties.map((property) => renderListItem(property))}
+                                    <div className="col-lg-12">{renderPagination()}</div>
+                                </>
+                            ) : (
+                                <div className="col-12 text-center py-5">
+                                    <h4>No properties found matching your criteria</h4>
+                                    <p>Try adjusting your filters to see more results</p>
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
         </>

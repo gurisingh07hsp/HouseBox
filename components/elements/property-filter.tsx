@@ -24,13 +24,13 @@ import { useDispatch, useSelector } from "react-redux"
 
 export default function PropertyFilter() {
 	const dispatch = useDispatch()
-	const { propertyTypes = [], amenitiesList = [], cities = [] } = useSelector((state: RootState) => state.property)
+	const { amenitiesList = [] } = useSelector((state: RootState) => state.property)
 	const { propertyFilter } = useSelector((state: RootState) => state.filter)
 
 	console.log("propertyFilter : ", propertyFilter);
 
-	const states = useSelector((state: RootState) => state.property.states) || []
-	const statuses = useSelector((state: RootState) => state.property.statuses) || []
+	// const states = useSelector((state: RootState) => state.property.states) || []
+	// const statuses = useSelector((state: RootState) => state.property.statuses) || []
 
 	const [priceRange, setPriceRange] = useState({
 		min: propertyFilter.price.min,
@@ -64,7 +64,7 @@ export default function PropertyFilter() {
 		dispatch(addKeyword(e.target.value))
 	}
 
-	const handleCityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+	const handleCityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		dispatch(addCity(e.target.value))
 	}
 
@@ -208,8 +208,9 @@ export default function PropertyFilter() {
 							<div className="input-area">
 								<input type="text" placeholder="Address" value={address} onChange={(e) => setAddress(e.target.value)} />
 							</div>
-							<div className="input-area m-0">
-								<select
+							<div className="input-area m-0 mt-4">
+								<input type="text" placeholder="City" value={propertyFilter.city} onChange={handleCityChange} />
+								{/* <select
 									name="country"
 									id="country1"
 									className="country-area nice-select"
@@ -224,7 +225,7 @@ export default function PropertyFilter() {
 											{city.name}
 										</option>
 									))}
-								</select>
+								</select> */}
 							</div>
 							<div className="input-area">
 								<select
@@ -343,7 +344,7 @@ export default function PropertyFilter() {
 							<div className="space32" />
 						</div>
 						<div className="col-lg-12">
-							<div className="btn-area1">
+							{/* <div className="btn-area1">
 								<Link
 									href="#"
 									className="theme-btn1"
@@ -376,7 +377,7 @@ export default function PropertyFilter() {
 										</svg>
 									</span>
 								</Link>
-							</div>
+							</div> */}
 							<div className="space16" />
 							<div className="btn-area1">
 								<span onClick={handleResetFilters} className="reset-filter">
@@ -401,8 +402,9 @@ export default function PropertyFilter() {
 							<div className="input-area">
 								<input type="text" placeholder="Address" value={address} onChange={(e) => setAddress(e.target.value)} />
 							</div>
-							<div className="input-area m-0">
-								<select
+							<div className="input-area m-0 mt-4">
+								<input type="text" placeholder="City" value={propertyFilter.city} onChange={handleCityChange} />
+								{/* <select
 									name="country"
 									id="country4"
 									className="country-area nice-select"
@@ -417,7 +419,7 @@ export default function PropertyFilter() {
 											{city.name}
 										</option>
 									))}
-								</select>
+								</select> */}
 							</div>
 							<div className="input-area">
 								<select
@@ -536,7 +538,7 @@ export default function PropertyFilter() {
 							<div className="space32" />
 						</div>
 						<div className="col-lg-12">
-							<div className="btn-area1">
+							{/* <div className="btn-area1">
 								<Link
 									href="#"
 									className="theme-btn1"
@@ -569,7 +571,7 @@ export default function PropertyFilter() {
 										</svg>
 									</span>
 								</Link>
-							</div>
+							</div> */}
 							<div className="space16" />
 							<div className="btn-area1">
 								<span onClick={handleResetFilters} className="reset-filter">
