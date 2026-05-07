@@ -5,6 +5,7 @@
 import About3 from "@/components/sections/About3"
 import Cta3 from "@/components/sections/Cta3"
 import Hero3 from "@/components/sections/Hero3"
+import Hero4 from "@/components/sections/Hero4"
 import Items3 from "@/components/sections/Items3"
 // import Others3 from "@/components/sections/Others3"
 import Properties3 from "@/components/sections/Properties3"
@@ -16,7 +17,7 @@ export default function Home3() {
 	return (
 		<>
 			{/* <Layout headerStyle={3} footerStyle={3}> */}
-				<Hero3 />
+				<Hero4 />
 				{/* <Others3 /> */}
 				<About3 />
 				<Properties3 />

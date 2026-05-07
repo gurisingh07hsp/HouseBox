@@ -957,7 +957,8 @@ Location:
 }
 
 .theme-btn4 {
-    display: inline-block;
+    display: flex;
+    align-items: center;
     padding: 14px 16.57px;
     color: var(--ztc-text-text-1);
     font-size: var(--ztc-font-size-font-s12);
@@ -1036,7 +1037,9 @@ Location:
 }
 
 .theme-btn5 {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    width: fit-content;
     padding: 14px 16.57px;
     color: var(--ztc-text-text-1);
     font-size: var(--ztc-font-size-font-s12);
@@ -1048,7 +1051,7 @@ Location:
     font-family: var(--ztc-family-font1);
     border: none;
     overflow: hidden;
-    background-color: var(--ztc-bg-bg-7);
+    background-color: var(--ztc-bg-bg-6);
     transition: all 0.4s;
     border-radius: 8px;
     position: relative;
@@ -2904,7 +2907,7 @@ Location:
 }
 
 .hero4-section-area .property-tab-section4 .tab-btn.active {
-    background: var(--ztc-text-text-8);
+    background: var(--ztc-text-text-7);
     color: var(--ztc-text-text-1);
 }
 
@@ -3002,7 +3005,7 @@ Location:
     padding: 14px 37px;
     border-radius: 4px;
     height: 50px;
-    background: var(--ztc-bg-bg-7);
+    background: var(--ztc-bg-bg-6);
     transition: all 0.4s;
 }
 

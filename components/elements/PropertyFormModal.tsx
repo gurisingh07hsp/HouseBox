@@ -5,10 +5,14 @@ import { PropertyListItem } from "@/types/types";
 import { X } from "lucide-react";
 import axios from "axios";
 import { useUser } from "@/context/UserContext";
-export default function PropertyFormModal({initialForm , mode}:{initialForm: PropertyListItem, mode: 'add' | 'edit'}) {
+export default function PropertyFormModal({initialForm , mode, open, setOpen}:{initialForm: PropertyListItem, mode: 'add' | 'edit' , open: boolean, setOpen: (open: boolean) => void}) {
     const {user} = useUser();
-  const [open, setOpen] = useState(false);
   const [propertyForm, setPropertyForm] = useState<PropertyListItem>(initialForm);
+
+
+  useEffect(()=> {
+    setPropertyForm(initialForm);
+  },[initialForm]);
 
       const postData = async()=> {
           const response = await axios.post('/api/properties', propertyForm, {withCredentials: true});
@@ -27,10 +31,12 @@ export default function PropertyFormModal({initialForm , mode}:{initialForm: Pro
       }
 
     useEffect(()=> {
-        if(user){
+        if(user && mode === 'add'){
             setPropertyForm({...propertyForm, agent: user._id || ""})
         }
     },[user]);
+
+    console.log("form fiejf : ", propertyForm);
 
       const amenitiesList = [
         "airCondition",
@@ -54,12 +60,12 @@ export default function PropertyFormModal({initialForm , mode}:{initialForm: Pro
     
     <>
       {/* Open Modal Button */}
-         <button onClick={() => setOpen(true)} className="edit flex gap-1">
+         {/* <button onClick={() => setOpen(true)} className="edit flex gap-1">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M6.41421 15.89L16.5563 5.74785L15.1421 4.33363L5 14.4758V15.89H6.41421ZM7.24264 17.89H3V13.6473L14.435 2.21231C14.8256 1.82179 15.4587 1.82179 15.8492 2.21231L18.6777 5.04074C19.0682 5.43126 19.0682 6.06443 18.6777 6.45495L7.24264 17.89ZM3 19.89H21V21.89H3V19.89Z" />
             </svg>{" "}
             Edit
-        </button>
+        </button> */}
 
       {/* Modal */}
       {open && (
@@ -760,7 +766,7 @@ export default function PropertyFormModal({initialForm , mode}:{initialForm: Pro
                                         ],
                                         });
                                     }}
-                                    style={{background: 'blue', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '5px', width: '120px', marginBottom: '20px'}}
+                                    style={{background: 'blue', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '5px', width: '150px', marginBottom: '20px'}}
                                     
                                     >
                                     + Add Floor
@@ -770,8 +776,8 @@ export default function PropertyFormModal({initialForm , mode}:{initialForm: Pro
                                   
                                     <div className="space48" />
                                     <div className="btn-area1 text-center">
-                                        <button onClick={updateData} style={{background: '#cbcd30', padding: '10px 20px', border: 'none', borderRadius: '5px', width: '170px', marginBottom: '20px'}} className="theme-btn1">
-                                            Update Property{" "}
+                                        <button onClick={mode == 'edit' ? updateData : postData} style={{background: '#cbcd30', padding: '10px 20px', border: 'none', borderRadius: '5px', width: '170px', marginBottom: '20px'}} className="theme-btn1">
+                                            {mode === 'edit' ? 'Update Property' : 'Add Property'}
                                             <span className="arrow1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24} fill="currentColor">
                                                     <path d="M12 13H4V11H12V4L20 12L12 20V13Z" />

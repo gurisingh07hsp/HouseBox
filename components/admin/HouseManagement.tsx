@@ -52,20 +52,12 @@ interface PropertyForm {
 }
 
 const HouseManagement = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [mode, setMode] = useState<'create' | 'edit'>('create');
-  const [tours, setTours] = useState<any[]>([]);
+  const [mode, setMode] = useState<'add' | 'edit'>('add');
   const [existingTour, setExistingTour] = useState<any>();
 
-
-
-
-
-
-
-
-      const {user} = useUser();
+    const {user} = useUser();
     const [properties, setProperties] = useState<PropertyListItem[]>([]);
     const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -85,7 +77,7 @@ const HouseManagement = () => {
             city: '',
             sold: false,
             status: '',
-            agent: user?._id || '',
+            agent: '',
             propertyPrices: {
                 propertyPrice: 0,
                 unitPrice: 0,
@@ -119,7 +111,6 @@ const HouseManagement = () => {
        const fetchProperties = async() => {
         setLoading(true);
         try{
-            // const response = await axios.get('/api/properties');
             const response = await axios.get("/api/properties", {
             params: {
                 filter: JSON.stringify(propertyFilter),
@@ -143,6 +134,29 @@ const HouseManagement = () => {
         fetchProperties();
     },[user, propertyFilter]);
 
+    const handleEdit = (property: PropertyListItem) => {
+         setPropertyForm((prev) => ({
+            ...prev,
+            ...property,
+
+            propertyPrices: {
+            ...prev.propertyPrices,
+            ...property.propertyPrices,
+            },
+
+            additionalInformation: {
+            ...prev.additionalInformation,
+            ...property.additionalInformation,
+            },
+
+            amenities: property.amenities || [],
+
+            floors: property.floors || [],
+        }));
+
+    }
+
+
 
     const handleDelete = async(PropertyId: string) => {
         try{
@@ -153,47 +167,62 @@ const HouseManagement = () => {
         }
     }
 
-
-
-  const getTours = async()=> {
-    const response = await axios.get('/api/tours');
-    if(response.status === 200){
-      setTours(response.data);
-    }
-    console.log(response.data);
-  }
-
-
-  const postData = async(data: any)=>{
-    try{
-      if(mode == 'create'){
-        const response = await axios.post('/api/tours',data);
-        console.log("data : ",response);
-      }
-      else{
-        const respose = await axios.put(`/api/tours/${data._id}`, data);
-        if(respose.status == 200){
-          getTours();
+    useEffect(() => {
+        if(open === false){
+            setPropertyForm({
+                name: '',
+            images: [],
+            video: '',
+            description: '',
+            address: '',
+            zipCode: '',
+            country: '',
+            state: '',
+            city: '',
+            sold: false,
+            status: '',
+            agent: '',
+            propertyPrices: {
+                propertyPrice: 0,
+                unitPrice: 0,
+                beforePriceLabel: 0,
+                afterPriceLabel: 0,
+            },
+            additionalInformation: {
+                propertySize: '',
+                landArea: '',
+                rooms: 0,
+                bedrooms: 0,
+                bathrooms: 0,
+                garages: 0,
+                garageSize: '',
+                yearBuilt: ''
+            },
+            amenities: [],
+            floors: [{
+                floorNumber: 0,
+                floorImage: '',
+                floorPrice: 0,
+                floorSize: 0,
+                bedrooms: 0,
+                bathrooms: 0,
+            }],
+            })
         }
-      }
-    }
-    catch(error){
-      console.log(error);
-    }
-  }
+    },[open]);
 
 
   return (
     <div className="space-y-6">
+          <PropertyFormModal initialForm={propertyForm} mode={mode} open={open} setOpen={setOpen}/>
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
         <h1 className="text-2xl font-bold text-foreground">Property Management</h1>
         <p className="text-muted-foreground text-sm">Create and manage Properties</p>
       </div>
-      <button onClick={()=> setIsOpen(true)} style={{borderRadius: '5px'}} className="bg-[#cbcd30] cursor-pointer flex items-center justify-center p-2 hover:bg-primary/90">
+      <button onClick={()=> {setMode('add'); setOpen(true)}} style={{borderRadius: '5px'}} className="bg-[#cbcd30] cursor-pointer flex items-center justify-center p-2 hover:bg-primary/90">
         <Plus className="h-4 w-4 mr-2" /> Add Property
         <div className="">
-          <PropertyFormModal initialForm={propertyForm} mode={'add'}/>
         </div>
       </button>
     </div>
@@ -280,7 +309,12 @@ const HouseManagement = () => {
                                                             </Link>
                                                         </div>
                                                         <div className="actions">
-                                                                <PropertyFormModal initialForm={property} mode={'edit'}/>
+                                                                  <button onClick={() => { handleEdit(property); setMode('edit'); setOpen(true)}} className="edit flex gap-1">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                                                        <path d="M6.41421 15.89L16.5563 5.74785L15.1421 4.33363L5 14.4758V15.89H6.41421ZM7.24264 17.89H3V13.6473L14.435 2.21231C14.8256 1.82179 15.4587 1.82179 15.8492 2.21231L18.6777 5.04074C19.0682 5.43126 19.0682 6.06443 18.6777 6.45495L7.24264 17.89ZM3 19.89H21V21.89H3V19.89Z" />
+                                                                    </svg>{" "}
+                                                                    Edit
+                                                                </button>
                                                             <button className="sold flex gap-1 mt-2">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                                                                     <path d="M7.0943 5.68009L18.3199 16.9057C19.3736 15.5506 20 13.8491 20 12C20 7.58172 16.4183 4 12 4C10.1509 4 8.44939 4.62644 7.0943 5.68009ZM16.9057 18.3199L5.68009 7.0943C4.62644 8.44939 4 10.1509 4 12C4 16.4183 7.58172 20 12 20C13.8491 20 15.5506 19.3736 16.9057 18.3199ZM4.92893 4.92893C6.73748 3.12038 9.23885 2 12 2C17.5228 2 22 6.47715 22 12C22 14.7611 20.8796 17.2625 19.0711 19.0711C17.2625 20.8796 14.7611 22 12 22C6.47715 22 2 17.5228 2 12C2 9.23885 3.12038 6.73748 4.92893 4.92893Z" />

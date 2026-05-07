@@ -11,7 +11,7 @@ export default function Footer3() {
                                 <div className="footer-top-area">
                                     <div className="img1">
                                         <Link href="/">
-                                            <img src="/assets/img/logo/logo4.png" alt="housebox" />
+                                            <img src="/assets/img/logo/logo6.png" alt="housebox" />
                                         </Link>
                                     </div>
                                     <div className="pera">

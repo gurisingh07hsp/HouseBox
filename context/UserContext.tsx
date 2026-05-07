@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
-
+import { useRouter } from "next/navigation";
 type User = {
   _id?: string;
   name: string;
@@ -26,6 +26,7 @@ const UserContext = createContext<UserContextType | null>(null);
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   // ✅ Fetch user from backend
   const fetchUser = async () => {
@@ -46,6 +47,8 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const logout = async () => {
     await axios.post("/api/auth/logout");
     setUser(null);
+    router.push('/');
+
   };
 
   useEffect(() => {
