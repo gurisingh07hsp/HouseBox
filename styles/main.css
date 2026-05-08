@@ -720,7 +720,9 @@ Location:
 }
 
 .theme-btn1 {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    width: fit-content;
     padding: 14px 16.57px;
     color: var(--ztc-text-text-2);
     font-size: var(--ztc-font-size-font-s12);

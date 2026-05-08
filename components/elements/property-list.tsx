@@ -3,6 +3,7 @@ import { addPerPage, addSort } from "@/features/filter/filterSlice";
 import { toggleFavoriteProperty } from "@/features/property/propertySlice";
 import type { RootState } from "@/features/store";
 import axios from "axios";
+import { IndianRupeeIcon } from "lucide-react";
 import Link from "next/link";
 import type React from "react";
 import { useCallback, useEffect, useState } from "react";
@@ -360,8 +361,8 @@ export default function PropertyList({ view }: any) {
                         </li>
                     </ul>
                     <div className="btn-area">
-                        <Link href="#" className="nm-btn">
-                            ${property.propertyPrices.propertyPrice.toLocaleString()}
+                        <Link href="#" className="nm-btn" style={{display: 'flex', alignItems: 'center'}}>
+                            <IndianRupeeIcon size={16}/>{property.propertyPrices.propertyPrice.toLocaleString()}
                         </Link>
                         {/* <Link href="#" className="heart" onClick={(e) => handleFavoriteToggle(e, property._id)}>
                             <img src="/assets/img/icons/heart1.svg" alt="favorite" className={`heart1 ${favoriteProperties.includes(property._id) ? "d-none" : ""}`} />
@@ -439,8 +440,8 @@ export default function PropertyList({ view }: any) {
                                         </>
                                     )} */}
                                 </div>
-                                <Link href="#" className="nm-btn">
-                                    ${property.propertyPrices.propertyPrice.toLocaleString()}
+                                <Link href="#" className="nm-btn" style={{display: 'flex', alignItems: 'center'}}>
+                                    <IndianRupeeIcon size={16}/>{property.propertyPrices.propertyPrice.toLocaleString()}
                                 </Link>
                             </div>
                         </div>

@@ -200,7 +200,10 @@ export async function POST(req: Request) {
   await connectDB();
   try {
     const propertyForm = await req.json();
+    console.log("Received Property Form:", propertyForm);
     const property = await Property.create(propertyForm);
+
+    console.log("New Property Added:", property);
 
     return NextResponse.json(property);
   } catch (error) {

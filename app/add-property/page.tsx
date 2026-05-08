@@ -130,13 +130,13 @@ export default function AddProperty() {
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="hero-header-area text-center">
-                                        <Link href="/">
+                                        {/* <Link href="/">
                                             Home{" "}
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                                                 <path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z"></path>
                                             </svg>{" "}
                                             Add Property
-                                        </Link>
+                                        </Link> */}
                                         <div className="space24" />
                                         <h1>Add Property</h1>
                                     </div>
@@ -991,7 +991,7 @@ export default function AddProperty() {
                                         </div>
                                     </div> */}
                                     <div className="space48" />
-                                    <div className="btn-area1 text-center">
+                                    <div className="btn-area1 text-center flex justify-center">
                                         <button onClick={postData} className="theme-btn1">
                                             Add Property{" "}
                                             <span className="arrow1">

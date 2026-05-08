@@ -1,4 +1,5 @@
 "use client";
+import { IndianRupeeIcon } from "lucide-react";
 import Link from "next/link";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -144,7 +145,7 @@ export default function Properties3() {
                                                             </li>
                                                         </ul>
                                                         <div className="content-area">
-                                                            <Link href="/property-details-v1" className="head">
+                                                            <Link href="/property-details-v1" className="text-xl text-black text-bold hover:text-blue-500">
                                                                 The Parkview Residence
                                                             </Link>
                                                             <div className="space16" />
@@ -185,7 +186,10 @@ export default function Properties3() {
                                                             <div className="space24" />
                                                             <div className="btn-area">
                                                                 <div className="nm-btn">
-                                                                    <Link href="#">$820,000</Link>
+                                                                      <Link href="#" style={{display: 'flex', alignItems: 'center', width: 'fit-content'}}>
+                                                                        <IndianRupeeIcon size={16} />
+                                                                        820,000
+                                                                    </Link>
                                                                 </div>
                                                                 <div style={{display: 'flex', alignItems: 'center', gap: '5px'}} className="love-share">
                                                                     <Link href="#" className="heart flex justify-center items-center">
@@ -215,7 +219,7 @@ export default function Properties3() {
                                                             </li>
                                                         </ul>
                                                         <div className="content-area">
-                                                            <Link href="/property-details-v1" className="head">
+                                                            <Link href="/property-details-v1" className="text-xl text-black text-bold">
                                                                 The Grand Horizon
                                                             </Link>
                                                             <div className="space16" />
@@ -256,7 +260,10 @@ export default function Properties3() {
                                                             <div className="space24" />
                                                             <div className="btn-area">
                                                                 <div className="nm-btn">
-                                                                    <Link href="#">$820,000</Link>
+                                                                       <Link href="#" style={{display: 'flex', alignItems: 'center', width: 'fit-content'}}>
+                                                                        <IndianRupeeIcon size={16} />
+                                                                        820,000
+                                                                    </Link>
                                                                 </div>
                                                                  <div style={{display: 'flex', alignItems: 'center', gap: '5px'}} className="love-share">
                                                                     <Link href="#" className="heart flex justify-center items-center">
@@ -299,7 +306,7 @@ export default function Properties3() {
                                                             </li>
                                                         </ul>
                                                         <div className="content-area">
-                                                            <Link href="/property-details-v1" className="head">
+                                                            <Link href="/property-details-v1" className="text-xl text-black text-bold">
                                                                 Lakeside Heights
                                                             </Link>
                                                             <div className="space16" />
@@ -340,7 +347,10 @@ export default function Properties3() {
                                                             <div className="space24" />
                                                             <div className="btn-area">
                                                                 <div className="nm-btn">
-                                                                    <Link href="#">$820,000</Link>
+                                                                       <Link href="#" style={{display: 'flex', alignItems: 'center', width: 'fit-content'}}>
+                                                                        <IndianRupeeIcon size={16} />
+                                                                        820,000
+                                                                    </Link>
                                                                 </div>
                                                                    <div style={{display: 'flex', alignItems: 'center', gap: '5px'}} className="love-share">
                                                                     <Link href="#" className="heart flex justify-center items-center">
@@ -370,7 +380,7 @@ export default function Properties3() {
                                                             </li>
                                                         </ul>
                                                         <div className="content-area">
-                                                            <Link href="/property-details-v1" className="head">
+                                                            <Link href="/property-details-v1" className="text-xl text-black text-bold">
                                                                 The Emerald Bay
                                                             </Link>
                                                             <div className="space16" />
@@ -411,7 +421,10 @@ export default function Properties3() {
                                                             <div className="space24" />
                                                             <div className="btn-area">
                                                                 <div className="nm-btn">
-                                                                    <Link href="#">$820,000</Link>
+                                                                       <Link href="#" style={{display: 'flex', alignItems: 'center', width: 'fit-content'}}>
+                                                                        <IndianRupeeIcon size={16} />
+                                                                        820,000
+                                                                    </Link>
                                                                 </div>
                                                                   <div style={{display: 'flex', alignItems: 'center', gap: '5px'}} className="love-share">
                                                                     <Link href="#" className="heart flex justify-center items-center">
@@ -454,7 +467,7 @@ export default function Properties3() {
                                                             </li>
                                                         </ul>
                                                         <div className="content-area">
-                                                            <Link href="/property-details-v1" className="head">
+                                                            <Link href="/property-details-v1" className="text-xl text-black text-bold">
                                                                 Willow Creek Estates
                                                             </Link>
                                                             <div className="space16" />
@@ -495,7 +508,10 @@ export default function Properties3() {
                                                             <div className="space24" />
                                                             <div className="btn-area">
                                                                 <div className="nm-btn">
-                                                                    <Link href="#">$820,000</Link>
+                                                                    <Link href="#" style={{display: 'flex', alignItems: 'center', width: 'fit-content'}}>
+                                                                        <IndianRupeeIcon size={16} />
+                                                                        820,000
+                                                                    </Link>
                                                                 </div>
                                                                 <div style={{display: 'flex', alignItems: 'center', gap: '5px'}} className="love-share">
                                                                     <Link href="#" className="heart flex justify-center items-center">
@@ -525,7 +541,7 @@ export default function Properties3() {
                                                             </li>
                                                         </ul>
                                                         <div className="content-area">
-                                                            <Link href="/property-details-v1" className="head">
+                                                            <Link href="/property-details-v1" className="text-xl text-black text-bold">
                                                                 The Skyline Haven
                                                             </Link>
                                                             <div className="space16" />
@@ -566,7 +582,10 @@ export default function Properties3() {
                                                             <div className="space24" />
                                                             <div className="btn-area">
                                                                 <div className="nm-btn">
-                                                                    <Link href="#">$820,000</Link>
+                                                                       <Link href="#" style={{display: 'flex', alignItems: 'center', width: 'fit-content'}}>
+                                                                        <IndianRupeeIcon size={16} />
+                                                                        820,000
+                                                                    </Link>
                                                                 </div>
                                                                   <div style={{display: 'flex', alignItems: 'center', gap: '5px'}} className="love-share">
                                                                     <Link href="#" className="heart flex justify-center items-center">

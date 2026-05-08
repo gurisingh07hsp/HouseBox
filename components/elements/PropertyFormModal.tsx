@@ -11,7 +11,9 @@ export default function PropertyFormModal({initialForm , mode, open, setOpen}:{i
 
 
   useEffect(()=> {
-    setPropertyForm(initialForm);
+    if(mode === 'edit'){
+        setPropertyForm(initialForm);
+    }
   },[initialForm]);
 
       const postData = async()=> {
@@ -775,7 +777,7 @@ export default function PropertyFormModal({initialForm , mode, open, setOpen}:{i
                                     </div>
                                   
                                     <div className="space48" />
-                                    <div className="btn-area1 text-center">
+                                    <div className="btn-area1 text-center flex justify-center">
                                         <button onClick={mode == 'edit' ? updateData : postData} style={{background: '#cbcd30', padding: '10px 20px', border: 'none', borderRadius: '5px', width: '170px', marginBottom: '20px'}} className="theme-btn1">
                                             {mode === 'edit' ? 'Update Property' : 'Add Property'}
                                             <span className="arrow1">

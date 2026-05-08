@@ -1,5 +1,5 @@
 'use client'
-import { Search, Plus, Edit, Trash2, Eye, Star } from "lucide-react";
+import { Search, Plus, Edit, Trash2, Eye, Star, IndianRupeeIcon } from "lucide-react";
 // import TourFormModal from "./TourForm";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -300,7 +300,10 @@ const HouseManagement = () => {
                                                                     </span>
                                                                 </p>
                                                                 <div className="space16" />
-                                                                <a className="price">${property.propertyPrices.propertyPrice.toLocaleString()}</a>
+                                                                <a className="price" style={{display: 'flex', alignItems: 'center', width: 'fit-content'}}>
+                                                                    <IndianRupeeIcon size={16} />
+                                                                    {property.propertyPrices.propertyPrice.toLocaleString()}
+                                                                </a>
                                                             </div>
                                                         </div>
                                                         <div className="status">
