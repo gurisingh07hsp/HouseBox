@@ -1,9 +1,167 @@
+'use client';
 import LineChart from "@/components/elements/line-chart";
 import Layout from "@/components/layout/Layout";
+import { RootState } from "@/features/store";
+import axios from "axios";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { useUser } from "@/context/UserContext";
+import { PropertyListItem } from "@/types/types";
+import PropertyFormModal from "@/components/elements/PropertyFormModal";
+import { useEffect, useState } from "react";
+import { IndianRupeeIcon } from "lucide-react";
+
+interface PropertyForm {
+    name: string;
+    images: any[];
+    video: string;
+    description: string;
+    address: string;
+    zipCode: string;
+    country: string;
+    state: string;
+    city: string;
+    sold: boolean;
+    status: string;
+    agent: string;
+    propertyPrices: {
+        propertyPrice: number;
+        unitPrice: number;
+        beforePriceLabel: number;
+        afterPriceLabel: number;
+    };
+    additionalInformation: {
+        propertySize: string;
+        landArea: string;
+        rooms: number;
+        bedrooms: number;
+        bathrooms: number;
+        garages: number;
+        garageSize: string;
+        yearBuilt: string;
+    };
+    amenities: string[];
+    floors: {
+        floorNumber: number;
+        floorImage: string;
+        floorPrice: number;
+        floorSize: number;
+        bedrooms: number;
+        bathrooms: number;
+    }[];
+}
+
+
 export default function Dashboard() {
+        const {user} = useUser();
+        const [properties, setProperties] = useState<PropertyListItem[]>([]);
+        const [total, setTotal] = useState(0);
+        const [open, setOpen] = useState(false);
+        const [loading, setLoading] = useState(true);
+    const [propertyFilter, setPropertyFilter] = useState({
+        keyword: "",
+    });
+            const [propertyForm, setPropertyForm] = useState<PropertyForm>({
+                name: '',
+                images: [],
+                video: '',
+                description: '',
+                address: '',
+                zipCode: '',
+                country: '',
+                state: '',
+                city: '',
+                sold: false,
+                status: '',
+                agent: '',
+                propertyPrices: {
+                    propertyPrice: 0,
+                    unitPrice: 0,
+                    beforePriceLabel: 0,
+                    afterPriceLabel: 0,
+                },
+                additionalInformation: {
+                    propertySize: '',
+                    landArea: '',
+                    rooms: 0,
+                    bedrooms: 0,
+                    bathrooms: 0,
+                    garages: 0,
+                    garageSize: '',
+                    yearBuilt: ''
+                },
+                amenities: [],
+                floors: [{
+                    floorNumber: 0,
+                    floorImage: '',
+                    floorPrice: 0,
+                    floorSize: 0,
+                    bedrooms: 0,
+                    bathrooms: 0,
+                }],
+            });
+        const { propertySort } = useSelector((state: RootState) => state.filter);
+       const fetchProperties = async() => {
+        setLoading(true);
+        try{
+            // const response = await axios.get('/api/properties');
+            const response = await axios.get("/api/properties", {
+            params: {
+                filter: JSON.stringify(propertyFilter),
+                pagination: JSON.stringify(propertySort),
+                agentId: user?._id,
+            },
+            });
+            if(response.status == 200){
+                console.log("Response Data : ", response.data);
+                setProperties(response.data.properties);
+                setTotal(response.data.total);
+            }
+        }catch(error){
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        fetchProperties();
+    },[user, propertyFilter]);
+
+            const handleEdit = (property: PropertyListItem) => {
+         setPropertyForm((prev) => ({
+            ...prev,
+            ...property,
+
+            propertyPrices: {
+            ...prev.propertyPrices,
+            ...property.propertyPrices,
+            },
+
+            additionalInformation: {
+            ...prev.additionalInformation,
+            ...property.additionalInformation,
+            },
+
+            amenities: property.amenities || [],
+
+            floors: property.floors || [],
+        }));
+
+    }
+
+
+    const handleDelete = async(PropertyId: string) => {
+        try{
+            confirm("Are you sure you want to delete this property?") && await axios.delete(`/api/properties/${PropertyId}`, {withCredentials: true});
+            fetchProperties();
+        }catch(error){
+            console.log(error);
+        }
+    }
     return (
         <>
+        <PropertyFormModal initialForm={propertyForm} mode={'edit'} open={open} setOpen={setOpen}/>
             <Layout headerStyle={3} footerStyle={3}>
                 <div>
                     <div className="hero-inner-section-area-sidebar">
@@ -50,7 +208,7 @@ export default function Dashboard() {
                                             <span>Your All Listing</span>
                                             <div className="space12" />
                                             <h3>
-                                                60 <span>/100 Remain</span>
+                                                {total} <span>/100 Remain</span>
                                             </h3>
                                         </div>
                                     </div>
@@ -66,7 +224,7 @@ export default function Dashboard() {
                                             <span>All Pending</span>
                                             <div className="space12" />
                                             <h3>
-                                                04 <span>/Pending</span>
+                                                0 <span>/Pending</span>
                                             </h3>
                                         </div>
                                     </div>
@@ -82,7 +240,7 @@ export default function Dashboard() {
                                             <span>Our Favourite</span>
                                             <div className="space12" />
                                             <h3>
-                                                08 <span>/Favourite</span>
+                                                0 <span>/Favourite</span>
                                             </h3>
                                         </div>
                                     </div>
@@ -97,7 +255,7 @@ export default function Dashboard() {
                                         <div className="text">
                                             <span>All Reviews</span>
                                             <div className="space12" />
-                                            <h3>1.567</h3>
+                                            <h3>0</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -143,7 +301,7 @@ export default function Dashboard() {
                                                 </div>
                                             </div>
                                             <div className="space28" />
-                                            <h4 className="found">60 Result Found</h4>
+                                            <h4 className="found">{total} Result Found</h4>
                                             <div className="space20" />
                                             <div className="table-container">
                                                 {/* Header */}
@@ -153,197 +311,58 @@ export default function Dashboard() {
                                                     <div>Action</div>
                                                 </div>
                                                 {/* Row 1 */}
-                                                <div className="table-row">
-                                                    <div className="listing">
-                                                        <img src="/assets/img/all-images/others/dash-img1.png" alt="Apartment Complex" />
-                                                        <div className="details">
-                                                            <Link href="/property-details-v1">Apartment Complex</Link>
-                                                            <div className="space18" />
-                                                            <p>
-                                                                <span>
-                                                                    <img src="/assets/img/icons/bed1.svg" alt="housebox" /> x2
-                                                                </span>
-                                                                <span>
-                                                                    <img src="/assets/img/icons/bath1.svg" alt="housebox" /> x2
-                                                                </span>
-                                                                <span>
-                                                                    <img src="/assets/img/icons/sqare1.svg" alt="housebox" /> 1200 sq
-                                                                </span>
-                                                            </p>
-                                                            <div className="space16" />
-                                                            <a className="price">$820,000</a>
+                                                     {properties.map((property)=> (
+                                                    <div key={property._id} className="table-row">
+                                                        <div className="listing">
+                                                            <img src="/assets/img/all-images/others/dash-img1.png" alt="Apartment Complex" />
+                                                            <div className="details">
+                                                                <Link href="/property-details-v1">{property.name}</Link>
+                                                                <div className="space18" />
+                                                                <p>
+                                                                    <span>
+                                                                        <img src="/assets/img/icons/bed1.svg" alt="housebox" /> x{property.additionalInformation.bedrooms}
+                                                                    </span>
+                                                                    <span>
+                                                                        <img src="/assets/img/icons/bath1.svg" alt="housebox" /> x{property.additionalInformation.bathrooms}
+                                                                    </span>
+                                                                    <span>
+                                                                        <img src="/assets/img/icons/sqare1.svg" alt="housebox" /> {property.additionalInformation.propertySize} sq
+                                                                    </span>
+                                                                </p>
+                                                                <div className="space16" />
+                                                                <a style={{display: 'flex', alignItems: 'center', width: 'fit-content'}} className="price"><IndianRupeeIcon size={16}  /> {property.propertyPrices.propertyPrice.toLocaleString()}</a>
+                                                            </div>
+                                                        </div>
+                                                        <div className="status">
+                                                            <Link href="/property-details-v1" className="status-badge approved">
+                                                                Approved
+                                                            </Link>
+                                                        </div>
+                                                        <div className="actions">
+                                                                    <button onClick={() => { handleEdit(property); setOpen(true)}} className="edit flex gap-1">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                                                        <path d="M6.41421 15.89L16.5563 5.74785L15.1421 4.33363L5 14.4758V15.89H6.41421ZM7.24264 17.89H3V13.6473L14.435 2.21231C14.8256 1.82179 15.4587 1.82179 15.8492 2.21231L18.6777 5.04074C19.0682 5.43126 19.0682 6.06443 18.6777 6.45495L7.24264 17.89ZM3 19.89H21V21.89H3V19.89Z" />
+                                                                    </svg>{" "}
+                                                                    Edit
+                                                                </button>
+                                                                
+                                                            <button className="sold flex gap-1 mt-2">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                                                    <path d="M7.0943 5.68009L18.3199 16.9057C19.3736 15.5506 20 13.8491 20 12C20 7.58172 16.4183 4 12 4C10.1509 4 8.44939 4.62644 7.0943 5.68009ZM16.9057 18.3199L5.68009 7.0943C4.62644 8.44939 4 10.1509 4 12C4 16.4183 7.58172 20 12 20C13.8491 20 15.5506 19.3736 16.9057 18.3199ZM4.92893 4.92893C6.73748 3.12038 9.23885 2 12 2C17.5228 2 22 6.47715 22 12C22 14.7611 20.8796 17.2625 19.0711 19.0711C17.2625 20.8796 14.7611 22 12 22C6.47715 22 2 17.5228 2 12C2 9.23885 3.12038 6.73748 4.92893 4.92893Z" />
+                                                                </svg>{" "}
+                                                                Sold
+                                                            </button>
+                                                            <button onClick={()=> handleDelete(property._id || "")} className="delete flex gap-1 mt-2">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                                                    <path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z" />
+                                                                </svg>{" "}
+                                                                Delete
+                                                            </button>
                                                         </div>
                                                     </div>
-                                                    <div className="status">
-                                                        <Link href="#" className="status-badge approved">
-                                                            Approved
-                                                        </Link>
-                                                    </div>
-                                                    <div className="actions">
-                                                        <button className="edit">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                                                <path d="M6.41421 15.89L16.5563 5.74785L15.1421 4.33363L5 14.4758V15.89H6.41421ZM7.24264 17.89H3V13.6473L14.435 2.21231C14.8256 1.82179 15.4587 1.82179 15.8492 2.21231L18.6777 5.04074C19.0682 5.43126 19.0682 6.06443 18.6777 6.45495L7.24264 17.89ZM3 19.89H21V21.89H3V19.89Z"></path>
-                                                            </svg>{" "}
-                                                            Edit
-                                                        </button>
-                                                        <button className="sold">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                                                <path d="M7.0943 5.68009L18.3199 16.9057C19.3736 15.5506 20 13.8491 20 12C20 7.58172 16.4183 4 12 4C10.1509 4 8.44939 4.62644 7.0943 5.68009ZM16.9057 18.3199L5.68009 7.0943C4.62644 8.44939 4 10.1509 4 12C4 16.4183 7.58172 20 12 20C13.8491 20 15.5506 19.3736 16.9057 18.3199ZM4.92893 4.92893C6.73748 3.12038 9.23885 2 12 2C17.5228 2 22 6.47715 22 12C22 14.7611 20.8796 17.2625 19.0711 19.0711C17.2625 20.8796 14.7611 22 12 22C6.47715 22 2 17.5228 2 12C2 9.23885 3.12038 6.73748 4.92893 4.92893Z"></path>
-                                                            </svg>{" "}
-                                                            Sold
-                                                        </button>
-                                                        <button className="delete">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                                                <path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path>
-                                                            </svg>{" "}
-                                                            Delete
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                {/* Row 2 */}
-                                                <div className="table-row">
-                                                    <div className="listing">
-                                                        <img src="/assets/img/all-images/others/dash-img2.png" alt="Apartment Complex" />
-                                                        <div className="details">
-                                                            <Link href="/property-details-v1">Luxury Green Villa</Link>
-                                                            <div className="space18" />
-                                                            <p>
-                                                                <span>
-                                                                    <img src="/assets/img/icons/bed1.svg" alt="housebox" /> x2
-                                                                </span>
-                                                                <span>
-                                                                    <img src="/assets/img/icons/bath1.svg" alt="housebox" /> x2
-                                                                </span>
-                                                                <span>
-                                                                    <img src="/assets/img/icons/sqare1.svg" alt="housebox" /> 1200 sq
-                                                                </span>
-                                                            </p>
-                                                            <div className="space16" />
-                                                            <a className="price">$820,000</a>
-                                                        </div>
-                                                    </div>
-                                                    <div className="status">
-                                                        <Link href="#" className="status-badge pending">
-                                                            Pending
-                                                        </Link>
-                                                    </div>
-                                                    <div className="actions">
-                                                        <button className="edit">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                                                <path d="M6.41421 15.89L16.5563 5.74785L15.1421 4.33363L5 14.4758V15.89H6.41421ZM7.24264 17.89H3V13.6473L14.435 2.21231C14.8256 1.82179 15.4587 1.82179 15.8492 2.21231L18.6777 5.04074C19.0682 5.43126 19.0682 6.06443 18.6777 6.45495L7.24264 17.89ZM3 19.89H21V21.89H3V19.89Z"></path>
-                                                            </svg>{" "}
-                                                            Edit
-                                                        </button>
-                                                        <button className="sold">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                                                <path d="M7.0943 5.68009L18.3199 16.9057C19.3736 15.5506 20 13.8491 20 12C20 7.58172 16.4183 4 12 4C10.1509 4 8.44939 4.62644 7.0943 5.68009ZM16.9057 18.3199L5.68009 7.0943C4.62644 8.44939 4 10.1509 4 12C4 16.4183 7.58172 20 12 20C13.8491 20 15.5506 19.3736 16.9057 18.3199ZM4.92893 4.92893C6.73748 3.12038 9.23885 2 12 2C17.5228 2 22 6.47715 22 12C22 14.7611 20.8796 17.2625 19.0711 19.0711C17.2625 20.8796 14.7611 22 12 22C6.47715 22 2 17.5228 2 12C2 9.23885 3.12038 6.73748 4.92893 4.92893Z"></path>
-                                                            </svg>{" "}
-                                                            Sold
-                                                        </button>
-                                                        <button className="delete">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                                                <path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path>
-                                                            </svg>{" "}
-                                                            Delete
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                {/* Row 3 */}
-                                                <div className="table-row">
-                                                    <div className="listing">
-                                                        <img src="/assets/img/all-images/others/dash-img3.png" alt="Apartment Complex" />
-                                                        <div className="details">
-                                                            <Link href="/property-details-v1">Four Room Apartment</Link>
-                                                            <div className="space18" />
-                                                            <p>
-                                                                <span>
-                                                                    <img src="/assets/img/icons/bed1.svg" alt="housebox" /> x2
-                                                                </span>
-                                                                <span>
-                                                                    <img src="/assets/img/icons/bath1.svg" alt="housebox" /> x2
-                                                                </span>
-                                                                <span>
-                                                                    <img src="/assets/img/icons/sqare1.svg" alt="housebox" /> 1200 sq
-                                                                </span>
-                                                            </p>
-                                                            <div className="space16" />
-                                                            <a className="price">$820,000</a>
-                                                        </div>
-                                                    </div>
-                                                    <div className="status">
-                                                        <Link href="#" className="status-badge approved">
-                                                            Approved
-                                                        </Link>
-                                                    </div>
-                                                    <div className="actions">
-                                                        <button className="edit">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                                                <path d="M6.41421 15.89L16.5563 5.74785L15.1421 4.33363L5 14.4758V15.89H6.41421ZM7.24264 17.89H3V13.6473L14.435 2.21231C14.8256 1.82179 15.4587 1.82179 15.8492 2.21231L18.6777 5.04074C19.0682 5.43126 19.0682 6.06443 18.6777 6.45495L7.24264 17.89ZM3 19.89H21V21.89H3V19.89Z"></path>
-                                                            </svg>{" "}
-                                                            Edit
-                                                        </button>
-                                                        <button className="sold">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                                                <path d="M7.0943 5.68009L18.3199 16.9057C19.3736 15.5506 20 13.8491 20 12C20 7.58172 16.4183 4 12 4C10.1509 4 8.44939 4.62644 7.0943 5.68009ZM16.9057 18.3199L5.68009 7.0943C4.62644 8.44939 4 10.1509 4 12C4 16.4183 7.58172 20 12 20C13.8491 20 15.5506 19.3736 16.9057 18.3199ZM4.92893 4.92893C6.73748 3.12038 9.23885 2 12 2C17.5228 2 22 6.47715 22 12C22 14.7611 20.8796 17.2625 19.0711 19.0711C17.2625 20.8796 14.7611 22 12 22C6.47715 22 2 17.5228 2 12C2 9.23885 3.12038 6.73748 4.92893 4.92893Z"></path>
-                                                            </svg>{" "}
-                                                            Sold
-                                                        </button>
-                                                        <button className="delete">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                                                <path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path>
-                                                            </svg>{" "}
-                                                            Delete
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                {/* Row 4 */}
-                                                <div className="table-row">
-                                                    <div className="listing">
-                                                        <img src="/assets/img/all-images/others/dash-img4.png" alt="Apartment Complex" />
-                                                        <div className="details">
-                                                            <Link href="/property-details-v1">Suburb Apartment</Link>
-                                                            <div className="space18" />
-                                                            <p>
-                                                                <span>
-                                                                    <img src="/assets/img/icons/bed1.svg" alt="housebox" /> x2
-                                                                </span>
-                                                                <span>
-                                                                    <img src="/assets/img/icons/bath1.svg" alt="housebox" /> x2
-                                                                </span>
-                                                                <span>
-                                                                    <img src="/assets/img/icons/sqare1.svg" alt="housebox" /> 1200 sq
-                                                                </span>
-                                                            </p>
-                                                            <div className="space16" />
-                                                            <a className="price">$820,000</a>
-                                                        </div>
-                                                    </div>
-                                                    <div className="status">
-                                                        <Link href="#" className="status-badge sold">
-                                                            Sold
-                                                        </Link>
-                                                    </div>
-                                                    <div className="actions">
-                                                        <button className="edit">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                                                <path d="M6.41421 15.89L16.5563 5.74785L15.1421 4.33363L5 14.4758V15.89H6.41421ZM7.24264 17.89H3V13.6473L14.435 2.21231C14.8256 1.82179 15.4587 1.82179 15.8492 2.21231L18.6777 5.04074C19.0682 5.43126 19.0682 6.06443 18.6777 6.45495L7.24264 17.89ZM3 19.89H21V21.89H3V19.89Z"></path>
-                                                            </svg>{" "}
-                                                            Edit
-                                                        </button>
-                                                        <button className="sold">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                                                <path d="M7.0943 5.68009L18.3199 16.9057C19.3736 15.5506 20 13.8491 20 12C20 7.58172 16.4183 4 12 4C10.1509 4 8.44939 4.62644 7.0943 5.68009ZM16.9057 18.3199L5.68009 7.0943C4.62644 8.44939 4 10.1509 4 12C4 16.4183 7.58172 20 12 20C13.8491 20 15.5506 19.3736 16.9057 18.3199ZM4.92893 4.92893C6.73748 3.12038 9.23885 2 12 2C17.5228 2 22 6.47715 22 12C22 14.7611 20.8796 17.2625 19.0711 19.0711C17.2625 20.8796 14.7611 22 12 22C6.47715 22 2 17.5228 2 12C2 9.23885 3.12038 6.73748 4.92893 4.92893Z"></path>
-                                                            </svg>{" "}
-                                                            Sold
-                                                        </button>
-                                                        <button className="delete">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                                                <path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path>
-                                                            </svg>{" "}
-                                                            Delete
-                                                        </button>
-                                                    </div>
-                                                </div>
+
+                                                ))}
+                        
                                             </div>
                                             <div className="col-lg-12">
                                                 <div className="pagination-area" style={{ textAlign: "start" }}>
