@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { PropertyListItem } from "@/types/types";
 import PropertyFormModal from "@/components/elements/PropertyFormModal";
 import { IndianRupeeIcon } from "lucide-react";
+import { PropertySlugify } from "@/utils/functions-utils";
 
 interface PropertyForm {
     name: string;
@@ -258,7 +259,7 @@ export default function MyProperty() {
                                                                     </span>
                                                                 </p>
                                                                 <div className="space16" />
-                                                                <a className="price" style={{display: 'flex', alignItems: 'center', width: 'fit-content'}}><IndianRupeeIcon size={16}/>{property.propertyPrices.propertyPrice.toLocaleString()}</a>
+                                                                <Link href={`/property-details/${PropertySlugify(property)}`} className="price" style={{display: 'flex', alignItems: 'center', width: 'fit-content'}}><IndianRupeeIcon size={16}/>{property.propertyPrices.propertyPrice.toLocaleString()}</Link>
                                                             </div>
                                                         </div>
                                                         <div className="status">

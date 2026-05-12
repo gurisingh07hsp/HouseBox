@@ -10,6 +10,7 @@ import { PropertyListItem } from "@/types/types";
 import PropertyFormModal from "@/components/elements/PropertyFormModal";
 import { useEffect, useState } from "react";
 import { IndianRupeeIcon } from "lucide-react";
+import { PropertySlugify } from "@/utils/functions-utils";
 
 interface PropertyForm {
     name: string;
@@ -330,7 +331,7 @@ export default function Dashboard() {
                                                                     </span>
                                                                 </p>
                                                                 <div className="space16" />
-                                                                <a style={{display: 'flex', alignItems: 'center', width: 'fit-content'}} className="price"><IndianRupeeIcon size={16}  /> {property.propertyPrices.propertyPrice.toLocaleString()}</a>
+                                                                <Link href={`/property-details/${PropertySlugify(property)}`} style={{display: 'flex', alignItems: 'center', width: 'fit-content'}} className="price"><IndianRupeeIcon size={16}  /> {property.propertyPrices.propertyPrice.toLocaleString()}</Link>
                                                             </div>
                                                         </div>
                                                         <div className="status">

@@ -19,8 +19,8 @@ import axios from "axios";
 const navItems = [
   { title: "Dashboard", path: "/admin", icon: LayoutDashboard },
   { title: "Houses", path: "/admin/houses", icon: Home },
-  { title: "Bookings", path: "/admin/bookings", icon: CalendarCheck },
-  { title: "Blog Posts", path: "/admin/blog", icon: FileText },
+  // { title: "Bookings", path: "/admin/bookings", icon: CalendarCheck },
+  { title: "Blog Posts", path: "/admin/blogs", icon: FileText },
 ];
 
 const SIDEBAR_WIDTH = 256;

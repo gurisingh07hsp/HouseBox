@@ -38,3 +38,15 @@ export interface PropertyListItem {
         bathrooms: number;
     }[],
 }
+
+export interface BlogType {
+  _id: string;
+  title: string;
+  image: string;
+  description: string;
+  content: string;
+  category: string;
+  isPublished: boolean;
+  slug: string;
+  createdAt: Date;
+}

@@ -10,74 +10,47 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { PropertySlugify } from "@/utils/functions-utils";
+import { PropertyListItem } from "@/types/types";
 
-
-// Updated interface to match the JSON structure
 // interface PropertyListItem {
-//     id: number;
-//     keyword: string;
-//     images?: {
-//         [key: string]: string;
-//     };
+//     _id: string;
+//     name: string;
+//     images: string[];
+//     video: string;
+//     description: string;
 //     address: string;
-//     city: string;
+//     zipCode: string;
+//     country: string;
 //     state: string;
-//     status: string;
-//     label: string;
-//     type: string;
-//     bedrooms: number;
-//     linkProperty: number;
-//     bathrooms: number;
-//     garages: number;
-//     rooms: number;
-//     minPrice: number;
-//     maxPrice: number;
-//     minSize: number;
-//     maxSize: number;
-//     amenities: string[];
-//     agent?: {
-//         name: string;
-//         image: string;
-//     };
+//     sold: boolean;
+//     seller: string;
+//     propertyPrices: {
+//         propertyPrice: number;
+//         unitPrice: number;
+//         beforePriceLabel: number;
+//         afterPriceLabel: number;
+//     },
+//     additionalInformation: {
+//         propertySize: string;
+//         landArea: string;
+//         rooms: number;
+//         bedrooms: number;
+//         bathrooms: number;
+//         garages: number;
+//         garageSize: string;
+//         yearBuilt: string;
+//     },
+//     amenities: string[],
+//     floors: [{
+//         floorNumber: number;
+//         floorImage: string;
+//         floorPrice: number;
+//         floorSize: number;
+//         bedrooms: number;
+//         bathrooms: number;
+//     }],
 // }
-interface PropertyListItem {
-    _id: string;
-    name: string;
-    images: string[];
-    video: string;
-    description: string;
-    address: string;
-    zipCode: string;
-    country: string;
-    state: string;
-    sold: boolean;
-    seller: string;
-    propertyPrices: {
-        propertyPrice: number;
-        unitPrice: number;
-        beforePriceLabel: number;
-        afterPriceLabel: number;
-    },
-    additionalInformation: {
-        propertySize: string;
-        landArea: string;
-        rooms: number;
-        bedrooms: number;
-        bathrooms: number;
-        garages: number;
-        garageSize: string;
-        yearBuilt: string;
-    },
-    amenities: string[],
-    floors: [{
-        floorNumber: number;
-        floorImage: string;
-        floorPrice: number;
-        floorSize: number;
-        bedrooms: number;
-        bathrooms: number;
-    }],
-}
 
 export default function PropertyList({ view }: any) {
     const dispatch = useDispatch();
@@ -336,7 +309,7 @@ export default function PropertyList({ view }: any) {
                     </ul>
                 </div>
                 <div className="content-area">
-                    <Link href={`/property-details-v-${property.name}`}>{property.name}</Link>
+                    <Link href={`/property-details/${PropertySlugify(property)}`}>{property.name}</Link>
                     <div className="space18" />
                     <p>
                         {property.address} {property.state}
@@ -361,7 +334,7 @@ export default function PropertyList({ view }: any) {
                         </li>
                     </ul>
                     <div className="btn-area">
-                        <Link href="#" className="nm-btn" style={{display: 'flex', alignItems: 'center'}}>
+                        <Link href={`/property-details/${PropertySlugify(property)}`} className="nm-btn" style={{display: 'flex', alignItems: 'center'}}>
                             <IndianRupeeIcon size={16}/>{property.propertyPrices.propertyPrice.toLocaleString()}
                         </Link>
                         {/* <Link href="#" className="heart" onClick={(e) => handleFavoriteToggle(e, property._id)}>
@@ -400,7 +373,7 @@ export default function PropertyList({ view }: any) {
                             </ul>
                         </div>
                         <div className="content-area">
-                            <Link href={`/property-details-v-${property.name}`}>{property.name}</Link>
+                            <Link href={`/property-details/${PropertySlugify(property)}`}>{property.name}</Link>
                             <div className="space18" />
                             <p className="flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -440,7 +413,7 @@ export default function PropertyList({ view }: any) {
                                         </>
                                     )} */}
                                 </div>
-                                <Link href="#" className="nm-btn" style={{display: 'flex', alignItems: 'center'}}>
+                                <Link href={`/property-details/${PropertySlugify(property)}`} className="nm-btn" style={{display: 'flex', alignItems: 'center'}}>
                                     <IndianRupeeIcon size={16}/>{property.propertyPrices.propertyPrice.toLocaleString()}
                                 </Link>
                             </div>

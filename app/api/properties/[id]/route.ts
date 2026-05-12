@@ -4,6 +4,31 @@ import Property from "@/models/Property";
 import User from "@/models/user";
 
 
+export async function GET(req: Request, {params}: {params: Promise<{id: string}>}){
+    await connectDB();
+    try{
+      const {id} = await params;
+      const property = await Property.findById(id).populate('agent', 'name email phone');
+      if(!property){
+        return NextResponse.json(
+          {message: 'Property not found'},
+          {status: 404}
+        )
+      }
+      return NextResponse.json({
+        property,
+      })
+    }catch(error){
+      return NextResponse.json(
+        {
+          message: 'Error fetching property',
+          error
+        }
+      )
+    }
+}
+
+
 export async function PUT(  req: Request,{ params }: { params: Promise<{ id: string }> }) {
   await connectDB();
   try {

@@ -4,6 +4,11 @@ import Layout from "@/components/layout/Layout";
 import Link from "next/link";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { PropertyListItem } from "@/types/types";
+import axios from "axios";
+import { IndianRupeeIcon } from "lucide-react";
 
 const swiperOptions = {
     modules: [Autoplay, Pagination, Navigation],
@@ -104,6 +109,31 @@ const swiperOptions2 = {
     },
 };
 export default function PropertyDetailsV1() {
+    const {slug} = useParams();
+    const propertyId = typeof slug === 'string' ? slug.split('-').pop() || '' : ''; // Extract the property ID from the slug
+
+    const [property, setProperty] = useState<any| null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchProperty = async () => {
+            try{
+                const response = await axios.get(`/api/properties/${propertyId}`);
+                if(response.status === 200){
+                    console.log('Property data: ', response.data);
+                    setProperty(response.data.property);
+                    setLoading(false);
+                }
+            }catch(error){
+                console.error('Error fetching property: ', error);
+            }
+            finally{
+                setLoading(false);
+            }
+        }
+        fetchProperty()
+    },[propertyId]);
+
     return (
         <>
             <Layout headerStyle={3} footerStyle={3}>
@@ -114,7 +144,7 @@ export default function PropertyDetailsV1() {
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="hero-header-area text-center">
-                                        <Link href="/">
+                                        {/* <Link href="/">
                                             Home{" "}
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                                                 <path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z" />
@@ -124,7 +154,7 @@ export default function PropertyDetailsV1() {
                                                 <path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z" />
                                             </svg>{" "}
                                             Apartment Complex
-                                        </Link>
+                                        </Link> */}
                                         <div className="space24" />
                                         <h1>Apartment Complex</h1>
                                     </div>
@@ -145,10 +175,10 @@ export default function PropertyDetailsV1() {
                                         <div className="space40" />
                                         <div className="content-area">
                                             <div className="content heading2">
-                                                <h2>Apartment Complex</h2>
+                                                <h2>{property?.name}</h2>
                                                 <ul>
                                                     <li>
-                                                        <Link href="#">$8,500</Link>
+                                                        <Link style={{display: 'flex', alignItems: 'center'}} href="#"><IndianRupeeIcon size={20}/>{property?.propertyPrices.propertyPrice.toLocaleString()}</Link>
                                                     </li>
                                                     <li>
                                                         <Link href="#">/For Sale</Link>
@@ -156,32 +186,32 @@ export default function PropertyDetailsV1() {
                                                 </ul>
                                             </div>
                                             <div className="list-area">
-                                                <div className="list">
+                                                <div style={{alignItems: 'center'}} className="list">
                                                     <ul>
                                                         <li>Features:</li>
                                                         <li>
-                                                            <Link href="#">
+                                                            <Link style={{display: 'flex', alignItems: 'center'}} href="#">
                                                                 <img src="/assets/img/icons/bed1.svg" alt="housebox" />
-                                                                x20 <span> | </span>
+                                                                x{property?.additionalInformation.bedrooms} <span> | </span>
                                                             </Link>
                                                         </li>
                                                         <li>
-                                                            <Link href="#">
+                                                            <Link style={{display: 'flex', alignItems: 'center'}} href="#">
                                                                 <img src="/assets/img/icons/bath1.svg" alt="housebox" />
-                                                                x30 <span> | </span>
+                                                                x{property?.additionalInformation.bathrooms} <span> | </span>
                                                             </Link>
                                                         </li>
                                                         <li>
-                                                            <Link href="#">
+                                                            <Link style={{display: 'flex', alignItems: 'center'}} href="#">
                                                                 <img src="/assets/img/icons/sqare1.svg" alt="housebox" />
-                                                                1200 sq
+                                                                {property?.additionalInformation.propertySize} sq
                                                             </Link>
                                                         </li>
                                                     </ul>
                                                     <ul className="m-0">
                                                         <li>Location:</li>
                                                         <li>
-                                                            <Link href="#">
+                                                            <Link style={{display: 'flex', alignItems: 'center'}} href="#">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                                                                     <path d="M12 23.7279L5.63604 17.364C2.12132 13.8492 2.12132 8.15076 5.63604 4.63604C9.15076 1.12132 14.8492 1.12132 18.364 4.63604C21.8787 8.15076 21.8787 13.8492 18.364 17.364L12 23.7279ZM16.9497 15.9497C19.6834 13.2161 19.6834 8.78392 16.9497 6.05025C14.2161 3.31658 9.78392 3.31658 7.05025 6.05025C4.31658 8.78392 4.31658 13.2161 7.05025 15.9497L12 20.8995L16.9497 15.9497ZM12 13C10.8954 13 10 12.1046 10 11C10 9.89543 10.8954 9 12 9C13.1046 9 14 9.89543 14 11C14 12.1046 13.1046 13 12 13Z" />
                                                                 </svg>{" "}
@@ -192,14 +222,14 @@ export default function PropertyDetailsV1() {
                                                 </div>
                                                 <ul className="share">
                                                     <li>
-                                                        <Link href="#">
+                                                        <Link style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} href="#">
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                                                                 <path d="M12.001 4.52853C14.35 2.42 17.98 2.49 20.2426 4.75736C22.5053 7.02472 22.583 10.637 20.4786 12.993L11.9999 21.485L3.52138 12.993C1.41705 10.637 1.49571 7.01901 3.75736 4.75736C6.02157 2.49315 9.64519 2.41687 12.001 4.52853ZM18.827 6.1701C17.3279 4.66794 14.9076 4.60701 13.337 6.01687L12.0019 7.21524L10.6661 6.01781C9.09098 4.60597 6.67506 4.66808 5.17157 6.17157C3.68183 7.66131 3.60704 10.0473 4.97993 11.6232L11.9999 18.6543L19.0201 11.6232C20.3935 10.0467 20.319 7.66525 18.827 6.1701Z" />
                                                             </svg>
                                                         </Link>
                                                     </li>
                                                     <li>
-                                                        <Link href="#">
+                                                        <Link style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} href="#">
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                                                                 <path d="M13.1202 17.0228L8.92129 14.7324C8.19135 15.5125 7.15261 16 6 16C3.79086 16 2 14.2091 2 12C2 9.79086 3.79086 8 6 8C7.15255 8 8.19125 8.48746 8.92118 9.26746L13.1202 6.97713C13.0417 6.66441 13 6.33707 13 6C13 3.79086 14.7909 2 17 2C19.2091 2 21 3.79086 21 6C21 8.20914 19.2091 10 17 10C15.8474 10 14.8087 9.51251 14.0787 8.73246L9.87977 11.0228C9.9583 11.3355 10 11.6629 10 12C10 12.3371 9.95831 12.6644 9.87981 12.9771L14.0788 15.2675C14.8087 14.4875 15.8474 14 17 14C19.2091 14 21 15.7909 21 18C21 20.2091 19.2091 22 17 22C14.7909 22 13 20.2091 13 18C13 17.6629 13.0417 17.3355 13.1202 17.0228ZM6 14C7.10457 14 8 13.1046 8 12C8 10.8954 7.10457 10 6 10C4.89543 10 4 10.8954 4 12C4 13.1046 4.89543 14 6 14ZM17 8C18.1046 8 19 7.10457 19 6C19 4.89543 18.1046 4 17 4C15.8954 4 15 4.89543 15 6C15 7.10457 15.8954 8 17 8ZM17 20C18.1046 20 19 19.1046 19 18C19 16.8954 18.1046 16 17 16C15.8954 16 15 16.8954 15 18C15 19.1046 15.8954 20 17 20Z"></path>
                                                             </svg>
@@ -243,117 +273,34 @@ export default function PropertyDetailsV1() {
                                     <div className="row">
                                         <div className="col-lg-8">
                                             <div className="details-siderbar">
-                                                <h3>Play Video</h3>
-                                                <div className="space32" />
-                                                <div className="vide-images">
-                                                    <SwiperSlide className="img1">
-                                                        <img src="/assets/img/all-images/properties/property-img33.png" alt="housebox" />
-                                                    </SwiperSlide>
-                                                    <VideoPopup />
-                                                </div>
-                                                <div className="space60" />
+                                                {property?.video && (
+                                                    <>
+                                                        <h3>Play Video</h3>
+                                                        <div className="space32" />
+                                                        <div className="vide-images">
+                                                            <SwiperSlide className="img1">
+                                                                <img src="/assets/img/all-images/properties/property-img33.png" alt="housebox" />
+                                                            </SwiperSlide>
+                                                            <VideoPopup />
+                                                        </div>
+                                                        <div className="space60" />
+                                                    </>
+                                                )}
                                                 <h3>Diamond Apartment Property Amenities</h3>
                                                 <div className="space12" />
                                                 <div className="row">
-                                                    <div className="col-lg-6 col-md-6">
-                                                        <div className="list-box">
-                                                            <div className="icon">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width={32} height={32} viewBox="0 0 32 32" fill="none">
-                                                                    <g clipPath="url(#clip0_2294_3357)">
-                                                                        <path d="M13 31.0054H5C4.46957 31.0054 3.96086 30.7947 3.58579 30.4196C3.21071 30.0445 3 29.5358 3 29.0054V3.00537C3 2.47494 3.21071 1.96623 3.58579 1.59116C3.96086 1.21608 4.46957 1.00537 5 1.00537H19C19.5304 1.00537 20.0391 1.21608 20.4142 1.59116C20.7893 1.96623 21 2.47494 21 3.00537V10" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                        <path d="M7.49997 15.5053C7.40086 15.5053 7.30398 15.5348 7.22164 15.59C7.1393 15.6452 7.07523 15.7236 7.03754 15.8152C6.99986 15.9069 6.99028 16.0077 7.01001 16.1049C7.02973 16.202 7.07789 16.2911 7.14835 16.3608C7.21881 16.4305 7.3084 16.4777 7.40574 16.4964C7.50308 16.5151 7.60377 16.5044 7.69504 16.4657C7.7863 16.4271 7.86402 16.3621 7.91831 16.2792C7.97261 16.1963 8.00103 16.0991 7.99997 16C7.99997 15.8674 7.94729 15.7402 7.85352 15.6464C7.75976 15.5527 7.63258 15.5 7.49997 15.5" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                        <path d="M27 21.0054H19C17.8954 21.0054 17 21.9008 17 23.0054V29.0054C17 30.1099 17.8954 31.0054 19 31.0054H27C28.1046 31.0054 29 30.1099 29 29.0054V23.0054C29 21.9008 28.1046 21.0054 27 21.0054Z" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                        <path d="M19 21.0054V19.0054C19 17.9445 19.4214 16.9271 20.1716 16.1769C20.9217 15.4268 21.9391 15.0054 23 15.0054C24.0609 15.0054 25.0783 15.4268 25.8284 16.1769C26.5786 16.9271 27 17.9445 27 19.0054V21.0054" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                        <path d="M23 25.5054C22.9011 25.5054 22.8044 25.5347 22.7222 25.5896C22.64 25.6446 22.5759 25.7227 22.5381 25.814C22.5002 25.9054 22.4903 26.0059 22.5096 26.1029C22.5289 26.1999 22.5765 26.289 22.6464 26.3589C22.7164 26.4289 22.8055 26.4765 22.9025 26.4958C22.9994 26.5151 23.1 26.5052 23.1913 26.4673C23.2827 26.4295 23.3608 26.3654 23.4157 26.2832C23.4707 26.2009 23.5 26.1043 23.5 26.0054C23.5 25.8728 23.4473 25.7456 23.3536 25.6518C23.2598 25.558 23.1326 25.5054 23 25.5054Z" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                    </g>
-                                                                    <defs>
-                                                                        <clipPath id="clip0_2294_3357">
-                                                                            <rect width={32} height={32} fill="white" />
-                                                                        </clipPath>
-                                                                    </defs>
-                                                                </svg>
+                                                    <div className="grid grid-cols-2 gap-x-4">
+                                                        {property?.amenities.map((amenity: any, index: number)=> (
+                                                            <div key={index} className="list-box">
+                                                                <div className="text">
+                                                                    <p>{amenity}</p>
+                                                                </div>
                                                             </div>
-                                                            <div className="text">
-                                                                <p>Lock On Bedroom </p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="list-box">
-                                                            <div className="icon">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width={32} height={32} viewBox="0 0 32 32" fill="none">
-                                                                    <g clipPath="url(#clip0_2294_3387)">
-                                                                        <path
-                                                                            d="M14.9995 22.9998L10.7329 18.5545C10.3595 18.1796 10.1136 17.6968 10.0298 17.1745C9.94609 16.6521 10.0288 16.1166 10.2662 15.6438C10.4447 15.2864 10.7057 14.9766 11.0275 14.7399C11.3493 14.5032 11.7228 14.3464 12.1172 14.2825C12.5115 14.2185 12.9155 14.2493 13.2956 14.3721C13.6757 14.495 14.0212 14.7065 14.3035 14.9892L14.9995 15.6852L15.6955 14.9892C15.9779 14.7065 16.3233 14.495 16.7035 14.3721C17.0836 14.2493 17.4875 14.2185 17.8819 14.2825C18.2762 14.3464 18.6497 14.5032 18.9715 14.7399C19.2934 14.9766 19.5543 15.2864 19.7329 15.6438C19.9696 16.1171 20.0514 16.653 19.9667 17.1754C19.882 17.6977 19.6351 18.1802 19.2609 18.5545L14.9995 22.9998Z"
-                                                                            stroke="#073B3A"
-                                                                            strokeWidth={2}
-                                                                            strokeLinecap="round"
-                                                                            strokeLinejoin="round"
-                                                                        />
-                                                                        <path d="M3 12V30" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                        <path d="M26.9961 19.9998H30.0001C30.2648 19.9998 30.5188 19.8948 30.7063 19.7078C30.8937 19.5209 30.9994 19.2672 31.0001 19.0025C31.0108 13.8945 31.0374 7.72512 28.9214 2.61712C28.8329 2.4033 28.673 2.22679 28.469 2.11767C28.2649 2.00855 28.0293 1.97358 27.8024 2.01872C27.5754 2.06386 27.3711 2.18632 27.2243 2.36522C27.0776 2.54412 26.9974 2.76838 26.9974 2.99979V29.9998" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                        <path d="M1 2V10C1 10.5304 1.21071 11.0391 1.58579 11.4142C1.96086 11.7893 2.46957 12 3 12C3.53043 12 4.03914 11.7893 4.41421 11.4142C4.78929 11.0391 5 10.5304 5 10V2" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                        <path d="M22 11.4202C21.1047 10.4594 20.0211 9.69318 18.8169 9.16927C17.6126 8.64537 16.3133 8.375 15 8.375C13.6867 8.375 12.3874 8.64537 11.1832 9.16927C9.97886 9.69318 8.89532 10.4594 8 11.4202" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                        <path d="M8 24.5801C8.89532 25.5409 9.97886 26.3071 11.1832 26.831C12.3874 27.3549 13.6867 27.6253 15 27.6253C16.3133 27.6253 17.6126 27.3549 18.8169 26.831C20.0211 26.3071 21.1047 25.5409 22 24.5801" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                    </g>
-                                                                    <defs>
-                                                                        <clipPath id="clip0_2294_3387">
-                                                                            <rect width={32} height={32} fill="white" />
-                                                                        </clipPath>
-                                                                    </defs>
-                                                                </svg>
-                                                            </div>
-                                                            <div className="text">
-                                                                <p>Outdoor Dining Area</p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="list-box">
-                                                            <div className="icon">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width={32} height={32} viewBox="0 0 32 32" fill="none">
-                                                                    <g clipPath="url(#clip0_2295_4098)">
-                                                                        <path d="M27.1244 1H5.67441C3.5205 1 1.77441 2.79086 1.77441 5V11C1.77441 13.2091 3.5205 15 5.67441 15H27.1244C29.2783 15 31.0244 13.2091 31.0244 11V5C31.0244 2.79086 29.2783 1 27.1244 1Z" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                        <path d="M7.625 5H25.175" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                        <path d="M25.1748 11H7.6248C7.10763 11 6.61164 11.2107 6.24595 11.5858C5.88025 11.9609 5.6748 12.4696 5.6748 13V15H27.1248V13C27.1248 12.4696 26.9194 11.9609 26.5537 11.5858C26.188 11.2107 25.692 11 25.1748 11Z" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                        <path d="M7.6248 19C7.6248 19 5.6748 19 5.6748 22C5.6748 25 7.6248 25 7.6248 28C7.6248 31 5.6748 31 5.6748 31" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                        <path d="M27.1248 19C27.1248 19 25.1748 19 25.1748 22C25.1748 25 27.1248 25 27.1248 28C27.1248 31 25.1748 31 25.1748 31" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                        <path d="M16.3994 21V29" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                        <path d="M13.0225 23L19.7773 27" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                        <path d="M13.0225 27L19.7773 23" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                    </g>
-                                                                    <defs>
-                                                                        <clipPath id="clip0_2295_4098">
-                                                                            <rect width="31.2" height={32} fill="white" transform="translate(0.799805)" />
-                                                                        </clipPath>
-                                                                    </defs>
-                                                                </svg>
-                                                            </div>
-                                                            <div className="text">
-                                                                <p>Air Conditioning</p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="list-box">
-                                                            <div className="icon">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width={32} height={32} viewBox="0 0 32 32" fill="none">
-                                                                    <g clipPath="url(#clip0_2294_3400)">
-                                                                        <path d="M2 15L4 24" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                        <path d="M2 31L4 24H8C8.53043 24 9.03914 24.2107 9.41421 24.5858C9.78929 24.9609 10 25.4696 10 26V31" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                        <path d="M30 15L28 24" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                        <path d="M30 31L28 24H24C23.4696 24 22.9609 24.2107 22.5858 24.5858C22.2107 24.9609 22 25.4696 22 26V31" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                        <path d="M16 9V31" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                        <path d="M9 18H23" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                        <path d="M2.00078 9.0002C1.77682 8.99994 1.55944 8.9245 1.38346 8.78599C1.20748 8.64747 1.08309 8.4539 1.03022 8.23627C0.977349 8.01865 0.999062 7.78957 1.09188 7.58576C1.18469 7.38194 1.34324 7.21518 1.54211 7.1122L15.0208 1.25753C15.32 1.08933 15.6575 1.00098 16.0008 1.00098C16.344 1.00098 16.6815 1.08933 16.9808 1.25753L30.4594 7.1122C30.6583 7.21518 30.8169 7.38194 30.9097 7.58576C31.0025 7.78957 31.0242 8.01865 30.9713 8.23627C30.9185 8.4539 30.7941 8.64747 30.6181 8.78599C30.4421 8.9245 30.2247 8.99994 30.0008 9.0002H2.00078Z" stroke="#073B3A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                                    </g>
-                                                                    <defs>
-                                                                        <clipPath id="clip0_2294_3400">
-                                                                            <rect width={32} height={32} fill="white" />
-                                                                        </clipPath>
-                                                                    </defs>
-                                                                </svg>
-                                                            </div>
-                                                            <div className="text">
-                                                                <p>Patio Or Balcony</p>
-                                                            </div>
-                                                        </div>
+                                                        ))}
+                                                    
+
                                                     </div>
-                                                    <div className="col-lg-6 col-md-6">
+                                                    {/* <div className="col-lg-6 col-md-6">
                                                         <div className="list-box">
                                                             <div className="icon">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width={32} height={32} viewBox="0 0 32 32" fill="none">
@@ -427,10 +374,10 @@ export default function PropertyDetailsV1() {
                                                                 <p>Sun Loungers</p>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> */}
                                                 </div>
-                                                <div className="space60" />
-                                                <div className="download-box">
+                                                {/* <div className="space60" /> */}
+                                                {/* <div className="download-box">
                                                     <h3>Apartment Complex File</h3>
                                                     <div className="space28" />
                                                     <div className="download">
@@ -453,18 +400,18 @@ export default function PropertyDetailsV1() {
                                                             </svg>
                                                         </Link>
                                                     </div>
-                                                </div>
-                                                <div className="space60" />
+                                                </div> */}
+                                                {/* <div className="space60" />
                                                 <h3>Explore 360° View</h3>
-                                                <div className="space32" />
-                                                <div className="rotate-images">
+                                                <div className="space32" /> */}
+                                                {/* <div className="rotate-images">
                                                     <SwiperSlide className="img1">
                                                         <img src="/assets/img/all-images/properties/property-img34.png" alt="housebox" />
                                                     </SwiperSlide>
                                                     <Link href="#">
                                                         <img src="/assets/img/icons/rotate.svg" alt="housebox" />
                                                     </Link>
-                                                </div>
+                                                </div> */}
                                                 <div className="space60" />
                                                 <h3>Map Locations</h3>
                                                 <div className="space32" />
@@ -475,21 +422,20 @@ export default function PropertyDetailsV1() {
                                                         <ul>
                                                             <li>
                                                                 <span>Address:</span>
-                                                                <div>CA, USA</div>
+                                                                <div>{property?.address}</div>
                                                             </li>
                                                             <li>
                                                                 <span>City:</span>
-                                                                <div>Los Angeles</div>
+                                                                <div>{property?.city}</div>
                                                             </li>
                                                         </ul>
                                                         <ul className="m-0 ">
                                                             <li>
                                                                 <span>Postal Code:</span>
-                                                                <div>CA, USA</div>
+                                                                <div>{property?.zipCode}</div>
                                                             </li>
                                                             <li>
-                                                                <span>Area Name:</span>
-                                                                <div>Los Angeles</div>
+                                                                
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -499,68 +445,43 @@ export default function PropertyDetailsV1() {
                                                 <div className="space32" />
                                                 <div className="accordion-area">
                                                     <div className="accordion accordion-flush" id="accordionFlushExample">
-                                                        <div className="accordion-item">
-                                                            <h2 className="accordion-header">
-                                                                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                                                    <span>First Floor</span>
-                                                                    <span className="list">
-                                                                        <span>
-                                                                            <img src="/assets/img/icons/bed1.svg" alt="housebox" />
-                                                                            x20
+                                                        {property?.floors.map((floor: any, index: number)=> (
+                                                            <div key={index} className="accordion-item">
+                                                                <h2 className="accordion-header">
+                                                                    <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                                        <span>{floor.floorNumber} Floor</span>
+                                                                        <span className="list">
+                                                                            <span>
+                                                                                <img src="/assets/img/icons/bed1.svg" alt="housebox" />
+                                                                                x{floor.bedrooms}
+                                                                            </span>
+                                                                            <span>
+                                                                                <img src="/assets/img/icons/bath1.svg" alt="housebox" />
+                                                                                x{floor.bathrooms}
+                                                                            </span>
+                                                                            <span>
+                                                                                <img src="/assets/img/icons/sqare1.svg" alt="housebox" />
+                                                                                {floor.floorSize} sq
+                                                                            </span>
                                                                         </span>
-                                                                        <span>
-                                                                            <img src="/assets/img/icons/bath1.svg" alt="housebox" />
-                                                                            x30
-                                                                        </span>
-                                                                        <span>
-                                                                            <img src="/assets/img/icons/sqare1.svg" alt="housebox" />
-                                                                            1200 sq
-                                                                        </span>
-                                                                    </span>
-                                                                </button>
-                                                            </h2>
-                                                            <div id="flush-collapseOne" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                                                <div className="accordion-body">
-                                                                    <SwiperSlide className="img1">
-                                                                        <img src="/assets/img/all-images/others/map-img1.png" alt="housebox" />
-                                                                    </SwiperSlide>
+                                                                    </button>
+                                                                </h2>
+                                                                <div id="flush-collapseOne" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                                                    <div className="accordion-body">
+                                                                        <SwiperSlide className="img1">
+                                                                            <img src="/assets/img/all-images/others/map-img1.png" alt="housebox" />
+                                                                        </SwiperSlide>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div className="accordion-item">
-                                                            <h2 className="accordion-header">
-                                                                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                                                                    <span>Second Floor</span>
-                                                                    <span className="list">
-                                                                        <span>
-                                                                            <img src="/assets/img/icons/bed1.svg" alt="housebox" />
-                                                                            x20
-                                                                        </span>
-                                                                        <span>
-                                                                            <img src="/assets/img/icons/bath1.svg" alt="housebox" />
-                                                                            x30
-                                                                        </span>
-                                                                        <span>
-                                                                            <img src="/assets/img/icons/sqare1.svg" alt="housebox" />
-                                                                            1200 sq
-                                                                        </span>
-                                                                    </span>
-                                                                </button>
-                                                            </h2>
-                                                            <div id="flush-collapseTwo" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                                                <div className="accordion-body">
-                                                                    <SwiperSlide className="img1">
-                                                                        <img src="/assets/img/all-images/others/map-img1.png" alt="housebox" />
-                                                                    </SwiperSlide>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+
+                                                        ))}
                                                     </div>
                                                 </div>
-                                                <div className="space60" />
-                                                <h3>Comments (2)</h3>
+                                                {/* <div className="space60" />
+                                                <h3>Comments (2)</h3> */}
                                                 <div className="space30" />
-                                                <div className="comments-boxarea">
+                                                {/* <div className="comments-boxarea">
                                                     <div className="comments-boxes">
                                                         <div className="comments-auhtor-box">
                                                             <div className="img3">
@@ -584,9 +505,9 @@ export default function PropertyDetailsV1() {
                                                     </div>
                                                     <div className="space16" />
                                                     <p>Thank you for exploring our properties! We value your feedback questions about our listings. Whether you're interested in scheduling a tour, learning more about our locations, or discovering the amenities we offer, this is the.</p>
-                                                </div>
-                                                <div className="space30" />
-                                                <div className="comments-boxarea box2">
+                                                </div> */}
+                                                {/* <div className="space30" /> */}
+                                                {/* <div className="comments-boxarea box2">
                                                     <div className="comments-boxes">
                                                         <div className="comments-auhtor-box">
                                                             <div className="img3">
@@ -610,7 +531,7 @@ export default function PropertyDetailsV1() {
                                                     </div>
                                                     <div className="space16" />
                                                     <p>Thank you so much for your interest and thoughtful comment! We’re the thrilled to hear you’re considering our properties and would love to best assist you further. If you’re interested in a specific listing, we’d be happy.</p>
-                                                </div>
+                                                </div> */}
                                                 <div className="space60" />
                                                 <h3>Leave A Reply Now</h3>
                                                 <div className="space32" />
@@ -661,21 +582,21 @@ export default function PropertyDetailsV1() {
                                                     <h4>Contact Seller</h4>
                                                     <div className="space24" />
                                                     <div className="personal-info">
-                                                        <img src="/assets/img/all-images/blog/blog-img17.png" alt="housebox" />
+                                                        {/* <img src="/assets/img/all-images/blog/blog-img17.png" alt="housebox" /> */}
                                                         <div className="content">
-                                                            <Link href="#">Ruhul Amin Jr</Link>
-                                                            <Link href="mailto:ruhulaminjr@.com">
+                                                            <Link href="#">{property?.agent.name}</Link>
+                                                            <Link style={{display: 'flex', alignItems: 'center'}} href={`mailto:${property?.agent.email}`}>
                                                                 {" "}
                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                                                                     <path d="M3 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3ZM20 7.23792L12.0718 14.338L4 7.21594V19H20V7.23792ZM4.51146 5L12.0619 11.662L19.501 5H4.51146Z" />
                                                                 </svg>
-                                                                ruhulaminjr@.com
+                                                                {property?.agent.email}
                                                             </Link>
-                                                            <Link href="tel:(234)345-4574">
+                                                            <Link style={{display: 'flex', alignItems: 'center'}} href={`tel:${property?.agent.phone}`}>
                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                                                                     <path d="M9.36556 10.6821C10.302 12.3288 11.6712 13.698 13.3179 14.6344L14.2024 13.3961C14.4965 12.9845 15.0516 12.8573 15.4956 13.0998C16.9024 13.8683 18.4571 14.3353 20.0789 14.4637C20.599 14.5049 21 14.9389 21 15.4606V19.9234C21 20.4361 20.6122 20.8657 20.1022 20.9181C19.5723 20.9726 19.0377 21 18.5 21C9.93959 21 3 14.0604 3 5.5C3 4.96227 3.02742 4.42771 3.08189 3.89776C3.1343 3.38775 3.56394 3 4.07665 3H8.53942C9.0611 3 9.49513 3.40104 9.5363 3.92109C9.66467 5.54288 10.1317 7.09764 10.9002 8.50444C11.1427 8.9484 11.0155 9.50354 10.6039 9.79757L9.36556 10.6821ZM6.84425 10.0252L8.7442 8.66809C8.20547 7.50514 7.83628 6.27183 7.64727 5H5.00907C5.00303 5.16632 5 5.333 5 5.5C5 12.9558 11.0442 19 18.5 19C18.667 19 18.8337 18.997 19 18.9909V16.3527C17.7282 16.1637 16.4949 15.7945 15.3319 15.2558L13.9748 17.1558C13.4258 16.9425 12.8956 16.6915 12.3874 16.4061L12.3293 16.373C10.3697 15.2587 8.74134 13.6303 7.627 11.6707L7.59394 11.6126C7.30849 11.1044 7.05754 10.5742 6.84425 10.0252Z"></path>
                                                                 </svg>
-                                                                (234) 345-4574
+                                                                {property?.agent.phone}
                                                             </Link>
                                                         </div>
                                                     </div>
@@ -684,7 +605,7 @@ export default function PropertyDetailsV1() {
                                                         <input type="text" placeholder="Full Name" />
                                                     </div>
                                                     <div className="input-area">
-                                                        <input type="number" placeholder="Phone Number" />
+                                                        <input type="text" placeholder="Phone Number" />
                                                     </div>
                                                     <div className="input-area">
                                                         <input type="email" placeholder="Email Address" />
