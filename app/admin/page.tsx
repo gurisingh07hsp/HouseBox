@@ -169,7 +169,7 @@ export default function Page() {
                             <div className="row">
                                 <div className="col-lg-4 m-auto">
                                     <div className="heading1 text-center">
-                                        <h1>Show Dashboard</h1>
+                                        <h2>Dashboard</h2>
                                     </div>
                                     <div className="space40" />
                                 </div>
@@ -186,7 +186,7 @@ export default function Page() {
                                             <span>Your All Listing</span>
                                             <div className="space12" />
                                             <h3>
-                                                {total} <span>/100 Remain</span>
+                                                {total}
                                             </h3>
                                         </div>
                                     </div>
@@ -256,26 +256,18 @@ export default function Page() {
                                                     </form>
                                                 </div>
                                             </div>
-                                            <div className="col-lg-4 col-md-6">
+                                            {/* <div className="col-lg-4 col-md-6">
                                                 <div className="input-area">
                                                     <form>
                                                         <input type="date" />
                                                     </form>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                             <div className="col-lg-4 col-md-6">
-                                                <div className="input-area">
-                                                    <div className="nice-select" tabIndex={0}>
-                                                        <span className="current">Select</span>
-                                                        <ul className="list">
-                                                            <li data-value={1} className="option">
-                                                                Today
-                                                            </li>
-                                                            <li data-value={2} className="option selected">
-                                                                Yesterday
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                                 <div className="input-area">
+                                                    <form>
+                                                        <input type="text" placeholder="City"/>
+                                                    </form>
                                                 </div>
                                             </div>
                                             <div className="space28" />

@@ -217,7 +217,7 @@ const HouseManagement = () => {
           <PropertyFormModal initialForm={propertyForm} mode={mode} open={open} setOpen={setOpen}/>
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
-        <h1 className="text-2xl font-bold text-foreground">Property Management</h1>
+        <h4 className="font-bold text-foreground">Property Management</h4>
         <p className="text-muted-foreground text-sm">Create and manage Properties</p>
       </div>
       <button onClick={()=> {setMode('add'); setOpen(true)}} style={{borderRadius: '5px'}} className="bg-[#cbcd30] cursor-pointer flex items-center justify-center p-2 hover:bg-primary/90">
@@ -234,7 +234,7 @@ const HouseManagement = () => {
                                 <div className="col-lg-12">
                                     <div className="space30" />
                                     <div className="dashboad-all-details-section">
-                                        <h3>New Listing</h3>
+                                        <h5>New Listing</h5>
                                         <div className="row">
                                             <div className="col-lg-4 col-md-6">
                                                 <div className="input-area">

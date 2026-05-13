@@ -1,10 +1,14 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import { useUser } from "@/context/UserContext";
+import AuthModal from "../elements/authModal";
 export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
     const [isAccordion, setIsAccordion] = useState(0);
+    const { user,logout } = useUser();
+    const [isOpen, setIsOpen] = useState(false);
     const handleAccordion = (key: any) => {
-        setIsAccordion((prevState) => (prevState === key ? null : key));
+        setIsAccordion(key);
     };
     return (
         <>
@@ -15,35 +19,41 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
                             <div className="mobile-header-elements">
                                 <div className="mobile-logo">
                                     <Link href="/">
-                                        <img src="/assets/img/logo/logo1.png" alt="housebox" />
+                                        <img src="/assets/img/logo/logo6.png" alt="housebox" />
                                     </Link>
                                 </div>
                                 <div className="mobile-right d-flex gap-1 align-items-center">
-                                    <Link className="circle-button user-icon" href="/my-profile">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width={14} height={14} viewBox="0 0 14 14" fill="none">
-                                            <g clipPath="url(#clip0_4104_7939)">
-                                                <path d="M7 0C4.96456 0 3.30859 1.65596 3.30859 3.69141C3.30859 5.72685 4.96456 7.38281 7 7.38281C9.03544 7.38281 10.6914 5.72685 10.6914 3.69141C10.6914 1.65596 9.03544 0 7 0Z" fill="#073B3A" />
-                                                <path d="M11.5928 9.79439C10.5822 8.76824 9.24243 8.20312 7.82031 8.20312H6.17969C4.75759 8.20312 3.4178 8.76824 2.40718 9.79439C1.4015 10.8155 0.847656 12.1634 0.847656 13.5898C0.847656 13.8164 1.0313 14 1.25781 14H12.7422C12.9687 14 13.1523 13.8164 13.1523 13.5898C13.1523 12.1634 12.5985 10.8155 11.5928 9.79439Z" fill="#073B3A" />
-                                            </g>
-                                            <defs>
-                                                <clipPath id="clip0_4104_7939">
-                                                    <rect width={14} height={14} fill="white" />
-                                                </clipPath>
-                                            </defs>
-                                        </svg>
-                                    </Link>
-                                    <Link className="circle-button add-icon" href="/add-property">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width={14} height={14} viewBox="0 0 14 14" fill="none">
-                                            <g clipPath="url(#clip0_4104_7948)">
-                                                <path d="M12.75 8.25H8.5C8.36194 8.25 8.25 8.36194 8.25 8.5V12.75C8.25 13.4403 7.69031 14 7 14C6.30969 14 5.75 13.4403 5.75 12.75V8.5C5.75 8.36194 5.63806 8.25 5.5 8.25H1.25C0.559692 8.25 0 7.69031 0 7C0 6.30969 0.559692 5.75 1.25 5.75H5.5C5.63806 5.75 5.75 5.63806 5.75 5.5V1.25C5.75 0.559691 6.30969 -1.66893e-06 7 -1.66893e-06C7.69031 -1.66893e-06 8.25 0.559691 8.25 1.25V5.5C8.25 5.63806 8.36194 5.75 8.5 5.75H12.75C13.4403 5.75 14 6.30969 14 7C14 7.69031 13.4403 8.25 12.75 8.25Z" fill="#073B3A" />
-                                            </g>
-                                            <defs>
-                                                <clipPath id="clip0_4104_7948">
-                                                    <rect width={14} height={14} fill="white" transform="matrix(1 0 0 -1 0 14)" />
-                                                </clipPath>
-                                            </defs>
-                                        </svg>
-                                    </Link>
+                                    {user ? (
+                                        <>
+                                            <Link className="circle-button user-icon" href="/my-profile">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width={14} height={14} viewBox="0 0 14 14" fill="none">
+                                                    <g clipPath="url(#clip0_4104_7939)">
+                                                        <path d="M7 0C4.96456 0 3.30859 1.65596 3.30859 3.69141C3.30859 5.72685 4.96456 7.38281 7 7.38281C9.03544 7.38281 10.6914 5.72685 10.6914 3.69141C10.6914 1.65596 9.03544 0 7 0Z" fill="#073B3A" />
+                                                        <path d="M11.5928 9.79439C10.5822 8.76824 9.24243 8.20312 7.82031 8.20312H6.17969C4.75759 8.20312 3.4178 8.76824 2.40718 9.79439C1.4015 10.8155 0.847656 12.1634 0.847656 13.5898C0.847656 13.8164 1.0313 14 1.25781 14H12.7422C12.9687 14 13.1523 13.8164 13.1523 13.5898C13.1523 12.1634 12.5985 10.8155 11.5928 9.79439Z" fill="#073B3A" />
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_4104_7939">
+                                                            <rect width={14} height={14} fill="white" />
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+                                            </Link>
+                                            <Link className="circle-button add-icon" href="/add-property">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width={14} height={14} viewBox="0 0 14 14" fill="none">
+                                                    <g clipPath="url(#clip0_4104_7948)">
+                                                        <path d="M12.75 8.25H8.5C8.36194 8.25 8.25 8.36194 8.25 8.5V12.75C8.25 13.4403 7.69031 14 7 14C6.30969 14 5.75 13.4403 5.75 12.75V8.5C5.75 8.36194 5.63806 8.25 5.5 8.25H1.25C0.559692 8.25 0 7.69031 0 7C0 6.30969 0.559692 5.75 1.25 5.75H5.5C5.63806 5.75 5.75 5.63806 5.75 5.5V1.25C5.75 0.559691 6.30969 -1.66893e-06 7 -1.66893e-06C7.69031 -1.66893e-06 8.25 0.559691 8.25 1.25V5.5C8.25 5.63806 8.36194 5.75 8.5 5.75H12.75C13.4403 5.75 14 6.30969 14 7C14 7.69031 13.4403 8.25 12.75 8.25Z" fill="#073B3A" />
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_4104_7948">
+                                                            <rect width={14} height={14} fill="white" transform="matrix(1 0 0 -1 0 14)" />
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+                                            </Link>
+                                        </>
+                                    ): (
+                                        <button onClick={()=> setIsOpen(true)} className="font-medium">Login</button>
+                                    )}                      
                                     <div className="mobile-nav-icon dots-menu">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                                             <path d="M3 4H21V6H3V4ZM7 19H21V21H7V19ZM3 14H21V16H3V14ZM7 9H21V11H7V9Z" />
@@ -57,7 +67,7 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
                 <div className="mobile-sidebar mobile-sidebar1">
                     <div className="logosicon-area">
                         <div className="logos">
-                            <img src="/assets/img/logo/logo1.png" alt="housebox" />
+                            <img src="/assets/img/logo/logo6.png" alt="housebox" />
                         </div>
                         <div className="menu-close">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -68,87 +78,14 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
                     <div className="mobile-nav mobile-nav1">
                         <ul className="mobile-nav-list nav-list1">
                             <li>
-                                <Link href="#">Home </Link>
-                                <span className={`submenu-button ${isAccordion == 1 ? "submenu-opened" : ""}`} onClick={() => handleAccordion(1)}>
-                                    <em></em>
-                                </span>
-                                <ul className="sub-menu" style={{ display: `${isAccordion == 1 ? "block" : "none"}` }}>
-                                    <li>
-                                        <Link href="/">Home One</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/index2">Home Two</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/index3">Home Three</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/index4">Home Four</Link>
-                                    </li>
-                                </ul>
+                                <Link onClick={() => handleAccordion(1)} href="/">Home </Link>
                             </li>
                             <li>
-                                <Link href="#">Listing</Link>
-                                <span className={`submenu-button ${isAccordion == 2 ? "submenu-opened" : ""}`} onClick={() => handleAccordion(2)}>
-                                    <em></em>
-                                </span>
-                                <ul className="sub-menu" style={{ display: `${isAccordion == 2 ? "block" : "none"}` }}>
-                                    <li>
-                                        <Link href="/property-halfmap-grid">Property Half Grid</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/property-halfmap-list">Property Half Map List</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/topmap-grid">Property Top Map Grid</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/topmap-list">Property Top Map List</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/sidebar-grid">Find Sidebar Grid</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/sidebar-list">Find Sidebar List</Link>
-                                    </li>
-                                </ul>
+                                <Link href="/sidebar-list" onClick={() => handleAccordion(2)}>Listing</Link>
                             </li>
+                         
                             <li>
-                                <Link href="#">Properties</Link>
-                                <span className={`submenu-button ${isAccordion == 3 ? "submenu-opened" : ""}`} onClick={() => handleAccordion(3)}>
-                                    <em></em>
-                                </span>
-                                <ul className="sub-menu" style={{ display: `${isAccordion == 3 ? "block" : "none"}` }}>
-                                    <li>
-                                        <Link href="/property-details-v1">Property Details 01</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/property-details-v2">Property Details 02</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/property-details-v3">Property Details 03</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/property-details-v4">Property Details 04</Link>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <Link href="#">Blogs</Link>
-                                <span className={`submenu-button ${isAccordion == 4 ? "submenu-opened" : ""}`} onClick={() => handleAccordion(4)}>
-                                    <em></em>
-                                </span>
-                                <ul className="sub-menu" style={{ display: `${isAccordion == 4 ? "block" : "none"}` }}>
-                                    <li>
-                                        <Link href="/blog">Blog Default</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/blog-grid">Blog Grid</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/blog-detail">Blog Post Details</Link>
-                                    </li>
-                                </ul>
+                                <Link href="/blog-grid"  onClick={() => handleAccordion(4)}>Blogs</Link>
                             </li>
                             <li>
                                 <Link href="#">Pages</Link>
@@ -176,35 +113,48 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
                                     </li>
                                 </ul>
                             </li>
-                            <li>
-                                <Link href="#">Dashboard</Link>
-                                <span className={`submenu-button ${isAccordion == 6 ? "submenu-opened" : ""}`} onClick={() => handleAccordion(6)}>
-                                    <em></em>
-                                </span>
-                                <ul className="sub-menu" style={{ display: `${isAccordion == 6 ? "block" : "none"}` }}>
+                            {user && (
+                                <>
                                     <li>
-                                        <Link href="/dashboard">Dashboard</Link>
+                                        <Link href="#">Dashboard</Link>
+                                        <span className={`submenu-button ${isAccordion == 6 ? "submenu-opened" : ""}`} onClick={() => handleAccordion(6)}>
+                                            <em></em>
+                                        </span>
+                                        <ul className="sub-menu" style={{ display: `${isAccordion == 6 ? "block" : "none"}` }}>
+                                            <li>
+                                                <Link href="/dashboard">Dashboard</Link>
+                                            </li>
+                                            <li>
+                                                <Link href="/my-property">My Properties</Link>
+                                            </li>
+                                            <li>
+                                                <Link href="/message">Message</Link>
+                                            </li>
+                                            <li>
+                                                <Link href="/my-favorites">My Favourites</Link>
+                                            </li>
+                                            <li>
+                                                <Link href="/reviews">Reviews</Link>
+                                            </li>
+                                            <li>
+                                                <Link href="/my-profile">My Propfile</Link>
+                                            </li>
+                                            <li>
+                                                <Link href="/my-property">Add Property</Link>
+                                            </li>
+                                        </ul>
                                     </li>
+                                    {user.role === 'admin' && (
+                                        <li>
+                                            <Link onClick={() => handleAccordion(7)} href={'/admin'}>Admin</Link>
+                                        </li>
+                                    )}
                                     <li>
-                                        <Link href="/my-property">My Properties</Link>
+                                        <button style={{fontSize: '18px'}} onClick={logout} className="font-semibold text-red-600">Logout</button>
                                     </li>
-                                    <li>
-                                        <Link href="/message">Message</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/my-favorites">My Favourites</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/reviews">Reviews</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/my-profile">My Propfile</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/my-property">Add Property</Link>
-                                    </li>
-                                </ul>
-                            </li>
+                                </>
+                            )}
+
                         </ul>
                         <div className="allmobilesection">
                             <Link href="/contact" className="theme-btn1">
@@ -220,7 +170,7 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
                                     </svg>
                                 </span>
                             </Link>
-                            <div className="single-footer">
+                            {/* <div className="single-footer">
                                 <h3>Contact Info</h3>
                                 <div className="footer1-contact-info">
                                     <div className="contact-info-single">
@@ -286,11 +236,14 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
             </div>
+               {isOpen && (
+                            <AuthModal isOpen={isOpen} setIsOpen={setIsOpen} />
+                )}
         </>
     );
 }

@@ -75,7 +75,7 @@ const deleteBlog = async (id: string) => {
     />
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
-        <h1 className="text-2xl font-bold text-foreground">Blog Management</h1>
+        <h4 className="text-2xl font-bold text-foreground">Blog Management</h4>
         <p className="text-muted-foreground text-sm">Create and manage Blogs</p>
       </div>
       <button style={{borderRadius: '8px'}} onClick={()=> setIsOpen(true)} className="bg-[#cbcd30] text-black cursor-pointer flex items-center justify-center p-2 rounded-lg hover:bg-primary/90">
@@ -101,7 +101,7 @@ const deleteBlog = async (id: string) => {
               <div className="p-4 space-y-3">
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="font-semibold text-foreground text-sm">{pkg.title}</h3>
+                    <h5 className="font-semibold text-foreground text-sm">{pkg.title}</h5>
                     <p className="text-xs text-muted-foreground">{pkg.description}</p>
                   </div>
                   <div
