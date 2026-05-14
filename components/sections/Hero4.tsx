@@ -1,7 +1,65 @@
-
+'use client';
 import Link from 'next/link'
+import axios from 'axios';
+import { useEffect, useRef, useState } from 'react';
+import { ChevronDown, MapPin } from 'lucide-react';
 
+interface place_data {
+  class: string;
+  type: string;
+  display_place: string;
+}
 export default function Hero4() {
+	const [location, setLocation] = useState('');
+	const [showLocationDropdown, setShowLocationDropdown] = useState(false);
+  	const [filteredCities, setFilteredCities] = useState<string[]>([]);
+	const locationRef = useRef<HTMLDivElement>(null);
+
+	  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (locationRef.current && !locationRef.current.contains(event.target as Node)) {
+        setShowLocationDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleSearch = () => {
+    if (location) {
+      const locationPath = location.toLowerCase().replace(/\s+/g, '-');
+      window.location.href = `/${locationPath}`;
+    }
+  };
+
+  const handleLocationSelect = (selectedCity: string) => {
+    setLocation(selectedCity);
+    setShowLocationDropdown(false);
+  };
+
+  const handleLocationFocus = () => {
+    setShowLocationDropdown(true);
+  };
+
+
+	const handleLocationChange = async(e: React.ChangeEvent<HTMLInputElement>) => {
+    setLocation(e.target.value);
+    if(e.target.value !== ' ' && e.target.value !== ''){ 
+      const response = await axios.get(`/api/places?input=${e.target.value}`);
+      console.log(response.data);
+      setFilteredCities(
+        response.data.predictions
+          ?.filter((place: place_data) => (place.class === "place" || place.class === 'boundary'))
+          .map((place: place_data) => place.display_place)
+      );
+    }
+
+    setShowLocationDropdown(true);
+  };
+
 	return (
 		<>
 
@@ -15,8 +73,51 @@ export default function Hero4() {
 									<div className="space20" />
 									<h1 className="text-anime-style-3">Turning Real Estate Dreams Into Reality</h1>
 									<div className="space20" />
-									<div className="btn-are1" data-aos="fade-left" data-aos-duration={1000}>
-										<Link href="/sidebar-grid" className="theme-btn5">Find Your Dream Home Now <span className="arrow1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24} fill="currentColor">
+									<div className="btn-are1 flex md:flex-row flex-col gap-1" data-aos="fade-left" data-aos-duration={1000}>
+										{/* <input type="text" className='w-full bg-white rounded-lg px-2 py-3 md:py-0' placeholder='Enter City' /> */}
+
+										           <div className="relative flex-1 min-w-0" ref={locationRef}>
+              <MapPin className="absolute left-1 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder={"Enter your location"}
+                value={location}
+                onChange={handleLocationChange}
+                onFocus={handleLocationFocus}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
+              />
+              <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              
+              {/* Location Dropdown */}
+              {showLocationDropdown && (
+                <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto">
+                  {filteredCities.length > 0 ? (
+                    filteredCities.filter((city, index, arr) => arr.indexOf(city) === index).map((city, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleLocationSelect(city)}
+                        className="w-full px-4 py-3 text-left hover:bg-gray-50 focus:bg-gray-50 focus:outline-none border-b border-gray-100 last:border-b-0"
+                      >
+                        <div className="flex items-center">
+                          <MapPin className="w-4 h-4 text-gray-400 mr-2" />
+                          <span className="text-gray-800">{city}</span>
+                        </div>
+                      </button>
+                    ))
+                  ) : (
+                    <div className="px-4 py-3 text-gray-500 text-sm">
+                      No cities found
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+
+
+
+
+										<Link href={`sidebar-list/${location.toLowerCase().replace(/\s+/g, '-')}`} className="theme-btn5">Find Your Dream Home Now <span className="arrow1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24} fill="currentColor">
 											<path d="M12 13H4V11H12V4L20 12L12 20V13Z" />
 										</svg></span><span className="arrow2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24} fill="currentColor">
 											<path d="M12 13H4V11H12V4L20 12L12 20V13Z" />

@@ -258,7 +258,7 @@ export default function AddProperty() {
                                                     <h5>City</h5>
                                                     <div className="space16" />
                                                     <div className="input-area" tabIndex={0}>
-                                                        <input value={propertyForm.city} onChange={(e)=> setPropertyForm({...propertyForm, city: e.target.value})} type="text" placeholder="City" />
+                                                        <input value={propertyForm.city} onChange={(e)=> setPropertyForm({...propertyForm, city: e.target.value.toLowerCase()})} type="text" placeholder="City" />
                                                     </div>
                                                 </div>
                                             </div>

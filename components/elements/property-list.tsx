@@ -12,48 +12,12 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { PropertySlugify } from "@/utils/functions-utils";
 import { PropertyListItem } from "@/types/types";
-
-// interface PropertyListItem {
-//     _id: string;
-//     name: string;
-//     images: string[];
-//     video: string;
-//     description: string;
-//     address: string;
-//     zipCode: string;
-//     country: string;
-//     state: string;
-//     sold: boolean;
-//     seller: string;
-//     propertyPrices: {
-//         propertyPrice: number;
-//         unitPrice: number;
-//         beforePriceLabel: number;
-//         afterPriceLabel: number;
-//     },
-//     additionalInformation: {
-//         propertySize: string;
-//         landArea: string;
-//         rooms: number;
-//         bedrooms: number;
-//         bathrooms: number;
-//         garages: number;
-//         garageSize: string;
-//         yearBuilt: string;
-//     },
-//     amenities: string[],
-//     floors: [{
-//         floorNumber: number;
-//         floorImage: string;
-//         floorPrice: number;
-//         floorSize: number;
-//         bedrooms: number;
-//         bathrooms: number;
-//     }],
-// }
+import { useParams } from "next/navigation";
+import { addCity } from "@/features/filter/filterSlice"
 
 export default function PropertyList({ view }: any) {
     const dispatch = useDispatch();
+    const {location} = useParams();
     // const { properties, favoriteProperties } = useSelector((state: RootState) => state.property);
     const [properties, setProperties] = useState<PropertyListItem[]>([]);
     const { propertyFilter, propertySort } = useSelector((state: RootState) => state.filter);
@@ -87,6 +51,12 @@ export default function PropertyList({ view }: any) {
     useEffect(()=> {
         setFilteredProperties(properties);
     },[properties]);
+
+    useEffect(()=> {
+        if(location){
+            dispatch(addCity(location?.toString().replace(/-/g, ' ') as string));
+        }
+    },[location]);
 
 
     useEffect(() => {
