@@ -13,12 +13,14 @@ export default function Hero4() {
 	const [location, setLocation] = useState('');
 	const [showLocationDropdown, setShowLocationDropdown] = useState(false);
   	const [filteredCities, setFilteredCities] = useState<string[]>([]);
+	const [showFrom, setShowForm] = useState(false);
 	const locationRef = useRef<HTMLDivElement>(null);
 
 	  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (locationRef.current && !locationRef.current.contains(event.target as Node)) {
         setShowLocationDropdown(false);
+		setShowForm(false);
       }
     };
 
@@ -37,6 +39,7 @@ export default function Hero4() {
 
   const handleLocationSelect = (selectedCity: string) => {
     setLocation(selectedCity);
+	setShowForm(true);
     setShowLocationDropdown(false);
   };
 
@@ -64,8 +67,8 @@ export default function Hero4() {
 		<>
 
 			<div>
-				<div className="hero4-section-area sp1 mt-32" style={{ backgroundImage: 'url(assets/img/all-images/hero/hero4-img1.png)', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', borderRadius: '20px' }}>
-					<div style={{marginTop: '150px'}} className="container">
+				<div className="hero4-section-area sp1 mt-40" style={{ backgroundImage: 'url(assets/img/all-images/hero/hero4-img1.png)', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', borderRadius: '20px' }}>
+					<div style={{marginTop: '180px'}} className="container">
 						<div className="row align-items-center">
 							<div className="col-lg-6">
 								<div className="hero-header">
@@ -76,7 +79,7 @@ export default function Hero4() {
 									<div className="btn-are1 flex md:flex-row flex-col gap-1" data-aos="fade-left" data-aos-duration={1000}>
 										{/* <input type="text" className='w-full bg-white rounded-lg px-2 py-3 md:py-0' placeholder='Enter City' /> */}
 
-										           <div className="relative flex-1 min-w-0" ref={locationRef}>
+			<div className="relative flex-1 min-w-0" ref={locationRef}>
               <MapPin className="absolute left-1 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <input
                 type="text"
@@ -90,15 +93,15 @@ export default function Hero4() {
               
               {/* Location Dropdown */}
               {showLocationDropdown && (
-                <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto">
+                <div className="absolute actions top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto">
                   {filteredCities.length > 0 ? (
                     filteredCities.filter((city, index, arr) => arr.indexOf(city) === index).map((city, index) => (
                       <button
                         key={index}
                         onClick={() => handleLocationSelect(city)}
-                        className="w-full px-4 py-3 text-left hover:bg-gray-50 focus:bg-gray-50 focus:outline-none border-b border-gray-100 last:border-b-0"
+                        className="w-full filter-button show-form px-4 py-3 text-left hover:bg-gray-50 focus:bg-gray-50 focus:outline-none border-b border-gray-100 last:border-b-0"
                       >
-                        <div className="flex items-center">
+                        <div className="flex items-center filter-button show-form">
                           <MapPin className="w-4 h-4 text-gray-400 mr-2" />
                           <span className="text-gray-800">{city}</span>
                         </div>
@@ -129,12 +132,12 @@ export default function Hero4() {
 							<div className="col-lg-4">
 								<div className="property-tab-section4">
 									<div className="tab-section">
-										<div className="tab-header">
+										{/* <div className="tab-header">
 											<button className="tab-btn active" data-tab="for-sale">For Sale</button>
 											<button className="tab-btn" data-tab="for-rent">For Rent</button>
-										</div>
+										</div> */}
 										<div className="tab-content1" id="for-sale">
-											<div className="dropdown-container">
+											{/* <div className="dropdown-container">
 												<select>
 													<option>All Status</option>
 													<option>For Rent</option>
@@ -151,8 +154,8 @@ export default function Hero4() {
 													<option>Bar</option>
 													<option>Cafe</option>
 												</select>
-											</div>
-											<div className="actions">
+											</div> */}
+											{/* <div className="actions mt-3">
 												<button style={{display: 'flex', alignItems: 'center'}} className="filter-button show-form">
 													Filters <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
 														<path d="M6.17071 18C6.58254 16.8348 7.69378 16 9 16C10.3062 16 11.4175 16.8348 11.8293 18H22V20H11.8293C11.4175 21.1652 10.3062 22 9 22C7.69378 22 6.58254 21.1652 6.17071 20H2V18H6.17071ZM12.1707 11C12.5825 9.83481 13.6938 9 15 9C16.3062 9 17.4175 9.83481 17.8293 11H22V13H17.8293C17.4175 14.1652 16.3062 15 15 15C13.6938 15 12.5825 14.1652 12.1707 13H2V11H12.1707ZM6.17071 4C6.58254 2.83481 7.69378 2 9 2C10.3062 2 11.4175 2.83481 11.8293 4H22V6H11.8293C11.4175 7.16519 10.3062 8 9 8C7.69378 8 6.58254 7.16519 6.17071 6H2V4H6.17071ZM9 6C9.55228 6 10 5.55228 10 5C10 4.44772 9.55228 4 9 4C8.44772 4 8 4.44772 8 5C8 5.55228 8.44772 6 9 6ZM15 13C15.5523 13 16 12.5523 16 12C16 11.4477 15.5523 11 15 11C14.4477 11 14 11.4477 14 12C14 12.5523 14.4477 13 15 13ZM9 20C9.55228 20 10 19.5523 10 19C10 18.4477 9.55228 18 9 18C8.44772 18 8 18.4477 8 19C8 19.5523 8.44772 20 9 20Z">
@@ -167,10 +170,10 @@ export default function Hero4() {
 														</svg>
 													</button>
 												</Link>
-											</div>
+											</div> */}
 										</div>
 										<div className="tab-content1"  id="for-rent" style={{ display: 'none' }}>
-											<div className="dropdown-container">
+											{/* <div className="dropdown-container">
 												<select>
 													<option>All Status</option>
 													<option>For Rent</option>
@@ -187,8 +190,8 @@ export default function Hero4() {
 													<option>Bar</option>
 													<option>Cafe</option>
 												</select>
-											</div>
-											<div className="actions">
+											</div> */}
+											{/* <div className="actions mt-3">
 												<button style={{display: 'flex', alignItems: 'center'}} className="filter-button show-form">
 													Filters <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
 														<path d="M6.17071 18C6.58254 16.8348 7.69378 16 9 16C10.3062 16 11.4175 16.8348 11.8293 18H22V20H11.8293C11.4175 21.1652 10.3062 22 9 22C7.69378 22 6.58254 21.1652 6.17071 20H2V18H6.17071ZM12.1707 11C12.5825 9.83481 13.6938 9 15 9C16.3062 9 17.4175 9.83481 17.8293 11H22V13H17.8293C17.4175 14.1652 16.3062 15 15 15C13.6938 15 12.5825 14.1652 12.1707 13H2V11H12.1707ZM6.17071 4C6.58254 2.83481 7.69378 2 9 2C10.3062 2 11.4175 2.83481 11.8293 4H22V6H11.8293C11.4175 7.16519 10.3062 8 9 8C7.69378 8 6.58254 7.16519 6.17071 6H2V4H6.17071ZM9 6C9.55228 6 10 5.55228 10 5C10 4.44772 9.55228 4 9 4C8.44772 4 8 4.44772 8 5C8 5.55228 8.44772 6 9 6ZM15 13C15.5523 13 16 12.5523 16 12C16 11.4477 15.5523 11 15 11C14.4477 11 14 11.4477 14 12C14 12.5523 14.4477 13 15 13ZM9 20C9.55228 20 10 19.5523 10 19C10 18.4477 9.55228 18 9 18C8.44772 18 8 18.4477 8 19C8 19.5523 8.44772 20 9 20Z">
@@ -203,251 +206,254 @@ export default function Hero4() {
 														</svg>
 													</button>
 												</Link>
-											</div>
+											</div> */}
 										</div>
 									</div>
-									<div className="wd-search-form ">
-										<div className=" group-select">
-											<div className="box-select">
-												<h5>Bathrooms</h5>
-												<div className="nice-select" tabIndex={0}>
-													<span className="current">Bathrooms</span>
-													<ul className="list">
-														<li data-value={1} className="option">1</li>
-														<li data-value={2} className="option selected">2</li>
-														<li data-value={3} className="option">3</li>
-														<li data-value={4} className="option">4</li>
-														<li data-value={5} className="option">5</li>
-														<li data-value={6} className="option">6</li>
-														<li data-value={7} className="option">7</li>
-														<li data-value={8} className="option">8</li>
-														<li data-value={9} className="option">9</li>
-														<li data-value={10} className="option">10</li>
-													</ul>
+									{showFrom && (
+										<div ref={locationRef} className="wd-search-form">
+											<div className=" group-select">
+												<div className="box-select">
+													<h5>Bathrooms</h5>
+													<div className="nice-select" tabIndex={0}>
+														<span className="current">Bathrooms</span>
+														<ul className="list">
+															<li data-value={1} className="option">1</li>
+															<li data-value={2} className="option selected">2</li>
+															<li data-value={3} className="option">3</li>
+															<li data-value={4} className="option">4</li>
+															<li data-value={5} className="option">5</li>
+															<li data-value={6} className="option">6</li>
+															<li data-value={7} className="option">7</li>
+															<li data-value={8} className="option">8</li>
+															<li data-value={9} className="option">9</li>
+															<li data-value={10} className="option">10</li>
+														</ul>
+													</div>
+												</div>
+												<div className="box-select">
+													<h5>Bedrooms</h5>
+													<div className="nice-select" tabIndex={0}>
+														<span className="current">Bedrooms</span>
+														<ul className="list">
+															<li data-value={1} className="option">1</li>
+															<li data-value={2} className="option selected">2</li>
+															<li data-value={3} className="option">3</li>
+															<li data-value={4} className="option">4</li>
+															<li data-value={5} className="option">5</li>
+															<li data-value={6} className="option">6</li>
+															<li data-value={7} className="option">7</li>
+															<li data-value={8} className="option">8</li>
+															<li data-value={9} className="option">9</li>
+															<li data-value={10} className="option">10</li>
+														</ul>
+													</div>
+												</div>
+												<div className="box-select">
+													<h5>States</h5>
+													<div className="nice-select" tabIndex={0}>
+														<span className="current">All States</span>
+														<ul className="list">
+															<li data-value={1} className="option">New York</li>
+															<li data-value={2} className="option selected">California</li>
+															<li data-value={3} className="option">Texas</li>
+															<li data-value={4} className="option">Sydney</li>
+														</ul>
+													</div>
+												</div>
+												<div className="box-select">
+													<h5>City</h5>
+													<div className="nice-select" tabIndex={0}>
+														<span className="current">All Cities</span>
+														<ul className="list">
+															<li data-value={1} className="option">Alice</li>
+															<li data-value={2} className="option selected">Bridgaport</li>
+															<li data-value={3} className="option">Dallas</li>
+															<li data-value={4} className="option">Kingston</li>
+															<li data-value={5} className="option">Los Angeles</li>
+															<li data-value={6} className="option">New York</li>
+														</ul>
+													</div>
 												</div>
 											</div>
-											<div className="box-select">
-												<h5>Bedrooms</h5>
-												<div className="nice-select" tabIndex={0}>
-													<span className="current">Bedrooms</span>
-													<ul className="list">
-														<li data-value={1} className="option">1</li>
-														<li data-value={2} className="option selected">2</li>
-														<li data-value={3} className="option">3</li>
-														<li data-value={4} className="option">4</li>
-														<li data-value={5} className="option">5</li>
-														<li data-value={6} className="option">6</li>
-														<li data-value={7} className="option">7</li>
-														<li data-value={8} className="option">8</li>
-														<li data-value={9} className="option">9</li>
-														<li data-value={10} className="option">10</li>
-													</ul>
+											<div className=" group-select">
+												<div className="box-select">
+													<h5>Garages</h5>
+													<div className="nice-select" tabIndex={0}>
+														<span className="current">Any Garages</span>
+														<ul className="list">
+															<li data-value={1} className="option">1</li>
+															<li data-value={2} className="option selected">2</li>
+															<li data-value={3} className="option">3</li>
+															<li data-value={4} className="option">4</li>
+															<li data-value={5} className="option">5</li>
+															<li data-value={6} className="option">6</li>
+															<li data-value={7} className="option">7</li>
+															<li data-value={8} className="option">8</li>
+															<li data-value={9} className="option">9</li>
+															<li data-value={10} className="option">10</li>
+														</ul>
+													</div>
+												</div>
+												<div className="box-select">
+													<h5>Rooms</h5>
+													<div className="nice-select" tabIndex={0}>
+														<span className="current">Any Rooms</span>
+														<ul className="list">
+															<li data-value={1} className="option">1</li>
+															<li data-value={2} className="option selected">2</li>
+															<li data-value={3} className="option">3</li>
+															<li data-value={4} className="option">4</li>
+															<li data-value={5} className="option">5</li>
+															<li data-value={6} className="option">6</li>
+															<li data-value={7} className="option">7</li>
+															<li data-value={8} className="option">8</li>
+															<li data-value={9} className="option">9</li>
+															<li data-value={10} className="option">10</li>
+														</ul>
+													</div>
 												</div>
 											</div>
-											<div className="box-select">
-												<h5>States</h5>
-												<div className="nice-select" tabIndex={0}>
-													<span className="current">All States</span>
-													<ul className="list">
-														<li data-value={1} className="option">New York</li>
-														<li data-value={2} className="option selected">California</li>
-														<li data-value={3} className="option">Texas</li>
-														<li data-value={4} className="option">Sydney</li>
-													</ul>
+											<div className="group-price">
+												<div className="slider-item">
+													<div className="slider-label">Price Range: <span id="price-output">$200 -
+														$2,500,000</span></div>
+													<div className="slider price-slider">
+														<input type="range" id="price-range-min" className="range-min" min={200} max={2500000} step={100} />
+														<input type="range" id="price-range-max" className="range-max" min={200} max={2500000} step={100} />
+														<div className="slider-fill" />
+													</div>
+												</div>
+												<div className="slider-item">
+													<div className="slider-label">Size Range: <span id="size-output">146 SqFt - 448
+														SqFt</span></div>
+													<div className="slider size-slider">
+														<input type="range" id="size-range-min" className="range-min" min={146} max={448} step={1} />
+														<input type="range" id="size-range-max" className="range-max" min={146} max={448} step={1} />
+														<div className="slider-fill" />
+													</div>
 												</div>
 											</div>
-											<div className="box-select">
-												<h5>City</h5>
-												<div className="nice-select" tabIndex={0}>
-													<span className="current">All Cities</span>
-													<ul className="list">
-														<li data-value={1} className="option">Alice</li>
-														<li data-value={2} className="option selected">Bridgaport</li>
-														<li data-value={3} className="option">Dallas</li>
-														<li data-value={4} className="option">Kingston</li>
-														<li data-value={5} className="option">Los Angeles</li>
-														<li data-value={6} className="option">New York</li>
-													</ul>
+											<div className="group-checkbox">
+												<div className=" title text-4 fw-6">Others Features</div>
+												<div className="space16" />
+												<div className="group-amenities ">
+													<fieldset className="checkbox-item style-1  ">
+														<label>
+															<input type="checkbox" />
+															<span className="btn-checkbox" />
+															<span className="text-4">Air Conditioning</span>
+														</label>
+													</fieldset>
+													<fieldset className="checkbox-item style-1   mt-12">
+														<label>
+															<input type="checkbox" />
+															<span className="btn-checkbox" />
+															<span className="text-4"> Laundry</span>
+														</label>
+													</fieldset>
+													<fieldset className="checkbox-item style-1   mt-12">
+														<label>
+															<input type="checkbox" />
+															<span className="btn-checkbox" />
+															<span className="text-4">Refrigerator </span>
+														</label>
+													</fieldset>
+													<fieldset className="checkbox-item style-1   mt-12">
+														<label>
+															<input type="checkbox" />
+															<span className="btn-checkbox" />
+															<span className="text-4">Washer </span>
+														</label>
+													</fieldset>
+													<fieldset className="checkbox-item style-1  ">
+														<label>
+															<input type="checkbox" />
+															<span className="btn-checkbox" />
+															<span className="text-4"> Barbeque</span>
+														</label>
+													</fieldset>
+													<fieldset className="checkbox-item style-1   mt-12">
+														<label>
+															<input type="checkbox" />
+															<span className="btn-checkbox" />
+															<span className="text-4"> Lawn</span>
+														</label>
+													</fieldset>
+													<fieldset className="checkbox-item style-1   mt-12">
+														<label>
+															<input type="checkbox" />
+															<span className="btn-checkbox" />
+															<span className="text-4">Sauna </span>
+														</label>
+													</fieldset>
+													<fieldset className="checkbox-item style-1   mt-12">
+														<label>
+															<input type="checkbox" />
+															<span className="btn-checkbox" />
+															<span className="text-4">Wifi </span>
+														</label>
+													</fieldset>
+													<fieldset className="checkbox-item style-1  ">
+														<label>
+															<input type="checkbox" />
+															<span className="btn-checkbox" />
+															<span className="text-4">Dryer </span>
+														</label>
+													</fieldset>
+													<fieldset className="checkbox-item style-1   mt-12">
+														<label>
+															<input type="checkbox" />
+															<span className="btn-checkbox" />
+															<span className="text-4">Microwave</span>
+														</label>
+													</fieldset>
+													<fieldset className="checkbox-item style-1   mt-12">
+														<label>
+															<input type="checkbox" />
+															<span className="btn-checkbox" />
+															<span className="text-4"> Swimming Pool</span>
+														</label>
+													</fieldset>
+													<fieldset className="checkbox-item style-1   mt-12">
+														<label>
+															<input type="checkbox" />
+															<span className="btn-checkbox" />
+															<span className="text-4">Window Coverings</span>
+														</label>
+													</fieldset>
+													<fieldset className="checkbox-item style-1  ">
+														<label>
+															<input type="checkbox" />
+															<span className="btn-checkbox" />
+															<span className="text-4"> Gym</span>
+														</label>
+													</fieldset>
+													<fieldset className="checkbox-item style-1   mt-12">
+														<label>
+															<input type="checkbox" />
+															<span className="btn-checkbox" />
+															<span className="text-4">Outdoor Shower </span>
+														</label>
+													</fieldset>
+													<fieldset className="checkbox-item style-1   mt-12">
+														<label>
+															<input type="checkbox" />
+															<span className="btn-checkbox" />
+															<span className="text-4"> TV Cable</span>
+														</label>
+													</fieldset>
+													<fieldset className="checkbox-item style-1   mt-12">
+														<label>
+															<input type="checkbox" />
+															<span className="btn-checkbox" />
+															<span className="text-4">Fireplace </span>
+														</label>
+													</fieldset>
 												</div>
 											</div>
 										</div>
-										<div className=" group-select">
-											<div className="box-select">
-												<h5>Garages</h5>
-												<div className="nice-select" tabIndex={0}>
-													<span className="current">Any Garages</span>
-													<ul className="list">
-														<li data-value={1} className="option">1</li>
-														<li data-value={2} className="option selected">2</li>
-														<li data-value={3} className="option">3</li>
-														<li data-value={4} className="option">4</li>
-														<li data-value={5} className="option">5</li>
-														<li data-value={6} className="option">6</li>
-														<li data-value={7} className="option">7</li>
-														<li data-value={8} className="option">8</li>
-														<li data-value={9} className="option">9</li>
-														<li data-value={10} className="option">10</li>
-													</ul>
-												</div>
-											</div>
-											<div className="box-select">
-												<h5>Rooms</h5>
-												<div className="nice-select" tabIndex={0}>
-													<span className="current">Any Rooms</span>
-													<ul className="list">
-														<li data-value={1} className="option">1</li>
-														<li data-value={2} className="option selected">2</li>
-														<li data-value={3} className="option">3</li>
-														<li data-value={4} className="option">4</li>
-														<li data-value={5} className="option">5</li>
-														<li data-value={6} className="option">6</li>
-														<li data-value={7} className="option">7</li>
-														<li data-value={8} className="option">8</li>
-														<li data-value={9} className="option">9</li>
-														<li data-value={10} className="option">10</li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										<div className="group-price">
-											<div className="slider-item">
-												<div className="slider-label">Price Range: <span id="price-output">$200 -
-													$2,500,000</span></div>
-												<div className="slider price-slider">
-													<input type="range" id="price-range-min" className="range-min" min={200} max={2500000} step={100} />
-													<input type="range" id="price-range-max" className="range-max" min={200} max={2500000} step={100} />
-													<div className="slider-fill" />
-												</div>
-											</div>
-											<div className="slider-item">
-												<div className="slider-label">Size Range: <span id="size-output">146 SqFt - 448
-													SqFt</span></div>
-												<div className="slider size-slider">
-													<input type="range" id="size-range-min" className="range-min" min={146} max={448} step={1} />
-													<input type="range" id="size-range-max" className="range-max" min={146} max={448} step={1} />
-													<div className="slider-fill" />
-												</div>
-											</div>
-										</div>
-										<div className="group-checkbox">
-											<div className=" title text-4 fw-6">Others Features</div>
-											<div className="space16" />
-											<div className="group-amenities ">
-												<fieldset className="checkbox-item style-1  ">
-													<label>
-														<input type="checkbox" />
-														<span className="btn-checkbox" />
-														<span className="text-4">Air Conditioning</span>
-													</label>
-												</fieldset>
-												<fieldset className="checkbox-item style-1   mt-12">
-													<label>
-														<input type="checkbox" />
-														<span className="btn-checkbox" />
-														<span className="text-4"> Laundry</span>
-													</label>
-												</fieldset>
-												<fieldset className="checkbox-item style-1   mt-12">
-													<label>
-														<input type="checkbox" />
-														<span className="btn-checkbox" />
-														<span className="text-4">Refrigerator </span>
-													</label>
-												</fieldset>
-												<fieldset className="checkbox-item style-1   mt-12">
-													<label>
-														<input type="checkbox" />
-														<span className="btn-checkbox" />
-														<span className="text-4">Washer </span>
-													</label>
-												</fieldset>
-												<fieldset className="checkbox-item style-1  ">
-													<label>
-														<input type="checkbox" />
-														<span className="btn-checkbox" />
-														<span className="text-4"> Barbeque</span>
-													</label>
-												</fieldset>
-												<fieldset className="checkbox-item style-1   mt-12">
-													<label>
-														<input type="checkbox" />
-														<span className="btn-checkbox" />
-														<span className="text-4"> Lawn</span>
-													</label>
-												</fieldset>
-												<fieldset className="checkbox-item style-1   mt-12">
-													<label>
-														<input type="checkbox" />
-														<span className="btn-checkbox" />
-														<span className="text-4">Sauna </span>
-													</label>
-												</fieldset>
-												<fieldset className="checkbox-item style-1   mt-12">
-													<label>
-														<input type="checkbox" />
-														<span className="btn-checkbox" />
-														<span className="text-4">Wifi </span>
-													</label>
-												</fieldset>
-												<fieldset className="checkbox-item style-1  ">
-													<label>
-														<input type="checkbox" />
-														<span className="btn-checkbox" />
-														<span className="text-4">Dryer </span>
-													</label>
-												</fieldset>
-												<fieldset className="checkbox-item style-1   mt-12">
-													<label>
-														<input type="checkbox" />
-														<span className="btn-checkbox" />
-														<span className="text-4">Microwave</span>
-													</label>
-												</fieldset>
-												<fieldset className="checkbox-item style-1   mt-12">
-													<label>
-														<input type="checkbox" />
-														<span className="btn-checkbox" />
-														<span className="text-4"> Swimming Pool</span>
-													</label>
-												</fieldset>
-												<fieldset className="checkbox-item style-1   mt-12">
-													<label>
-														<input type="checkbox" />
-														<span className="btn-checkbox" />
-														<span className="text-4">Window Coverings</span>
-													</label>
-												</fieldset>
-												<fieldset className="checkbox-item style-1  ">
-													<label>
-														<input type="checkbox" />
-														<span className="btn-checkbox" />
-														<span className="text-4"> Gym</span>
-													</label>
-												</fieldset>
-												<fieldset className="checkbox-item style-1   mt-12">
-													<label>
-														<input type="checkbox" />
-														<span className="btn-checkbox" />
-														<span className="text-4">Outdoor Shower </span>
-													</label>
-												</fieldset>
-												<fieldset className="checkbox-item style-1   mt-12">
-													<label>
-														<input type="checkbox" />
-														<span className="btn-checkbox" />
-														<span className="text-4"> TV Cable</span>
-													</label>
-												</fieldset>
-												<fieldset className="checkbox-item style-1   mt-12">
-													<label>
-														<input type="checkbox" />
-														<span className="btn-checkbox" />
-														<span className="text-4">Fireplace </span>
-													</label>
-												</fieldset>
-											</div>
-										</div>
-									</div>
+									)}
+
 								</div>
 							</div>
 						</div>

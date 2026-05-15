@@ -26,6 +26,9 @@ const inter = Inter({
 export const metadata: Metadata = {
 	title: "HouseBox - Real Esate Next.js Template",
 	description: "Made by AliThemes",
+	alternates:{
+    canonical: '/'
+  }
 }
 
 export default function RootLayout({

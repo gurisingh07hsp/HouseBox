@@ -3211,14 +3211,14 @@ Location:
     position: absolute;
     width: 100%;
     height: 4px;
-    appearance: none;
-    background: transparent;
-    pointer-events: none;
+    /* appearance: none; */
+    /* background: transparent; */
+    /* pointer-events: none; */
     z-index: 2;
 }
 
 .hero4-section-area .property-tab-section4 .wd-search-form input[type="range"]::-webkit-slider-thumb {
-    appearance: none;
+    /* appearance: none; */
     width: 14px;
     height: 14px;
     background: var(--ztc-bg-bg-1);
@@ -3320,8 +3320,8 @@ Location:
     border-left: 1px solid #f0f1f1;
     border-right: 1px solid #f0f1f1;
     z-index: 2;
-    opacity: 0;
-    visibility: hidden;
+    /* opacity: 0; */
+    /* visibility: hidden; */
     position: absolute;
     margin: 0 auto;
     left: 0;

@@ -36,10 +36,10 @@ export default function Properties3() {
                                         Featured Properties
                                     </h5>
                                     <div className="space20" />
-                                    <h2 className="text-anime-style-3">Our Featured Properties</h2>
+                                    <h2 className="text-2xl">Our Featured Properties</h2>
                                 </div>
-                                <div className="btn-area1" data-aos="zoom-in-up" data-aos-duration={1000}>
-                                    <Link href="/sidebar-grid" className="theme-btn4">
+                                <div className="btn-area1 flex justify-center" data-aos="zoom-in-up" data-aos-duration={1000}>
+                                    <Link href="/sidebar-list" className="theme-btn4">
                                         See All Properties{" "}
                                         <span className="arrow1">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24} fill="currentColor">

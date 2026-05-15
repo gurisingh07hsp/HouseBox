@@ -1,28 +1,24 @@
-"use client";
 import PropertyFilter from "@/components/elements/property-filter";
 import PropertyList from "@/components/elements/property-list";
 import Layout from "@/components/layout/Layout";
-import Link from "next/link";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
 
-const swiperFade = {
-    modules: [Autoplay, Pagination, Navigation],
-    spaceBetween: 0,
-    slidesPerView: 1,
-    freeMode: true,
-    watchSlidesProgress: true,
-    autoplay: {
-        delay: 2500,
-    },
-    pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-    },
-    navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-    },
-};
+interface LocationPageProps {
+  params: {
+    location: string;
+  };
+}
+
+export async function generateMetadata({ params }: LocationPageProps) {
+  const location = decodeURIComponent(params.location.replace(/-/g, " "));
+
+  return {
+    alternates:{
+      canonical: `/${location.replace(/\s+/g, "-")}`
+    } 
+  };
+}
+
+
 export default function SidebarList() {
     return (
         <>
@@ -219,7 +215,7 @@ export default function SidebarList() {
                     </div>
                     {/*===== PROPERTIES AREA ENDS =======*/}
                     {/*===== CTA AREA STARTS =======*/}
-                    <div className="cta1-section-area">
+                    {/* <div className="cta1-section-area">
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-12">
@@ -257,7 +253,7 @@ export default function SidebarList() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </Layout>
         </>
