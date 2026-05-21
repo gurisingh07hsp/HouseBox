@@ -30,13 +30,6 @@ export default function Hero4() {
     };
   }, []);
 
-  const handleSearch = () => {
-    if (location) {
-      const locationPath = location.toLowerCase().replace(/\s+/g, '-');
-      window.location.href = `/${locationPath}`;
-    }
-  };
-
   const handleLocationSelect = (selectedCity: string) => {
     setLocation(selectedCity);
 	setShowForm(true);

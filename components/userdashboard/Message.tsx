@@ -1,38 +1,42 @@
+'use client';
 import Layout from "@/components/layout/Layout";
+import { useContext } from "react";
+import { useUser } from "@/context/UserContext";
 import Link from "next/link";
-export default function Reviews() {
+export default function Message() {
+    const {user} = useUser();
     return (
         <>
-            <Layout headerStyle={3} footerStyle={3}>
+            {/* <Layout headerStyle={3} footerStyle={3}> */}
                 <div>
-                    <div className="hero-inner-section-area-sidebar">
+                    {/* <div className="hero-inner-section-area-sidebar">
                         <img src="/assets/img/all-images/hero/hero-img1.png" alt="housebox" className="hero-img1" />
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="hero-header-area text-center">
-                                        {/* <Link href="/">
+                                        <Link href="/">
                                             Home{" "}
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                                                 <path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z" />
                                             </svg>{" "}
-                                            Reviews
-                                        </Link> */}
+                                            ALL MESSAGE
+                                        </Link>
                                         <div className="space24" />
-                                        <h1>Reviews</h1>
+                                        <h1>ALL MESSAGE</h1>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     {/*===== HERO AREA ENDS =======*/}
                     {/*===== DASHBOARD AREA STARTS =======*/}
-                    <div className="dashboard-section-area sp1">
+                    <div className="dashboard-section-area">
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-4">
                                     <div className="heading1">
-                                        <h2>All Reviews</h2>
+                                        <h2>All Message</h2>
                                     </div>
                                 </div>
                                 <div className="col-lg-4" />
@@ -60,36 +64,23 @@ export default function Reviews() {
                                     <div className="space30" />
                                     <div className="dashboard-info-sider-deatils">
                                         <div className="dashboard-info-sider">
-                                            <div className="message-boxarea">
+                                            {user?.messages?.map((item, index)=>(
+                                            <div key={index} className="message-boxarea">
                                                 <div className="img1">
                                                     <img src="/assets/img/all-images/others/dash-img5.png" alt="housebox" />
                                                 </div>
                                                 <div className="conatent-area">
                                                     <div className="content">
-                                                        <Link href="#">Henry Nicolas</Link>
-                                                        <p>3 Days Ago</p>
+                                                        <Link href="#">{item.name}</Link>
+                                                        <p>{new Date(item.createdAt).toLocaleString()}</p>
                                                     </div>
+                                                    <p>{item.email} . {item.phone}</p>
                                                     <div className="space14" />
-                                                    <p>We're excited to help you find the perfect neighborhood and home for your family Let us know how.</p>
-                                                    <ul>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                    </ul>
+                                                    <p>{item.message}</p>
                                                 </div>
                                             </div>
+
+                                            ))}
                                             <div className="message-boxarea">
                                                 <div className="space32" />
                                                 <div className="img1">
@@ -102,23 +93,6 @@ export default function Reviews() {
                                                     </div>
                                                     <div className="space14" />
                                                     <p>Thank you for reaching out! We’re here to guiding you every step of the way in finding the idea home.</p>
-                                                    <ul>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                    </ul>
                                                 </div>
                                             </div>
                                             <div className="message-boxarea">
@@ -133,23 +107,6 @@ export default function Reviews() {
                                                     </div>
                                                     <div className="space14" />
                                                     <p>Finding the perfect place to call home is a journey worth taking, Explore our listings, resources.</p>
-                                                    <ul>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                    </ul>
                                                 </div>
                                             </div>
                                             <div className="message-boxarea">
@@ -164,23 +121,6 @@ export default function Reviews() {
                                                     </div>
                                                     <div className="space14" />
                                                     <p>We hope your home search is the going smoothly! If you have any question need more information.</p>
-                                                    <ul>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                    </ul>
                                                 </div>
                                             </div>
                                             <div className="message-boxarea" style={{ borderBottom: "none", padding: 0 }}>
@@ -195,23 +135,6 @@ export default function Reviews() {
                                                     </div>
                                                     <div className="space14" />
                                                     <p>We hope your home search is the going smoothly! If you have any question need more information.</p>
-                                                    <ul>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                        <li>
-                                                            <i className="fa-solid fa-star" />
-                                                        </li>
-                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>
@@ -305,7 +228,7 @@ export default function Reviews() {
                         </div>
                     </div>
                 </div>
-            </Layout>
+            {/* </Layout> */}
         </>
     );
 }

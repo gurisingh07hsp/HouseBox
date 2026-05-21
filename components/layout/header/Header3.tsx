@@ -176,10 +176,10 @@ export default function Header3({ scroll, isMobileMenu, handleMobileMenu }: any)
                                             </li> */}
                                             {user && user.email && (
                                                 <li>
-                                                    <Link href="dashboard" className="plus">
-                                                        Dashboard <i className="fa-solid fa-angle-down" />
+                                                    <Link href="/dashboard" className="plus">
+                                                        Dashboard
                                                     </Link>
-                                                    <ul className="dropdown-padding">
+                                                    {/* <ul className="dropdown-padding">
                                                         <li>
                                                             <Link href="/dashboard">Dashboard</Link>
                                                         </li>
@@ -201,7 +201,7 @@ export default function Header3({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                         <li>
                                                             <Link href="/add-property">Add Property</Link>
                                                         </li>
-                                                    </ul>
+                                                    </ul> */}
                                                 </li>
                                             )}
                                             <li>

@@ -163,36 +163,36 @@ export default function Dashboard() {
     return (
         <>
         <PropertyFormModal initialForm={propertyForm} mode={'edit'} open={open} setOpen={setOpen}/>
-            <Layout headerStyle={3} footerStyle={3}>
+            {/* <Layout headerStyle={3} footerStyle={3}> */}
                 <div>
-                    <div className="hero-inner-section-area-sidebar">
+                    {/* <div className="hero-inner-section-area-sidebar">
                         <img src="/assets/img/all-images/hero/hero-img1.png" alt="housebox" className="hero-img1" />
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="hero-header-area text-center">
-                                        {/* <Link href="/">
+                                        <Link href="/">
                                             Home{" "}
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                                                 <path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z"></path>
                                             </svg>{" "}
                                             Dashboard
-                                        </Link> */}
+                                        </Link>
                                         <div className="space24" />
                                         <h1>Dashboard</h1>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     {/*===== HERO AREA ENDS =======*/}
                     {/*===== DASHBOARD AREA STARTS =======*/}
-                    <div className="dashboard-section-area sp1">
+                    <div className="dashboard-section-area">
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-4 m-auto">
                                     <div className="heading1 text-center">
-                                        <h1>Show Dashboard</h1>
+                                        <h1>Dashboard</h1>
                                     </div>
                                     <div className="space40" />
                                 </div>
@@ -587,7 +587,7 @@ export default function Dashboard() {
                     </div>
                     {/*===== DASHBOARD AREA ENDS =======*/}
                     {/*===== CTA AREA STARTS =======*/}
-                    <div className="cta1-section-area">
+                    {/* <div className="cta1-section-area">
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-12">
@@ -625,9 +625,9 @@ export default function Dashboard() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
-            </Layout>
+            {/* </Layout> */}
         </>
     );
 }

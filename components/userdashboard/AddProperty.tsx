@@ -122,37 +122,37 @@ export default function AddProperty() {
 
     return (
         <>
-            <Layout headerStyle={3} footerStyle={3}>
+            {/* <Layout headerStyle={3} footerStyle={3}> */}
                 <div>
-                    <div className="hero-inner-section-area-sidebar">
+                    {/* <div className="hero-inner-section-area-sidebar">
                         <img src="/assets/img/all-images/hero/hero-img1.png" alt="housebox" className="hero-img1" />
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="hero-header-area text-center">
-                                        {/* <Link href="/">
+                                        <Link href="/">
                                             Home{" "}
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                                                 <path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z"></path>
                                             </svg>{" "}
                                             Add Property
-                                        </Link> */}
+                                        </Link>
                                         <div className="space24" />
                                         <h1>Add Property</h1>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     {/*===== HERO AREA ENDS =======*/}
                     {/*===== DASHBOARD AREA STARTS =======*/}
-                    <div className="add-property-section sp1">
+                    <div className="add-property-section">
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-4">
                                     <div className="heading1">
                                         <h2>Add Property</h2>
-                                        <div className="space32" />
+                                        {/* <div className="space32" /> */}
                                     </div>
                                 </div>
                                 <div className="col-lg-12">
@@ -958,13 +958,6 @@ export default function AddProperty() {
 </button>
 
 
-
-
-
-
-
-
-
                                     </div>
                                     {/* <div className="space60" /> */}
                                     {/* <div className="upload-main-boxarea">
@@ -1065,7 +1058,7 @@ export default function AddProperty() {
                         </div>
                     </div>
                 </div>
-            </Layout>
+            {/* </Layout> */}
         </>
     );
 }

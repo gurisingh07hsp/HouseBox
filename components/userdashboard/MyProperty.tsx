@@ -163,7 +163,7 @@ export default function MyProperty() {
     return (
         <>
             <PropertyFormModal initialForm={propertyForm} mode={'edit'} open={open} setOpen={setOpen}/>
-            <Layout headerStyle={3} footerStyle={3}>
+            {/* <Layout headerStyle={3} footerStyle={3}> */}
                 <div>
                     {/* <div className="hero-inner-section-area-sidebar">
                         <img src="/assets/img/all-images/hero/hero-img1.png" alt="housebox" className="hero-img1" />
@@ -187,7 +187,7 @@ export default function MyProperty() {
                     </div> */}
                     {/*===== HERO AREA ENDS =======*/}
                     {/*===== DASHBOARD AREA STARTS =======*/}
-                    <div className="dashboard-section-area sp1">
+                    <div className="dashboard-section-area">
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-12">
@@ -383,7 +383,7 @@ export default function MyProperty() {
                         </div>
                     </div> */}
                 </div>
-            </Layout>
+            {/* </Layout> */}
         </>
     );
 }

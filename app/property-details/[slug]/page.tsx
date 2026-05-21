@@ -115,6 +115,13 @@ export default function PropertyDetailsV1() {
     const [property, setProperty] = useState<any| null>(null);
     const [loading, setLoading] = useState(true);
 
+    const [messageForm, setMessageForm] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        message: ''
+    });
+
     useEffect(() => {
         const fetchProperty = async () => {
             try{
@@ -133,6 +140,21 @@ export default function PropertyDetailsV1() {
         }
         fetchProperty()
     },[propertyId]);
+
+
+    const sendMessage = async()=> {
+        console.log("agent : ", property.agent._id);
+        const response = await axios.post(`/api/messages/${property.agent._id}`, messageForm);
+        if(response.status == 200){
+            setMessageForm({
+                name: '',
+                email: '',
+                phone: '',
+                message: ''
+            })
+            console.log('message sent');
+        }
+    }
 
     return (
         <>
@@ -602,20 +624,20 @@ export default function PropertyDetailsV1() {
                                                     </div>
                                                     <div className="space10" />
                                                     <div className="input-area">
-                                                        <input type="text" placeholder="Full Name" />
+                                                        <input value={messageForm.name} onChange={(e)=> setMessageForm({...messageForm, name: e.target.value})} type="text" placeholder="Full Name" />
                                                     </div>
                                                     <div className="input-area">
-                                                        <input type="text" placeholder="Phone Number" />
+                                                        <input value={messageForm.phone} onChange={(e)=> setMessageForm({...messageForm, phone: e.target.value})} type="text" placeholder="Phone Number" />
                                                     </div>
                                                     <div className="input-area">
-                                                        <input type="email" placeholder="Email Address" />
+                                                        <input value={messageForm.email} onChange={(e)=> setMessageForm({...messageForm, email: e.target.value})} type="email" placeholder="Email Address" />
                                                     </div>
                                                     <div className="input-area">
-                                                        <textarea placeholder="Your Message" />
+                                                        <textarea value={messageForm.message} onChange={(e)=> setMessageForm({...messageForm, message: e.target.value})} placeholder="Your Message" />
                                                     </div>
                                                     <div className="input-area">
-                                                        <button type="submit" className="theme-btn1">
-                                                            Find Properties{" "}
+                                                        <button onClick={sendMessage} type="submit" className="theme-btn1">
+                                                            Send Message{" "}
                                                             <span className="arrow1">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24} fill="currentColor">
                                                                     <path d="M12 13H4V11H12V4L20 12L12 20V13Z" />

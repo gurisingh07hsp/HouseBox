@@ -10,6 +10,14 @@ type User = {
   phone: string;
   description: string;
   role?: string;
+  messages: {
+    name: string;
+    phone: string;
+    email: string;
+    message: string;
+    status: ['Read', 'UnRead'];
+    createdAt: Date;
+  }[];
   bookings?: string[];
 };
 
